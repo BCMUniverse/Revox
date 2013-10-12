@@ -1,0 +1,42 @@
+#include "resource.h"
+#include <windows.h>
+
+LANGUAGE LANG_PORTUGUESE, SUBLANG_PORTUGUESE_BRAZILIAN
+
+VS_VERSION_INFO     VERSIONINFO
+    FILEVERSION     0,1,0,0
+    PRODUCTVERSION  0,1,0,0
+    FILEFLAGSMASK   0x3fL
+#ifdef _DEBUG
+    FILEFLAGS       0x1L
+#else
+    FILEFLAGS       0x0L
+#endif
+    FILEOS          VOS_NT_WINDOWS32
+    FILETYPE        VFT_DLL
+    FILESUBTYPE     VFT_UNKNOWN
+{
+    BLOCK "StringFileInfo"{
+        BLOCK "041604B0"{
+            VALUE "Build",            "3 de Setembro de 2013\0"
+            VALUE "Comments",         "Free for personal use only.\0"
+            VALUE "CompanyName",      "Cleber Matheus Softwares\0"
+            VALUE "Developer",        "Cleber Matheus\0"
+            VALUE "FileDescription",  "Renderizador web\0"
+            VALUE "FileVersion",      "0.1.0.0\0"
+            VALUE "InternalName",     "REVOX.DLL\0"
+            VALUE "LegalCopyright",   "GNU General Public License Version 3\0"
+            VALUE "LegalTrademarks",  "All rights reserved.\0"
+            VALUE "OriginalFilename", "Revox.dll\0"
+            VALUE "PrivateBuild",     "a13v2\0"
+            VALUE "ProductName",      "BCM Revox Engine\0"
+            VALUE "ProductVersion",   "0.1.0.0\0"
+            VALUE "SpecialBuild",     "\0"
+            VALUE "Support",          "http://clebermatheus.users.sf.net/support\0"
+            VALUE "Users",            "Unlimited.\0"
+        }
+    }
+    BLOCK "VarFileInfo"{
+        VALUE "Translation", 0x416, 1200
+    }
+}
