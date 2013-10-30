@@ -6,11 +6,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <winsock2.h>
-
-typedef struct{
-    char v[32];
-    int topo, ind;
-}pilha;
+#include "bonus.h"
 
 void InitPilha(pilha *p){
     int i;

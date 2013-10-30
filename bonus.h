@@ -5,7 +5,10 @@
 #define BUF32KB 524288
 
 //Pilha
-typedef struct pilha;
+typedef struct{
+    char v[32];
+    int topo[32], ind;
+}pilha;
 void InitPilha(pilha *p);
 void InsrtPilha(pilha *p, char novo);
 char RemovePilha(pilha *p);

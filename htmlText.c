@@ -40,11 +40,33 @@ char *SubString(char *str, int inicio, int fim){
 }
 
 char *SubStringP(char *str, char *elem){
-    int i;
-    char result = (char *)malloc(sizeof(char)*(strlen(str)));
+    int i, j;
+    char *result = malloc(sizeof(char)*(strlen(str)));
+    pilha p;
 
+    InitPilha(&p);
     for(i=0; str[i]!='\0'; i++){
-        if(str[i] == '<'){}
+        if(str[i]=='<' && str[i+1]!='/'){
+            for(i=i, j=0; str[i]!='>'; i++){
+                InsrtPilha(&p, str[i]);
+                p.ind[j] = i;
+            }
+            if(str[i]=='>'){
+                InsrtPilha(&p, str[i]);
+                p.ind[j] = i;
+            }
+            for(j=0; j<p.topo+1; j++){
+                if(p.v[j]==)
+            }
+        }
+        if(str[i]=='<' && str[i+1]=='/'){
+            for(i=i, j=0; str[i]!='>'; i++){
+                InsrtPilha(&p, str[i]);
+                p.ind[j] = i;
+            }
+            InsrtPilha(&p, str[i]);
+            p.ind[j] = i;
+        }
     }
 
     return result;
@@ -53,9 +75,9 @@ char *SubStringP(char *str, char *elem){
 char *SubString2(char *str, char *inicio, char *fim){
     int i, j, k, l = 0, m1, n1;
     char *result, *m, *n;
-    result = (char *)malloc(sizeof(char)*(strlen(str)));
-    m = (char *)malloc(sizeof(char)*(strlen(str)));
-    n = (char *)malloc(sizeof(char)*(strlen(str)));
+    result = malloc(sizeof(char)*(strlen(str)));
+    m = malloc(sizeof(char)*(strlen(str)));
+    n = malloc(sizeof(char)*(strlen(str)));
 
     for(i=0; result[i]!='\0'; i++){
         result[i] = '\0';
@@ -87,7 +109,8 @@ char *SubString2(char *str, char *inicio, char *fim){
             strcat(result, SubString(str, m1+(k+1), n1-(l/8)));
             strcat(result, "\r\n");
         }
-        str = SubString(str, n1+l, j);
+        strcpy(str, m);
+        //str = SubString(str, n1+l, j);
     }
     free(m);
     free(n);
@@ -200,7 +223,7 @@ char *InitHTMLText(char *content){
 
     printf("%s", html);
 
-    /*//Liberando Memória Alocada
+    //Liberando Memória Alocada
     free(conthtml);
     free(intag);
     free(intag2);
@@ -214,7 +237,7 @@ char *InitHTMLText(char *content){
     intag2 = NULL;
     head = NULL;
     title = NULL;
-    body = NULL;*/
+    body = NULL;
 
     return html;
 }

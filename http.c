@@ -153,6 +153,10 @@ char *InitHTTP(char *address, int port, char *caminho, char *cookie){
     }
     puts("Dados enviados");
 
+    for(i=0; i<BUF32KB; i++){
+        server_reply[i] = '\0';
+    }
+
     //Receive a reply from the server
     if((recv_size = recv(sock, server_reply, strlen(server_reply), 0))<SOCKET_ERROR){
         puts("recv falhou");
