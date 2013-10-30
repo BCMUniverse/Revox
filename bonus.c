@@ -11,16 +11,16 @@
 void InitPilha(pilha *p){
     int i;
     p->topo = -1;
-    for(i=0; i<32; i++){
+    for(i=0; i<VKB; i++){
         p->ind[i] = -1;
     }
-    for(i=0; i<32; i++){
+    for(i=0; i<VKB; i++){
         p->v[i] = '\0';
     }
 }
 
 void InsrtPilha(pilha *p, char novo){
-    if(p->topo == 31){
+    if(p->topo==VKB-1){
         fprintf(stderr, "Erro: Pilha Cheia!\n");
         exit(EXIT_FAILURE);
     }

@@ -3,11 +3,13 @@
 
 //Buffer de saída de 512KB
 #define BUF32KB 524288
+//Tamanho do Vetor p.v
+#define VKB 256
 
 //Pilha
 typedef struct{
-    char v[32];
-    int topo, ind[32];
+    char v[VKB];
+    int topo, ind[VKB];
 }pilha;
 void InitPilha(pilha *p);
 void InsrtPilha(pilha *p, char novo);

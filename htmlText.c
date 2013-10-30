@@ -64,14 +64,14 @@ char *SubStringP(char *str, char *elem){
             }
             if(strstr(p.v, elem)!=NULL || strstr(p.v, strupr(elem))!=NULL){
                 l = strstr(p.v, elem);
-                if(strstr(p.v, strupr(elem))!=NULL){
+                if(l==NULL){
                     l = strstr(p.v, strupr(elem));
                 }
                 m = p.ind[l];
                 n = m-str;
             }
             r = p.topo;
-            for(j=0; j<32; j++){
+            for(j=0; j<VKB; j++){
                 RemovePilha(&p);
             }
         }
@@ -84,14 +84,14 @@ char *SubStringP(char *str, char *elem){
             p.ind[j++] = i;
             if(strstr(p.v, elem)!=NULL || strstr(p.v, strupr(elem))!=NULL){
                 l = strstr(p.v, elem);
-                if(strstr(p.v, strupr(elem))!=NULL){
+                if(l==NULL){
                     l = strstr(p.v, strupr(elem));
                 }
                 o = p.ind[l];
                 q = o-str;
             }
             s = p.topo;
-            for(j=0; j<32; j++){
+            for(j=0; j<VKB; j++){
                 RemovePilha(&p);
             }
         }
