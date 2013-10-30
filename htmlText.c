@@ -71,7 +71,7 @@ char *SubStringP(char *str, char *elem){
                 n = m-str;
             }
             r = p.topo;
-            for(j=0; j<VKB; j++){
+            for(j=0; j<r; j++){
                 RemovePilha(&p);
             }
         }
@@ -91,15 +91,15 @@ char *SubStringP(char *str, char *elem){
                 q = o-str;
             }
             s = p.topo;
-            for(j=0; j<VKB; j++){
+            for(j=0; j<s; j++){
                 RemovePilha(&p);
             }
         }
         if(i=0){
-            result = SubString(str, n+r, q-s);
+            result = SubString(str, n+(r+1), q-(s/8));
         }
         else{
-            strcat(result, SubString(str, n+r, q-s));
+            strcat(result, SubString(str, n+(r+1), q-(s/8)));
             strcat(result, "\r\n");
         }
         str = SubString(str, q+s, t);
