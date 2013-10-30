@@ -40,34 +40,72 @@ char *SubString(char *str, int inicio, int fim){
 }
 
 char *SubStringP(char *str, char *elem){
-    int i, j;
-    char *result = malloc(sizeof(char)*(strlen(str)));
+    int i, j, k, n, q, r, s, t;
+    char *result, l, *m, *o;
     pilha p;
 
     InitPilha(&p);
+    result = malloc(sizeof(char)*(strlen(str)));
+    m = malloc(sizeof(char)*(strlen(str)));
+    o = malloc(sizeof(char)*(strlen(str)));
+    for(i=0; result[i]<strlen(str)+1; i++){
+        result[i] = '\0';
+    }
+    for(t=0; str[t]!='\0'; t++);
     for(i=0; str[i]!='\0'; i++){
         if(str[i]=='<' && str[i+1]!='/'){
             for(i=i, j=0; str[i]!='>'; i++){
                 InsrtPilha(&p, str[i]);
-                p.ind[j] = i;
+                p.ind[j++] = i;
             }
             if(str[i]=='>'){
                 InsrtPilha(&p, str[i]);
-                p.ind[j] = i;
+                p.ind[j++] = i;
             }
-            for(j=0; j<p.topo+1; j++){
-                if(p.v[j]==)
+            if(strstr(p.v, elem)!=NULL || strstr(p.v, strupr(elem))!=NULL){
+                l = strstr(p.v, elem);
+                if(strstr(p.v, strupr(elem))!=NULL){
+                    l = strstr(p.v, strupr(elem));
+                }
+                m = p.ind[l];
+                n = m-str;
+            }
+            r = p.topo;
+            for(j=0; j<32; j++){
+                RemovePilha(&p);
             }
         }
         if(str[i]=='<' && str[i+1]=='/'){
             for(i=i, j=0; str[i]!='>'; i++){
                 InsrtPilha(&p, str[i]);
-                p.ind[j] = i;
+                p.ind[j++] = i;
             }
             InsrtPilha(&p, str[i]);
-            p.ind[j] = i;
+            p.ind[j++] = i;
+            if(strstr(p.v, elem)!=NULL || strstr(p.v, strupr(elem))!=NULL){
+                l = strstr(p.v, elem);
+                if(strstr(p.v, strupr(elem))!=NULL){
+                    l = strstr(p.v, strupr(elem));
+                }
+                o = p.ind[l];
+                q = o-str;
+            }
+            s = p.topo;
+            for(j=0; j<32; j++){
+                RemovePilha(&p);
+            }
         }
+        if(i=0){
+            result = SubString(str, n+r, q-s);
+        }
+        else{
+            strcat(result, SubString(str, n+r, q-s));
+            strcat(result, "\r\n");
+        }
+        str = SubString(str, q+s, t);
     }
+    free(m);
+    free(o);
 
     return result;
 }
@@ -109,8 +147,8 @@ char *SubString2(char *str, char *inicio, char *fim){
             strcat(result, SubString(str, m1+(k+1), n1-(l/8)));
             strcat(result, "\r\n");
         }
-        strcpy(str, m);
-        //str = SubString(str, n1+l, j);
+        //strcpy(str, m);
+        str = SubString(str, n1+l, j);
     }
     free(m);
     free(n);
@@ -210,12 +248,8 @@ char *InitHTMLText(char *content){
             }
         }
         if(i==4){
-            // Tag <p
-            aux = CreateTag(cesp[0], tags[i], "\0");
-            // Tag </p>
-            aux2 = CreateTag(cesp[2], tags[i], cesp[1]);
-
-            conthtml = SubString2(body, aux, aux2);
+            // Tag <p...> e </p>
+            conthtml = SubStringP(body, tags[i]);
             strcat(html, conthtml);
             strcat(html, "\r\n");
         }

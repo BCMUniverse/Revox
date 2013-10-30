@@ -11,7 +11,9 @@
 void InitPilha(pilha *p){
     int i;
     p->topo = -1;
-    p->ind = -1;
+    for(i=0; i<32; i++){
+        p->ind[i] = -1;
+    }
     for(i=0; i<32; i++){
         p->v[i] = '\0';
     }

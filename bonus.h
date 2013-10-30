@@ -7,7 +7,7 @@
 //Pilha
 typedef struct{
     char v[32];
-    int topo[32], ind;
+    int topo, ind[32];
 }pilha;
 void InitPilha(pilha *p);
 void InsrtPilha(pilha *p, char novo);
