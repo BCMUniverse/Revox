@@ -40,14 +40,15 @@ char *SubString(char *str, int inicio, int fim){
 }
 
 char *SubStringP(char *str, char *elem){
-    int i, j, k, n, q, r, s, t;
+    int i, j, k = 0, n = 0, q = 0, r = 0, s = 0, t = 0;
     char *result, l, *m, *o;
-    pilha p;
+    pilha p, u;
 
     InitPilha(&p);
-    result = malloc(sizeof(char)*(strlen(str)));
-    m = malloc(sizeof(char)*(strlen(str)));
-    o = malloc(sizeof(char)*(strlen(str)));
+    InitPilha(&u);
+    result = (char *)malloc(sizeof(char)*(strlen(str)));
+    m = (char *)malloc(sizeof(char)*(strlen(str)));
+    o = (char *)malloc(sizeof(char)*(strlen(str)));
     for(i=0; result[i]<strlen(str)+1; i++){
         result[i] = '\0';
     }
@@ -66,43 +67,54 @@ char *SubStringP(char *str, char *elem){
                 l = strstr(p.v, elem);
                 if(l==NULL){
                     l = strstr(p.v, strupr(elem));
+                    if(l!=NULL){
+                        m = p.v[p.ind[l]];
+                        n = m-str;
+                    }
                 }
-                m = p.ind[l];
-                n = m-str;
+                else{
+                    m = p.v[p.ind[l]];
+                    n = m-str;
+                }
             }
             r = p.topo;
-            for(j=0; j<r; j++){
-                RemovePilha(&p);
-            }
+            strlwr(elem);
         }
         if(str[i]=='<' && str[i+1]=='/'){
             for(i=i, j=0; str[i]!='>'; i++){
-                InsrtPilha(&p, str[i]);
-                p.ind[j++] = i;
+                InsrtPilha(&u, str[i]);
+                u.ind[j++] = i;
             }
-            InsrtPilha(&p, str[i]);
-            p.ind[j++] = i;
-            if(strstr(p.v, elem)!=NULL || strstr(p.v, strupr(elem))!=NULL){
-                l = strstr(p.v, elem);
+            InsrtPilha(&u, str[i]);
+            u.ind[j++] = i;
+            if(strstr(u.v, elem)!=NULL || strstr(u.v, strupr(elem))!=NULL){
+                l = strstr(u.v, elem);
                 if(l==NULL){
-                    l = strstr(p.v, strupr(elem));
+                    l = strstr(u.v, strupr(elem));
+                    if(l!=NULL){
+                        o = u.v[u.ind[l]];
+                        q = o-str;
+                    }
                 }
-                o = p.ind[l];
-                q = o-str;
+                else{
+                    o = u.v[u.ind[l]];
+                    q = o-str;
+                }
             }
-            s = p.topo;
-            for(j=0; j<s; j++){
-                RemovePilha(&p);
+            s = u.topo;
+            strlwr(elem);
+        }
+        if(p.v[i]!='\0' && u.v[i]!='\0'){
+            if(k==0){
+                result = SubString(str, n+(r+1), q-(s/8));
             }
+            else{
+                strcat(result, SubString(str, n+(r+1), q-(s/8)));
+                strcat(result, "\r\n");
+            }
+            str = SubString(str, q+s, t);
+            k++;
         }
-        if(i=0){
-            result = SubString(str, n+(r+1), q-(s/8));
-        }
-        else{
-            strcat(result, SubString(str, n+(r+1), q-(s/8)));
-            strcat(result, "\r\n");
-        }
-        str = SubString(str, q+s, t);
     }
     free(m);
     free(o);
@@ -113,9 +125,9 @@ char *SubStringP(char *str, char *elem){
 char *SubString2(char *str, char *inicio, char *fim){
     int i, j, k, l = 0, m1, n1;
     char *result, *m, *n;
-    result = malloc(sizeof(char)*(strlen(str)));
-    m = malloc(sizeof(char)*(strlen(str)));
-    n = malloc(sizeof(char)*(strlen(str)));
+    result = (char *)malloc(sizeof(char)*(strlen(str)));
+    m = (char *)malloc(sizeof(char)*(strlen(str)));
+    n = (char *)malloc(sizeof(char)*(strlen(str)));
 
     for(i=0; result[i]!='\0'; i++){
         result[i] = '\0';
@@ -199,7 +211,7 @@ char *InitHTMLText(char *content){
                 conthtml = SubString(content, inicio+(k+1), fim-(l/8));
             }
             else{
-                body = SubString(content, inicio, fim);
+                body = SubString(content, inicio, fim+l);
             }
         }
         if(i==1 || i==2){
@@ -225,7 +237,7 @@ char *InitHTMLText(char *content){
                 if(inicio<0){
                     inicio = 0;
                 }
-                head = SubString(content, inicio, fim);
+                head = SubString(content, inicio, fim+l);
             }
             else{
                 intag = strstr(head, aux);
