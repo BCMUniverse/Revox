@@ -8,7 +8,7 @@
 #include <sys/time.h>
 #include "bonus.h"
 
-#define BUFKB 1024
+#define BUFKB 2048
 #pragma omp parallel
 
 unsigned long mode = 1;

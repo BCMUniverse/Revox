@@ -26,7 +26,7 @@ char *SubString(char *str, int inicio, int fim){
     char *sub;
     int i, j;
 
-    if(inicio >= fim || fim>strlen(str)){
+    if(inicio >= fim || fim>strlen(str) && inicio<0){
         fprintf(stderr, "Erro! SubString nao Encontrada!\n");
         return "\0";
     }
@@ -112,12 +112,14 @@ char *SubStringP(char *str, char *elem){
                 strcat(result, SubString(str, n+(r+1), q-(s/8)));
                 strcat(result, "\r\n");
             }
-            str = SubString(str, q+s, t);
+            //str = SubString(str, q+s, t);
             k++;
         }
-        else{
-            for(j=0; j<p.topo && j<u.topo; j++){
+        else if(p.topo>-1 && u.topo>-1){
+            for(j=-1; j<r; j++){
                 RemovePilha(&p);
+            }
+            for(j=-1; j<s; j++){
                 RemovePilha(&u);
             }
         }
