@@ -115,6 +115,12 @@ char *SubStringP(char *str, char *elem){
             str = SubString(str, q+s, t);
             k++;
         }
+        else{
+            for(j=0; j<p.topo && j<u.topo; j++){
+                RemovePilha(&p);
+                RemovePilha(&u);
+            }
+        }
     }
     free(m);
     free(o);
