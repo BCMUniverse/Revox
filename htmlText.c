@@ -106,21 +106,24 @@ char *SubStringP(char *str, char *elem){
         }
         if(p.v[i]!='\0' && u.v[i]!='\0'){
             if(k==0){
-                result = SubString(str, n+(r+1), q-(s/8));
+                result = SubString(str, n+r, q-(s/8));
             }
             else{
-                strcat(result, SubString(str, n+(r+1), q-(s/8)));
+                strcat(result, SubString(str, n+r, q-(s/8)));
                 strcat(result, "\r\n");
             }
-            //str = SubString(str, q+s, t);
             k++;
         }
-        else if(p.topo>-1 && u.topo>-1){
-            for(j=-1; j<r; j++){
-                RemovePilha(&p);
+        else{
+            if(p.topo>-1){
+                for(j=-1; j<r; j++){
+                    RemovePilha(&p);
+                }
             }
-            for(j=-1; j<s; j++){
-                RemovePilha(&u);
+            if(u.topo>-1){
+                for(j=-1; j<s; j++){
+                    RemovePilha(&u);
+                }
             }
         }
     }

@@ -158,7 +158,7 @@ char *InitHTTP(char *address, int port, char *caminho, char *cookie){
     }
 
     //Receive a reply from the server
-    if((recv_size = recv(sock, server_reply, strlen(server_reply), 0))<SOCKET_ERROR){
+    if((recv_size = recv(sock, server_reply, BUF32KB, 0))<SOCKET_ERROR){
         puts("recv falhou");
     }
     printf("Resposta recebida\nBytes recebidos: %d\n", recv_size);
@@ -167,7 +167,10 @@ char *InitHTTP(char *address, int port, char *caminho, char *cookie){
     int total = recvtimeout(sock, 4);
     printf("\nPronto. Tamanho total do pacote: %d bytes\n", total);
 
-    char *conteudo[strlen(server_reply)];
+    char *conteudo = (char *)malloc(sizeof(char)*BUF32KB);
+    for(i=0; i<BUF32KB; i++){
+        conteudo[i] = '\0';
+    }
     strcpy(conteudo, server_reply);
 
     closesocket(sock);
