@@ -18,5 +18,5 @@
 *.app
 
 # Bin e Obj
-#/bin
-#/obj
+/bin
+/obj
