@@ -1,11 +1,28 @@
+/*
+	Este arquivo faz parte do BCM Revox Engine;
+
+	BCM Revox Engine é Software Livre; você pode redistribui-lo e/ou
+	modificá-lo dentro dos termos da Licença Pública Geru GNU como
+	publicada pela Fundação do Software Livre (FSF); na versão 3 da Licença.
+	Este programa é distribuído na esperança que possa ser util,
+	mas SEM NENHUMA GARANTIA; sem uma garantia implicita de ADEQUAÇÂO a
+	qualquer MERCADO ou APLICAÇÃO EM PARTICULAR. Veja a Licença Pública Geral
+	GNU para maiores detalhes.
+	Você deve ter recebido uma cópia da Licença Pública Geral GNU junto com
+	este programa, se não, escreva para a Fundação do Software Livre(FSF) Inc.,
+	51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
+
+	BCM Revox Engine v0.1
+	BCM Revox Engine -> Ano: 2013|Tipo: WebEngine
+*/
 #include "resource.h"
 #include <windows.h>
 
 LANGUAGE LANG_PORTUGUESE, SUBLANG_PORTUGUESE_BRAZILIAN
 
 VS_VERSION_INFO     VERSIONINFO
-    FILEVERSION     0, 0, 7, 5
-    PRODUCTVERSION  0, 0, 7, 5
+    FILEVERSION     0, 1, 0, 0
+    PRODUCTVERSION  0, 1, 0, 0
     FILEFLAGSMASK   0x3fL
 #ifdef _DEBUG
     FILEFLAGS       0x1L
@@ -23,17 +40,17 @@ VS_VERSION_INFO     VERSIONINFO
             VALUE "CompanyName",      "Cleber Matheus Softwares\0"
             VALUE "Developer",        "Cleber Matheus\0"
             VALUE "FileDescription",  "WebEngine\0"
-            VALUE "FileVersion",      "0.0.7.5\0"
+            VALUE "FileVersion",      "0.1.0.0\0"
             VALUE "InternalName",     "REVOX.DLL\0"
             VALUE "LegalCopyright",   "GNU General Public License Version 3\0"
             VALUE "LegalTrademarks",  "All rights reserved.\0"
             VALUE "OriginalFilename", "Revox.dll\0"
-            VALUE "PrivateBuild",     "a13v13\0"
+            VALUE "PrivateBuild",     "a13v14 - Release 0.1\0"
             VALUE "ProductName",      "BCM Revox Engine\0"
-            VALUE "ProductVersion",   "0.0.7.5\0"
-            VALUE "SpecialBuild",     "0.0.7.5\0"
+            VALUE "ProductVersion",   "0.1\0"
+            VALUE "SpecialBuild",     "0.1.0.0\0"
             VALUE "Support",          "http://clebermatheus.users.sf.net/support\0"
-            VALUE "Users",            "All Users\0"
+            VALUE "Users",            "Todos os Usuarios!\0"
         }
     }
     BLOCK "VarFileInfo"{
