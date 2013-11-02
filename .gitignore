@@ -16,3 +16,7 @@
 *.exe
 *.out
 *.app
+
+# Bin e Obj
+/bin
+/obj

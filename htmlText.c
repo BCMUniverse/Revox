@@ -24,113 +24,23 @@ char *CreateTag(char *inicio, char *tag, char *fim){
 
 char *SubString(char *str, int inicio, int fim){
     char *sub;
-    int i, j;
+    int i, j, k;
 
-    if(inicio >= fim || fim>strlen(str) && inicio<0){
+    for(k=0; str[k]!='\0'; k++);
+    if(inicio >= fim || fim>k){
         fprintf(stderr, "Erro! SubString nao Encontrada!\n");
         return "\0";
     }
-    sub = (char *)malloc(sizeof(char)*(fim-inicio+1));
+    if(inicio<0){
+        inicio = 0;
+    }
+    sub = (char *)malloc(sizeof(char)*((fim-inicio)+1));
     for(i=inicio, j=0; i<fim; i++, j++){
         sub[j] = str[i];
     }
     sub[j] = '\0';
 
     return sub;
-}
-
-char *SubStringP(char *str, char *elem){
-    int i, j, k = 0, n = 0, q = 0, r = 0, s = 0, t = 0;
-    char *result, l, *m, *o;
-    pilha p, u;
-
-    InitPilha(&p);
-    InitPilha(&u);
-    result = (char *)malloc(sizeof(char)*(strlen(str)));
-    m = (char *)malloc(sizeof(char)*(strlen(str)));
-    o = (char *)malloc(sizeof(char)*(strlen(str)));
-    for(i=0; result[i]<strlen(str)+1; i++){
-        result[i] = '\0';
-    }
-    for(t=0; str[t]!='\0'; t++);
-    for(i=0; str[i]!='\0'; i++){
-        if(str[i]=='<' && str[i+1]!='/'){
-            for(i=i, j=0; str[i]!='>'; i++){
-                InsrtPilha(&p, str[i]);
-                p.ind[j++] = i;
-            }
-            if(str[i]=='>'){
-                InsrtPilha(&p, str[i]);
-                p.ind[j++] = i;
-            }
-            if(strstr(p.v, elem)!=NULL || strstr(p.v, strupr(elem))!=NULL){
-                l = strstr(p.v, elem);
-                if(l==NULL){
-                    l = strstr(p.v, strupr(elem));
-                    if(l!=NULL){
-                        m = p.v[p.ind[l]];
-                        n = m-str;
-                    }
-                }
-                else{
-                    m = p.v[p.ind[l]];
-                    n = m-str;
-                }
-            }
-            r = p.topo;
-            strlwr(elem);
-        }
-        if(str[i]=='<' && str[i+1]=='/'){
-            for(i=i, j=0; str[i]!='>'; i++){
-                InsrtPilha(&u, str[i]);
-                u.ind[j++] = i;
-            }
-            InsrtPilha(&u, str[i]);
-            u.ind[j++] = i;
-            if(strstr(u.v, elem)!=NULL || strstr(u.v, strupr(elem))!=NULL){
-                l = strstr(u.v, elem);
-                if(l==NULL){
-                    l = strstr(u.v, strupr(elem));
-                    if(l!=NULL){
-                        o = u.v[u.ind[l]];
-                        q = o-str;
-                    }
-                }
-                else{
-                    o = u.v[u.ind[l]];
-                    q = o-str;
-                }
-            }
-            s = u.topo;
-            strlwr(elem);
-        }
-        if(p.v[i]!='\0' && u.v[i]!='\0'){
-            if(k==0){
-                result = SubString(str, n+r, q-(s/8));
-            }
-            else{
-                strcat(result, SubString(str, n+r, q-(s/8)));
-                strcat(result, "\r\n");
-            }
-            k++;
-        }
-        else{
-            if(p.topo>-1){
-                for(j=-1; j<r; j++){
-                    RemovePilha(&p);
-                }
-            }
-            if(u.topo>-1){
-                for(j=-1; j<s; j++){
-                    RemovePilha(&u);
-                }
-            }
-        }
-    }
-    free(m);
-    free(o);
-
-    return result;
 }
 
 char *SubString2(char *str, char *inicio, char *fim){
@@ -146,7 +56,7 @@ char *SubString2(char *str, char *inicio, char *fim){
     for(j=0; str[j]!='\0'; j++);
     for(k=0; inicio[k]!='\0'; k++);
     for(l=0; fim[l]!='\0'; l++);
-    for(i=0; strlen(str)!=0; i++){
+    for(i=0; strlen(str)!=0 || str[i]!='\0'; i++){
         m = strstr(str, inicio);
         n = strstr(str, fim);
         if(m==NULL){
@@ -163,15 +73,16 @@ char *SubString2(char *str, char *inicio, char *fim){
         if(n1<0){
             n1 = 0;
         }
-        if(i=0){
+        if(i==0){
             result = SubString(str, m1+(k+1), n1-(l/8));
+            strcat(result, "\r\n");
         }
         else{
             strcat(result, SubString(str, m1+(k+1), n1-(l/8)));
             strcat(result, "\r\n");
         }
-        //strcpy(str, m);
         str = SubString(str, n1+l, j);
+        for(j=0; str[j]!='\0'; j++);
     }
     free(m);
     free(n);
@@ -271,8 +182,11 @@ char *InitHTMLText(char *content){
             }
         }
         if(i==4){
-            // Tag <p...> e </p>
-            conthtml = SubStringP(body, tags[i]);
+            // Tag <p...>
+            aux = CreateTag(cesp[0], tags[i], "\0");
+            // Tag </p>
+            aux2 = CreateTag(cesp[2], tags[i], cesp[1]);
+            conthtml = SubString2(body, aux, aux2);
             strcat(html, conthtml);
             strcat(html, "\r\n");
         }
