@@ -50,13 +50,14 @@ char *SubString2(char *str, char *inicio, char *fim){
     m = (char *)malloc(sizeof(char)*(strlen(str)));
     n = (char *)malloc(sizeof(char)*(strlen(str)));
 
+    #pragma omp parallel schedule(guided)
     for(i=0; result[i]!='\0'; i++){
         result[i] = '\0';
     }
     for(j=0; str[j]!='\0'; j++);
     for(k=0; inicio[k]!='\0'; k++);
     for(l=0; fim[l]!='\0'; l++);
-    for(i=0; strlen(str)!=0 || str[i]!='\0'; i++){
+    for(i=0; str[i]!='\0'; i++){
         m = strstr(str, inicio);
         n = strstr(str, fim);
         if(m==NULL){
@@ -73,16 +74,16 @@ char *SubString2(char *str, char *inicio, char *fim){
         if(n1<0){
             n1 = 0;
         }
-        if(i==0){
-            result = SubString(str, m1+(k+1), n1-(l/8));
-            strcat(result, "\r\n");
+        if(m1==0 && n1==0){
+            fprintf(stderr, "Nao tem mais %s ou %s!\n", inicio, fim);
+            break;
         }
         else{
             strcat(result, SubString(str, m1+(k+1), n1-(l/8)));
             strcat(result, "\r\n");
+            str = SubString(str, n1+l, j);
+            for(j=0; str[j]!='\0'; j++);
         }
-        str = SubString(str, n1+l, j);
-        for(j=0; str[j]!='\0'; j++);
     }
     free(m);
     free(n);
@@ -195,12 +196,12 @@ char *InitHTMLText(char *content){
     printf("%s", html);
 
     //Liberando Memória Alocada
-    free(conthtml);
+    /*free(conthtml);
     free(intag);
     free(intag2);
     free(head);
     free(title);
-    free(body);
+    free(body);*/
 
     //Adicionando Null aos ponteiros
     conthtml = NULL;

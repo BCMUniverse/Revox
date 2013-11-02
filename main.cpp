@@ -14,6 +14,18 @@ void InitText(char *host){
     char *content = InitHTTP(host, 80, "/", NULL);
     InitHTMLText(content);
 }
+void InitFileText(char *path){
+    char *content = (char *)malloc(sizeof(char)*BUF32KB);
+    FILE *input;
+    if((input = fopen(path, "r"))==NULL){
+        fprintf(stderr, "Erro: Arquivo Invalido!\n");
+        return;
+    }
+    fscanf(input, "%s", &content);
+    InitHTMLText(content);
+    free(content);
+    fclose(input);
+}
 
 extern "C" BOOL APIENTRY DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved){
     switch (fdwReason){
