@@ -1,6 +1,5 @@
 # Revox
 
->Revox é uma Engine que renderizas páginas web, .
+>Revox é uma Engine que renderiza páginas web utilizando pacotes recebidos por enderços HTTP.
 
-Em Breve!
----------
+## Em Breve!
