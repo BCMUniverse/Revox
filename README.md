@@ -1,5 +1,8 @@
 # Revox
 
->Revox é uma Engine que renderiza páginas web utilizando pacotes recebidos por enderços HTTP.
+>BCM Revox Engine é uma Engine que interpreta arquivos HTML sejam uma página web ou um arquivo local.
+
+##Noções Básicas do Revox
+--->Gumbo
 
 ## Em Breve!
