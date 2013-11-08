@@ -16,9 +16,9 @@ O BCM Revox Engine é distribuido pelo GNU General Public License - veja o arquiv
 O Revox está sendo desenvolvido somente no Windows 7, porém pode funcionar em outras versões do Windows, em versões futuras, terá suporte a Linux, Mac OS X entre outros.
 
 ##Documentação:
-###Em Breve!
+Na pasta docs/ você poderá encontrar mais detalhadamente com utilizar cada função no seu código e como instalar mais detalhadamente o Revox no seu projeto.
 
-##Construindo o Revox
+##Construindo e Compilando o Revox
 ###Em Breve!
 
 ##Utilizando o Revox
