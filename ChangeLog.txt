@@ -1,0 +1,7 @@
+﻿-- BCM Revox Engine v0.1 --
+//ChangeLog
+	v0.1 - Alpha 1
+		+ Adicionado o Analisador HTML - Gumbo
+		+ Adicionado o Analisador HTML em Texto
+		+ Adicionado o Cliente HTTP
+		+ Adicionado Soquetes

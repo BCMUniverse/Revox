@@ -16,17 +16,24 @@ O BCM Revox Engine é distribuido pelo GNU General Public License - veja o arquiv
 O Revox está sendo desenvolvido somente no Windows 7, porém pode funcionar em outras versões do Windows, em versões futuras, terá suporte a Linux, Mac OS X entre outros.
 
 ##Documentação:
-Na pasta docs/ você poderá encontrar mais detalhadamente com utilizar cada função no seu código e como instalar mais detalhadamente o Revox no seu projeto.
+Na pasta docs/ você poderá encontrar mais detalhadamente com utilizar cada função no seu código e como incorporar o Revox no seu projeto.
 
-##Como compilar o Revox
+##Como construir o Revox
 
 Primeiro, clone o repositório do Revox:
 
+'''bash
 git clone https://github.com/BCMUniverse/Revox.git
-
+'''
 Se não tiver o Codeblocks 12.11 instalado, faça o download e baixe-o no link abaixo:
 
+'''bash
 http://sourceforge.net/projects/codeblocks/files/Binaries/12.11/Windows/codeblocks-12.11mingw-setup.exe
+'''
+
+Abra o arquivo Revox.cbp no codeblocks e clique em Build ou compilar.
+Pronto. A Biblioteca estará na pasta bin/Release ou bin/Dbg, compilada junto com a biblioteca estática.
 
 ##Utilizando o Revox
-###Em Breve!
+
+A instalação e utilização do Revox estará na pasta docs explicando detalhadamente como instala-lo e utilizá-lo.
