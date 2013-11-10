@@ -1,5 +1,5 @@
 #BCM Revox Engine
-## #TheNextEngine -> #TheRevox
+### #TheNextEngine -> #TheRevox
 
 BCM Revox Engine <http://revox.sf.net/>
 
@@ -19,7 +19,9 @@ O Revox está sendo desenvolvido somente no Windows 7, porém pode funcionar em ou
 Na pasta docs/ você poderá encontrar mais detalhadamente com utilizar cada função no seu código e como instalar mais detalhadamente o Revox no seu projeto.
 
 ##Construindo e Compilando o Revox
-###Em Breve!
+###Requisitos para Compilar o Revox
+- CodeBlocks
+- Windows 7 ou superior
 
 ##Utilizando o Revox
 ###Em Breve!
