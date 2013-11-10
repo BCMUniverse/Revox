@@ -22,14 +22,14 @@ Na pasta docs/ você poderá encontrar mais detalhadamente com utilizar cada funçã
 
 Primeiro, clone o repositório do Revox:
 
-'''bash
+```bash
 git clone https://github.com/BCMUniverse/Revox.git
-'''
+```
 Se não tiver o Codeblocks 12.11 instalado, faça o download e baixe-o no link abaixo:
 
-'''bash
+```bash
 http://sourceforge.net/projects/codeblocks/files/Binaries/12.11/Windows/codeblocks-12.11mingw-setup.exe
-'''
+```
 
 Abra o arquivo Revox.cbp no codeblocks e clique em Build ou compilar.
 Pronto. A Biblioteca estará na pasta bin/Release ou bin/Dbg, compilada junto com a biblioteca estática.
