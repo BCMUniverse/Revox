@@ -18,14 +18,15 @@ O Revox está sendo desenvolvido somente no Windows 7, porém pode funcionar em ou
 ##Documentação:
 Na pasta docs/ você poderá encontrar mais detalhadamente com utilizar cada função no seu código e como instalar mais detalhadamente o Revox no seu projeto.
 
-##Compilando o Revox
-###Requisitos para Compilar o Revox
+##Como compilar o Revox
 
-Para compilar o Revox você irá precisar dos seguintes recursos:
-- CodeBlocks 12.11
-- GNU GCC Compiler
+Primeiro, clone o repositório do Revox:
 
+git clone https://github.com/BCMUniverse/Revox.git
 
+Se não tiver o Codeblocks 12.11 instalado, faça o download e baixe-o no link abaixo:
+
+http://sourceforge.net/projects/codeblocks/files/Binaries/12.11/Windows/codeblocks-12.11mingw-setup.exe
 
 ##Utilizando o Revox
 ###Em Breve!
