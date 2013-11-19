@@ -34,6 +34,7 @@ http://sourceforge.net/projects/codeblocks/files/Binaries/12.11/Windows/codebloc
 Abra o arquivo Revox.cbp no codeblocks e clique em Build ou compilar.
 Pronto. A Biblioteca estará na pasta bin/Release ou bin/Dbg, compilada junto com a biblioteca estática.
 
-##Utilizando o Revox
+##Instalando e Utilizando o Revox
 
-A instalação e utilização do Revox estará na pasta docs explicando detalhadamente como instala-lo e utilizá-lo.
+- Para instalar o Revox no projeto, deve-se copiar o arquivo dll para a pasta de arquivos compilados do projeto ou a pasta bin do Revox na pasta bin do seu projeto.
+- Para utilizar o Revox no seu projeto deve seguir os passos que estão na pasta docs.
