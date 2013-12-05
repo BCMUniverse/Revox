@@ -8,25 +8,48 @@
 		<h1>Funções incluídas no Revox</h1>
 		<h2>htmlText.h</h2>
 		<ul>
-			<li>CreateTag</li>
-			<li>SubString</li>
-			<li>SubString2</li>
-			<li>InitHTMLText</li>
+			<li>CreateTag: Cria os elementos</li>
+			<li>SubString: copia substrings de uma string</li>
+			<li>SubString2: copia substring e remove-as de uma string</li>
+			<li>InitHTMLText: Analisa o Documento ou arquivo recebido e converte o conteúdo HTML</li>
 		</ul>
 		<h2>http.h</h2>
 		<ul>
-			<li>recvtimeout</li>
-			<li>InitHTTP</li>
+			<li>recvtimeout: recebe pacotes vindo da web</li>
+			<li>InitHTTP: recebe e acessa endereço recebido</li>
 		</ul>
 		<h2>revox.h</h2>
 		<ul>
-			<li>InitGumbo</li>
-			<li>InitText</li>
-			<li>InitFileText</li>
+			<li>InitGumbo: analisa documento html</li>
+			<li>InitText: inicia o analisador html e acessa endereço recebido</li>
+			<li>InitFileText: analisa um arquivo html</li>
 		</ul>
 		<h2>socket.h</h2>
 		<ul>
-			<li>InitSocket</li>
+			<li>InitSocket: recebe sockets a partir de um endereço</li>
+		</ul>
+		<h1>Implementando as Funções</h1>
+		<h2>htmlText.h</h2>
+		<ul>
+			<li>CreateTag: char *CreateTag(char *inicio, char *tag, char *fim)</li>
+			<li>SubString: char *SubString(char *str, int inicio, int fim)</li>
+			<li>SubString2: char *SubString2(char *str, char *inicio, char *fim)</li>
+			<li>InitHTMLText: char *InitHTMLText(char *content)</li>
+		</ul>
+		<h2>http.h</h2>
+		<ul>
+			<li>recvtimeout: int recvtimeout(int s, int timeout)</li>
+			<li>InitHTTP: char *InitHTTP(char *address, int port, char *caminho, char *cookie)</li>
+		</ul>
+		<h2>revox.h</h2>
+		<ul>
+			<li>InitGumbo: void InitGumbo(char *host)</li>
+			<li>InitText: void InitText(char *host)</li>
+			<li>InitFileText: void InitFileText(char *path)</li>
+		</ul>
+		<h2>socket.h</h2>
+		<ul>
+			<li>InitSocket: void InitSocket(char *hostname)</li>
 		</ul>
 	</body>
 </html>
