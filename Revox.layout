@@ -1,29 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Release" />
-	<File name="tokenizer.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="char_ref.h" open="0" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="1662" topLine="8" />
 		</Cursor>
 	</File>
-	<File name="tokenizer_states.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1662" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="utf8.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="error.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="1662" topLine="8" />
-		</Cursor>
-	</File>
-	<File name="utf8.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1662" topLine="8" />
-		</Cursor>
-	</File>
-	<File name="util.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1662" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="error.h" open="0" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -31,19 +16,9 @@
 			<Cursor1 position="1662" topLine="8" />
 		</Cursor>
 	</File>
-	<File name="vector.c" open="0" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1662" topLine="8" />
-		</Cursor>
-	</File>
 	<File name="html.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="807" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="vector.h" open="0" top="0" tabpos="12" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1662" topLine="8" />
 		</Cursor>
 	</File>
 	<File name="htmlText.c" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -106,59 +81,14 @@
 			<Cursor1 position="807" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="socket.h" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="807" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="string_buffer.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1662" topLine="8" />
-		</Cursor>
-	</File>
-	<File name="bonus.h" open="1" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="807" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="string_buffer.h" open="0" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1662" topLine="8" />
-		</Cursor>
-	</File>
-	<File name="char_ref.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1662" topLine="8" />
-		</Cursor>
-	</File>
-	<File name="string_piece.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1662" topLine="8" />
-		</Cursor>
-	</File>
-	<File name="char_ref.h" open="0" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1662" topLine="8" />
-		</Cursor>
-	</File>
-	<File name="string_piece.h" open="0" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1662" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="error.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1662" topLine="8" />
-		</Cursor>
-	</File>
 	<File name="tag.c" open="0" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="1662" topLine="8" />
 		</Cursor>
 	</File>
-	<File name="attribute.c" open="0" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="socket.h" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1662" topLine="8" />
+			<Cursor1 position="807" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="token_type.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -166,7 +96,7 @@
 			<Cursor1 position="1662" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="attribute.h" open="0" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="string_buffer.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="1662" topLine="8" />
 		</Cursor>
@@ -176,9 +106,79 @@
 			<Cursor1 position="1662" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="bonus.c" open="1" top="1" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="string_buffer.h" open="0" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1662" topLine="8" />
+		</Cursor>
+	</File>
+	<File name="tokenizer.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1662" topLine="8" />
+		</Cursor>
+	</File>
+	<File name="string_piece.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1662" topLine="8" />
+		</Cursor>
+	</File>
+	<File name="tokenizer_states.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1662" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="string_piece.h" open="0" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1662" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="utf8.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1662" topLine="8" />
+		</Cursor>
+	</File>
+	<File name="attribute.c" open="0" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1662" topLine="8" />
+		</Cursor>
+	</File>
+	<File name="utf8.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1662" topLine="8" />
+		</Cursor>
+	</File>
+	<File name="attribute.h" open="0" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1662" topLine="8" />
+		</Cursor>
+	</File>
+	<File name="util.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1662" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="bonus.c" open="1" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="807" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="vector.c" open="0" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1662" topLine="8" />
+		</Cursor>
+	</File>
+	<File name="vector.h" open="0" top="0" tabpos="12" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1662" topLine="8" />
+		</Cursor>
+	</File>
+	<File name="bonus.h" open="1" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="807" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="char_ref.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1662" topLine="8" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

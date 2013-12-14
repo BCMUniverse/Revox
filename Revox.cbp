@@ -46,22 +46,10 @@
 		<Linker>
 			<Add option="-lmsvcrt" />
 		</Linker>
-		<Unit filename="attribute.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="attribute.h" />
 		<Unit filename="bonus.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="bonus.h" />
-		<Unit filename="char_ref.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="char_ref.h" />
-		<Unit filename="error.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="error.h" />
 		<Unit filename="html.h" />
 		<Unit filename="htmlText.c">
 			<Option compilerVar="CC" />
@@ -71,12 +59,7 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="http.h" />
-		<Unit filename="insertion_mode.h" />
 		<Unit filename="main.cpp" />
-		<Unit filename="parser.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="parser.h" />
 		<Unit filename="resource.h" />
 		<Unit filename="revox.h" />
 		<Unit filename="revox.rc">
@@ -86,34 +69,12 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="socket.h" />
-		<Unit filename="string_buffer.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="string_buffer.h" />
-		<Unit filename="string_piece.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="string_piece.h" />
-		<Unit filename="tag.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="token_type.h" />
-		<Unit filename="tokenizer.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="tokenizer.h" />
 		<Unit filename="tokenizer_states.h" />
-		<Unit filename="utf8.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="utf8.h" />
-		<Unit filename="util.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="util.h" />
-		<Unit filename="vector.c">
-			<Option compilerVar="CC" />
-		</Unit>
 		<Unit filename="vector.h" />
 		<Extensions>
 			<code_completion />

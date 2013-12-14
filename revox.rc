@@ -21,8 +21,8 @@
 LANGUAGE LANG_PORTUGUESE, SUBLANG_PORTUGUESE_BRAZILIAN
 
 VS_VERSION_INFO     VERSIONINFO
-    FILEVERSION     0, 1, 0, 0
-    PRODUCTVERSION  0, 1, 0, 0
+    FILEVERSION     0, 2, 0, 0
+    PRODUCTVERSION  0, 2, 0, 0
     FILEFLAGSMASK   0x3fL
 #ifdef _DEBUG
     FILEFLAGS       0x1L
@@ -35,20 +35,20 @@ VS_VERSION_INFO     VERSIONINFO
 {
     BLOCK "StringFileInfo"{
         BLOCK "041604B0"{
-            VALUE "Build",            "2 de Novembro de 2013\0"
+            VALUE "Build",            "14 de Dezembro de 2013\0"
             VALUE "Comments",         "Gratuito para todos os Usuarios!\0"
             VALUE "CompanyName",      "Cleber Matheus Softwares\0"
             VALUE "Developer",        "Cleber Matheus\0"
             VALUE "FileDescription",  "WebEngine\0"
-            VALUE "FileVersion",      "0.1.0.0\0"
+            VALUE "FileVersion",      "0.2.0.0\0"
             VALUE "InternalName",     "REVOX.DLL\0"
             VALUE "LegalCopyright",   "GNU General Public License Version 3\0"
             VALUE "LegalTrademarks",  "All rights reserved.\0"
             VALUE "OriginalFilename", "Revox.dll\0"
             VALUE "PrivateBuild",     "a13v14 - Release 0.1\0"
             VALUE "ProductName",      "BCM Revox Engine\0"
-            VALUE "ProductVersion",   "0.1\0"
-            VALUE "SpecialBuild",     "0.1.0.0\0"
+            VALUE "ProductVersion",   "0.2\0"
+            VALUE "SpecialBuild",     "0.2.0.0\0"
             VALUE "Support",          "http://clebermatheus.users.sf.net/support\0"
             VALUE "Users",            "Todos os Usuarios!\0"
         }

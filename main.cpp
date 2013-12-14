@@ -18,18 +18,9 @@
 #include <omp.h>
 #include <stdio.h>
 #include <windef.h>
-#include "html.h"
-#include "parser.h"
 #include "revox.h"
 #include "bonus.h"
 
-void InitGumbo(char *host){
-    char *html = (char *)malloc(sizeof(char)*BUF32KB);
-    html = InitHTTP(host, 80, "/", NULL);
-    Output* output = parse(html);
-    destroy_output(&kDefaultOptions, output);
-    free(html);
-}
 void InitText(char *host){
     char *content = (char *)malloc(sizeof(char)*BUF32KB);
     content = InitHTTP(host, 80, "/", NULL);

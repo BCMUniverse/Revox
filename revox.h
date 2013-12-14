@@ -40,8 +40,6 @@ extern "C"{
 //Biblioteca Socket
 #include "socket.h"
 
-//Inicia o Modo GUI
-void InitGumbo(char *host);
 //Inicia o Modo Texto
 void InitText(char *host);
 //Ler um arquivo HTML
