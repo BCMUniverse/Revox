@@ -50,7 +50,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="bonus.h" />
-		<Unit filename="html.h" />
 		<Unit filename="htmlText.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -69,13 +68,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="socket.h" />
-		<Unit filename="string_piece.h" />
-		<Unit filename="token_type.h" />
-		<Unit filename="tokenizer.h" />
-		<Unit filename="tokenizer_states.h" />
-		<Unit filename="utf8.h" />
-		<Unit filename="util.h" />
-		<Unit filename="vector.h" />
+		<Unit filename="urlparser.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="urlparser.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

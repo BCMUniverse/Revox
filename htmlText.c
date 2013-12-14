@@ -206,7 +206,7 @@ char *InitHTMLText(char *content){
         }
     }
 
-    printf("%s", html);
+    //printf("%s", html);
 
     //Liberando Memória Alocada
     /*free(conthtml);

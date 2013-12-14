@@ -152,7 +152,7 @@ char *InitHTTP(char *address, int port, char *caminho, char *cookie){
     strcat(buffer, address);
     strcat(buffer, "\r\n");
     strcat(buffer, "Connection: keep-alive\r\n");
-    strcat(buffer, "User-Agent: Revox/0.1 (Windows NT 6.1; BCM Revox Engine/0.1)\r\n");
+    strcat(buffer, "User-Agent: Revox/0.2 (Windows NT 6.1; BCM Revox Engine/0.2)\r\n");
     strcat(buffer, "Accept: text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5\r\n");
     strcat(buffer, "Accept-Language: pt-br,pt;q=0.7;en-us,en;q=0.5\r\n");
     strcat(buffer, "Accept-Charset: ISO-8859-1,UTF-8;q=0.7,*;q=0.7\r\n");
