@@ -20,7 +20,7 @@
 
 typedef struct _url{
     int port;
-    char endereco[1025], path[1025];
+    char host[1025], url_path[1025], prtcol[16];
 }url;
 
 #endif // _URLPARSER_H_

@@ -21,13 +21,41 @@
 #include "htmlText.h"
 #include "urlparser.h"
 
+#pragma omp parallel
+
 url UrlParser(char host[]){
-    char ports[][8] = {"http", "https", "ftp", "telnet"}, bars[][4] = {":", "//", "/"}, aux[16];
+    char ports[][8] = {"http", "https", "ftp", "telnet"}, bars[][4] = {":", "//", "/"}, aux[16], aux2[16];
     int i, j, k;
     url addr;
 
-    for(i=0; i<){}
-    strstr(host, );
+    #pragma omp parallel schedule(guided)
+    for(i=0; i<4; i++){
+        aux = CreateTag(ports[i], bars[0], "\0");
+        for(k=0; aux[k]!='\0'; k++);
+        aux2 = strstr(host, aux);
+        if(aux2==NULL){
+            aux2 = strstr(host, strupr(aux));
+        }
+        if(aux2!=NULL){
+            switch(aux){
+            case "http:":
+                addr.port = 80;
+                strcpy(addr.prtcol, ports[i]);
+                SubString2(host, ports[i], bars[1]);
+                break;
+            case "https:":
+                addr.port = 443;
+                strcpy(addr.prtcol, ports[i]);
+                SubString2(host, ports[i], bars[1]);
+                break;
+            case "ftp":
+                addr.port = 21;
+                strcpy(addr.prtcol, ports[i]);
+                SubString2(host, ports[i], bars[1]);
+                break;
+            }
+        }
+    }
 
     return addr;
 }
