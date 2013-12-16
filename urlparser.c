@@ -18,6 +18,7 @@
 #include <omp.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "htmlText.h"
 #include "urlparser.h"
 
@@ -26,73 +27,76 @@
 url UrlParser(char host[]){
     char ports[][16] = {"http", "https", "ftp", "telnet", "gopher", "file", "mailto", "news", "nntp", "wais", "prospero"};
     char bars[][4] = {":", "//", "/", "?"}, aux[16], aux2[16];
-    int i, j, k;
+    int i;
     url addr;
+    uports port1;
 
     #pragma omp parallel for schedule(guided)
     for(i=0; i<11; i++){
-        aux = CreateTag(ports[i], bars[0], "\0");
-        for(k=0; aux[k]!='\0'; k++);
-        aux2 = strstr(host, aux);
+        strcpy(aux, CreateTag(ports[i], bars[0], "\0"));
+        strcpy(aux2, strstr(host, aux));
         if(aux2==NULL){
-            aux2 = strstr(host, strupr(aux));
+            strcpy(aux2, strstr(host, strupr(aux)));
         }
         if(aux2!=NULL){
-            switch(aux){
-            case "http:":
+            if(strcmp(aux, ports[i])==0){
+                port1 = i;
+            }
+            switch(port1){
+            case HTTP:
                 addr.port = 80;
                 strcpy(addr.prtcol, ports[i]);
                 SubString2(host, ports[i], bars[1]);
                 break;
-            case "https:":
+            case HTTPS:
                 addr.port = 443;
                 strcpy(addr.prtcol, ports[i]);
                 SubString2(host, ports[i], bars[1]);
                 break;
-            case "ftp":
+            case FTP:
                 addr.port = 21;
                 strcpy(addr.prtcol, ports[i]);
                 SubString2(host, ports[i], bars[1]);
                 break;
-            case "telnet":
+            case TELNET:
                 addr.port = 23;
                 strcpy(addr.prtcol, ports[i]);
                 SubString2(host, ports[i], bars[1]);
                 break;
-            case "gopher":
+            case GOPHER:
                 addr.port = 70;
                 strcpy(addr.prtcol, ports[i]);
                 SubString2(host, ports[i], bars[1]);
                 break;
-            case "file":
+            case FILES:
                 addr.port = 0;
                 strcpy(addr.prtcol, ports[i]);
                 SubString2(host, ports[i], bars[1]);
                 break;
-            case "mailto":
+            case MAILTO:
                 addr.port = 25;
                 strcpy(addr.prtcol, ports[i]);
-                SubString2(host, port[i], bars[3]);
+                SubString2(host, ports[i], bars[3]);
                 break;
-            case "news":
+            case NEWS:
                 addr.port = 0;
                 strcpy(addr.prtcol, ports[i]);
-                SubString2(host, port[i], "\0");
+                SubString2(host, ports[i], "\0");
                 break;
-            case "nntp":
+            case NNTP:
                 addr.port = 119;
                 strcpy(addr.prtcol, ports[i]);
-                SubString2(host, port[i], bars[1]);
+                SubString2(host, ports[i], bars[1]);
                 break;
-            case "wais":
+            case WAIS:
                 addr.port = 210;
                 strcpy(addr.prtcol, ports[i]);
-                SubString2(host, port[i], bars[1]);
+                SubString2(host, ports[i], bars[1]);
                 break;
-            case "prospero":
+            case PROSPERO:
                 addr.port = 1525;
                 strcpy(addr.prtcol, ports[i]);
-                SubString2(host, port[i], bars[1]);
+                SubString2(host, ports[i], bars[1]);
                 break;
             default:
                 fprintf(stderr, "Erro: protocolo não encontrado!\r\n");
@@ -104,7 +108,7 @@ url UrlParser(char host[]){
             SubString2(host, ports[i], bars[1]);
         }
     }
-    addr.host = SubString2(host, NULL, bars[2]);
+    strcpy(addr.host, SubString2(host, NULL, bars[2]));
     strcpy(addr.url_path, bars[2]);
     strcat(addr.url_path, host);
 

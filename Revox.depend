@@ -1,1 +1,75 @@
 # depslib dependency file v1.0
+1383432103 source:e:\bcmuniverse\revox\v1.x\bonus.c
+	<ctype.h>
+	<stdio.h>
+	<stdint.h>
+	<winsock2.h>
+	"bonus.h"
+
+1383432103 e:\bcmuniverse\revox\v1.x\bonus.h
+
+1383432075 source:e:\bcmuniverse\revox\v1.x\socket.c
+	<stdio.h>
+	<sys/types.h>
+	<winsock.h>
+	<stdlib.h>
+	<string.h>
+	<unistd.h>
+	"bonus.h"
+
+1387041843 source:e:\bcmuniverse\revox\v1.x\htmltext.c
+	<omp.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<ctype.h>
+	"bonus.h"
+
+1387055175 source:e:\bcmuniverse\revox\v1.x\http.c
+	<omp.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<winsock2.h>
+	<sys/types.h>
+	<unistd.h>
+	<sys/time.h>
+	"bonus.h"
+
+1387040866 source:e:\bcmuniverse\revox\v1.x\main.cpp
+	<omp.h>
+	<stdio.h>
+	<windef.h>
+	"revox.h"
+	"bonus.h"
+
+1387040847 e:\bcmuniverse\revox\v1.x\revox.h
+	<windows.h>
+	"bonus.h"
+	"htmlText.h"
+	"http.h"
+	"socket.h"
+
+1387156532 e:\bcmuniverse\revox\v1.x\htmltext.h
+	"bonus.h"
+
+1383432054 e:\bcmuniverse\revox\v1.x\http.h
+
+1383432075 e:\bcmuniverse\revox\v1.x\socket.h
+
+1387039341 source:e:\bcmuniverse\revox\v1.x\revox.rc
+	"resource.h"
+	<windows.h>
+
+1383432117 e:\bcmuniverse\revox\v1.x\resource.h
+
+1387159200 source:e:\bcmuniverse\revox\v1.x\urlparser.c
+	<omp.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"htmlText.h"
+	"urlparser.h"
+
+1387158896 e:\bcmuniverse\revox\v1.x\urlparser.h
+

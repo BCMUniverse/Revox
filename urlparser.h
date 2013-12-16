@@ -23,4 +23,18 @@ typedef struct _url{
     char host[1025], url_path[1025], prtcol[16];
 }url;
 
+typedef enum _uports{
+    HTTP,
+    HTTPS,
+    FTP,
+    TELNET,
+    GOPHER,
+    FILES,
+    MAILTO,
+    NEWS,
+    NNTP,
+    WAIS,
+    PROSPERO
+}uports;
+
 #endif // _URLPARSER_H_

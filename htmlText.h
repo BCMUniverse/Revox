@@ -18,6 +18,8 @@
 #ifndef _HTMLTEXT_H_
 #define _HTMLTEXT_H_
 
+#include "bonus.h"
+
 //Em Breve
 typedef struct{
     char aux[32], aux2[32], html[BUF32KB], title[1024], head[10240], *body;
