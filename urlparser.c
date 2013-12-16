@@ -24,12 +24,13 @@
 #pragma omp parallel
 
 url UrlParser(char host[]){
-    char ports[][8] = {"http", "https", "ftp", "telnet"}, bars[][4] = {":", "//", "/"}, aux[16], aux2[16];
+    char ports[][16] = {"http", "https", "ftp", "telnet", "gopher", "file", "mailto", "news", "nntp", "wais", "prospero"};
+    char bars[][4] = {":", "//", "/", "?"}, aux[16], aux2[16];
     int i, j, k;
     url addr;
 
-    #pragma omp parallel schedule(guided)
-    for(i=0; i<4; i++){
+    #pragma omp parallel for schedule(guided)
+    for(i=0; i<11; i++){
         aux = CreateTag(ports[i], bars[0], "\0");
         for(k=0; aux[k]!='\0'; k++);
         aux2 = strstr(host, aux);
@@ -53,9 +54,59 @@ url UrlParser(char host[]){
                 strcpy(addr.prtcol, ports[i]);
                 SubString2(host, ports[i], bars[1]);
                 break;
+            case "telnet":
+                addr.port = 23;
+                strcpy(addr.prtcol, ports[i]);
+                SubString2(host, ports[i], bars[1]);
+                break;
+            case "gopher":
+                addr.port = 70;
+                strcpy(addr.prtcol, ports[i]);
+                SubString2(host, ports[i], bars[1]);
+                break;
+            case "file":
+                addr.port = 0;
+                strcpy(addr.prtcol, ports[i]);
+                SubString2(host, ports[i], bars[1]);
+                break;
+            case "mailto":
+                addr.port = 25;
+                strcpy(addr.prtcol, ports[i]);
+                SubString2(host, port[i], bars[3]);
+                break;
+            case "news":
+                addr.port = 0;
+                strcpy(addr.prtcol, ports[i]);
+                SubString2(host, port[i], "\0");
+                break;
+            case "nntp":
+                addr.port = 119;
+                strcpy(addr.prtcol, ports[i]);
+                SubString2(host, port[i], bars[1]);
+                break;
+            case "wais":
+                addr.port = 210;
+                strcpy(addr.prtcol, ports[i]);
+                SubString2(host, port[i], bars[1]);
+                break;
+            case "prospero":
+                addr.port = 1525;
+                strcpy(addr.prtcol, ports[i]);
+                SubString2(host, port[i], bars[1]);
+                break;
+            default:
+                fprintf(stderr, "Erro: protocolo não encontrado!\r\n");
             }
         }
+        else{
+            addr.port = 80;
+            strcpy(addr.prtcol, ports[i]);
+            SubString2(host, ports[i], bars[1]);
+        }
     }
+    addr.host = SubString2(host, NULL, bars[2]);
+    strcpy(addr.url_path, bars[2]);
+    strcat(addr.url_path, host);
 
     return addr;
 }
