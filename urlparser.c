@@ -27,7 +27,7 @@
 url UrlParser(char host[]){
     char ports[][16] = {"http", "https", "ftp", "telnet", "gopher", "file", "mailto", "news", "nntp", "wais", "prospero"};
     char bars[][4] = {":", "//", "/", "?"}, aux[16], aux2[16];
-    int i;
+    int i, j;
     url addr;
     uports port1;
 
@@ -39,9 +39,7 @@ url UrlParser(char host[]){
             strcpy(aux2, strstr(host, strupr(aux)));
         }
         if(aux2!=NULL){
-            if(strcmp(aux, ports[i])==0){
-                port1 = i;
-            }
+            port1 = i;
             switch(port1){
             case HTTP:
                 addr.port = 80;
@@ -108,7 +106,19 @@ url UrlParser(char host[]){
             SubString2(host, ports[i], bars[1]);
         }
     }
-    strcpy(addr.host, SubString2(host, NULL, bars[2]));
+    for(i=0; host[i]!=bars[0] || host[i]!=bars[2]; i++){
+        addr.host[i] = host[i];
+    }
+    if(host[i]==bars[0]){
+        SubString2(host, host[0], bars[0]);
+        for(j=0; j<16; j++){
+            aux[j] = '\0';
+        }
+        for(i=0; host[i]!=bars[2]; i++){
+            aux[i] = host[i];
+        }
+        addr.port = atoi(aux);
+    }
     strcpy(addr.url_path, bars[2]);
     strcat(addr.url_path, host);
 

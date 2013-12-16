@@ -37,4 +37,7 @@ typedef enum _uports{
     PROSPERO
 }uports;
 
+//Analisa URLs
+url UrlParser(char host[]);
+
 #endif // _URLPARSER_H_
