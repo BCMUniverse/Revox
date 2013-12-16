@@ -40,6 +40,9 @@ extern "C"{
 //Biblioteca Socket
 #include "socket.h"
 
+//Biblioteca UrlParser
+#include "urlparser.h"
+
 //Inicia o Modo Texto
 void InitText(char *host);
 //Ler um arquivo HTML

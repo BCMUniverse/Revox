@@ -21,6 +21,7 @@
 #include <string.h>
 #include <ctype.h>
 #include "bonus.h"
+#include "htmlText.h"
 
 #define KB 1024
 #pragma omp parallel
@@ -63,7 +64,7 @@ char *SubString2(char *str, char *inicio, char *fim){
     m = (char *)malloc(sizeof(char)*(strlen(str)));
     n = (char *)malloc(sizeof(char)*(strlen(str)));
 
-    #pragma omp parallel schedule(guided)
+    #pragma omp parallel for schedule(guided)
     for(i=0; result[i]!='\0'; i++){
         result[i] = '\0';
     }
@@ -104,28 +105,45 @@ char *SubString2(char *str, char *inicio, char *fim){
     return result;
 }
 
+void RemvSubString(char *str, char *substr){
+    while(*str){
+        char *sub=substr, *s=str;
+        while(*sub && *sub==*s){
+            ++sub, ++s;
+        }
+        if(!*sub){
+            while(*s){
+                *str++ = *s++;
+            }
+            *str = 0;
+            return;
+        }
+        ++str;
+    }
+}
+
 char *InitHTMLText(char *content){
     int i, j, k, l, inicio, fim;
     char tags[][16] = {"html\0", "head\0", "title\0", "body\0", "p\0"};
     char cesp[][4] = {"<\0", ">\0", "</\0", "/>\0"};
-    char *conthtml, *aux, *aux2, *intag, *intag2, html[BUF32KB], *title, *head, *body;
+    char *conthtml, aux[16], aux2[16], *intag, *intag2, html[BUF32KB], *head, *body;
+    phtml cont;
 
     //Alocando Memória
     conthtml = (char *)malloc(sizeof(char)*(strlen(content)));
     intag = (char *)malloc(sizeof(char)*(strlen(content)));
     intag2 = (char *)malloc(sizeof(char)*(strlen(content)));
     head = (char *)malloc(sizeof(char)*(strlen(content)));
-    title = (char *)malloc(sizeof(char)*2048);
     body = (char *)malloc(sizeof(char)*(strlen(content)));
 
     #pragma omp parallel for schedule(guided)
-    #pragma omp parallel private(conthtml, intag, intag2, head, title, body)
+    #pragma omp parallel private(conthtml, intag, intag2, head, body)
     for(i=0; i<5; i++){
         if(i==0 || i==3){
             // Tag <html e <body
-            aux = CreateTag(cesp[0], tags[i], "\0");
+            strcpy(aux, CreateTag(cesp[0], tags[i], "\0"));
             // Tag </html> e </body>
-            aux2 = CreateTag(cesp[2], tags[i], cesp[1]);
+            strcpy(aux2, CreateTag(cesp[2], tags[i], cesp[1]));
 
             for(k=0; aux[k]!='\0'; k++);
             for(l=0; aux2[l]!='\0'; l++);
@@ -152,9 +170,9 @@ char *InitHTMLText(char *content){
         }
         if(i==1 || i==2){
             // Tag <head> e <title>
-            aux = CreateTag(cesp[0], tags[i], cesp[1]);
+            strcpy(aux, CreateTag(cesp[0], tags[i], cesp[1]));
             // Tag </head> e </title>
-            aux2 = CreateTag(cesp[2], tags[i], cesp[1]);
+            strcpy(aux2, CreateTag(cesp[2], tags[i], cesp[1]));
 
             for(k=0; aux[k]!='\0'; k++);
             for(l=0; aux2[l]!='\0'; l++);
@@ -189,31 +207,28 @@ char *InitHTMLText(char *content){
                 if(inicio<0){
                     inicio = 0;
                 }
-                title = SubString(head, inicio+k, fim-(l/8)+1);
-                strcpy(html, "Titulo: ");
-                strcat(html, title);
-                strcat(html, "\r\n");
+                strcpy(cont.title, SubString(head, inicio+k, fim-(l/8)+1));
             }
         }
         if(i==4){
             // Tag <p...>
-            aux = CreateTag(cesp[0], tags[i], "\0");
+            strcpy(aux, CreateTag(cesp[0], tags[i], "\0"));
             // Tag </p>
-            aux2 = CreateTag(cesp[2], tags[i], cesp[1]);
+            strcpy(aux2, CreateTag(cesp[2], tags[i], cesp[1]));
             conthtml = SubString2(body, aux, aux2);
             strcat(html, conthtml);
             strcat(html, "\r\n");
         }
     }
 
-    //printf("%s", html);
+    printf("%s", html);
+    strcpy(cont.content, html);
 
     //Liberando Memória Alocada
     /*free(conthtml);
     free(intag);
     free(intag2);
     free(head);
-    free(title);
     free(body);*/
 
     //Adicionando Null aos ponteiros
@@ -221,7 +236,6 @@ char *InitHTMLText(char *content){
     intag = NULL;
     intag2 = NULL;
     head = NULL;
-    title = NULL;
     body = NULL;
 
     return html;

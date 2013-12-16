@@ -19,21 +19,27 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "bonus.h"
+#include "http.h"
 #include "htmlText.h"
 #include "urlparser.h"
 
 #pragma omp parallel
 
+char ports[][16] = {"http", "https", "ftp", "telnet", "gopher", "file", "mailto", "news", "nntp", "wais", "prospero"};
+char bars[][4] = {":", "//", "/", "?"};
+
 url UrlParser(char host[]){
-    char ports[][16] = {"http", "https", "ftp", "telnet", "gopher", "file", "mailto", "news", "nntp", "wais", "prospero"};
-    char bars[][4] = {":", "//", "/", "?"}, aux[16], aux2[16];
+    char aux[16], aux2[16];
     int i, j;
     url addr;
     uports port1;
 
+    limpaVetor(addr.host, 1025);
+    limpaVetor(addr.url_path, 1025);
     #pragma omp parallel for schedule(guided)
     for(i=0; i<11; i++){
-        strcpy(aux, CreateTag(ports[i], bars[0], "\0"));
+        strcpy(aux, CreateTag(ports[i], bars[0], bars[1]));
         strcpy(aux2, strstr(host, aux));
         if(aux2==NULL){
             strcpy(aux2, strstr(host, strupr(aux)));
@@ -44,83 +50,133 @@ url UrlParser(char host[]){
             case HTTP:
                 addr.port = 80;
                 strcpy(addr.prtcol, ports[i]);
-                SubString2(host, ports[i], bars[1]);
+                RemvSubString(host, aux);
                 break;
             case HTTPS:
                 addr.port = 443;
                 strcpy(addr.prtcol, ports[i]);
-                SubString2(host, ports[i], bars[1]);
+                RemvSubString(host, aux);
                 break;
             case FTP:
                 addr.port = 21;
                 strcpy(addr.prtcol, ports[i]);
-                SubString2(host, ports[i], bars[1]);
+                RemvSubString(host, aux);
                 break;
             case TELNET:
                 addr.port = 23;
                 strcpy(addr.prtcol, ports[i]);
-                SubString2(host, ports[i], bars[1]);
+                RemvSubString(host, aux);
                 break;
             case GOPHER:
                 addr.port = 70;
                 strcpy(addr.prtcol, ports[i]);
-                SubString2(host, ports[i], bars[1]);
+                RemvSubString(host, aux);
                 break;
             case FILES:
                 addr.port = 0;
                 strcpy(addr.prtcol, ports[i]);
-                SubString2(host, ports[i], bars[1]);
+                RemvSubString(host, aux);
                 break;
             case MAILTO:
                 addr.port = 25;
                 strcpy(addr.prtcol, ports[i]);
-                SubString2(host, ports[i], bars[3]);
+                RemvSubString(host, aux);
                 break;
             case NEWS:
                 addr.port = 0;
                 strcpy(addr.prtcol, ports[i]);
-                SubString2(host, ports[i], "\0");
+                RemvSubString(host, aux);
                 break;
             case NNTP:
                 addr.port = 119;
                 strcpy(addr.prtcol, ports[i]);
-                SubString2(host, ports[i], bars[1]);
+                RemvSubString(host, aux);
                 break;
             case WAIS:
                 addr.port = 210;
                 strcpy(addr.prtcol, ports[i]);
-                SubString2(host, ports[i], bars[1]);
+                RemvSubString(host, aux);
                 break;
             case PROSPERO:
                 addr.port = 1525;
                 strcpy(addr.prtcol, ports[i]);
-                SubString2(host, ports[i], bars[1]);
+                RemvSubString(host, aux);
                 break;
             default:
                 fprintf(stderr, "Erro: protocolo não encontrado!\r\n");
             }
+            break;
         }
         else{
             addr.port = 80;
             strcpy(addr.prtcol, ports[i]);
-            SubString2(host, ports[i], bars[1]);
+            RemvSubString(host, aux);
         }
     }
-    for(i=0; host[i]!=bars[0] || host[i]!=bars[2]; i++){
+    for(i=0; i<strlen(host) && host[i]!=':' && host[i]!='/'; i++){
         addr.host[i] = host[i];
     }
+    RemvSubString(host, addr.host);
     if(host[i]==bars[0]){
-        SubString2(host, host[0], bars[0]);
-        for(j=0; j<16; j++){
-            aux[j] = '\0';
-        }
+        RemvSubString(host, bars[0]);
+        limpaVetor(aux, 16);
         for(i=0; host[i]!=bars[2]; i++){
             aux[i] = host[i];
         }
         addr.port = atoi(aux);
     }
-    strcpy(addr.url_path, bars[2]);
     strcat(addr.url_path, host);
+    printf("-%s-\r\n\f", addr.url_path);
 
     return addr;
+}
+
+char *UrlConnect(char *host){
+    char *result;
+    int i;
+    uports up1;
+    url url1 = UrlParser(host);
+    for(i=0; i<11; i++){
+        if(strcmp(url1.prtcol, ports[i])==0){
+            up1 = i;
+            break;
+        }
+    }
+    switch(up1){
+    case HTTP:
+        result = InitHTTP(url1.host, url1.port, url1.url_path, NULL);
+        break;
+    case HTTPS:
+        result = InitHTTP(url1.host, url1.port, url1.url_path, NULL);
+        break;
+    case FTP:
+        result = NULL;
+        break;
+    case TELNET:
+        result = NULL;
+        break;
+    case GOPHER:
+        result = NULL;
+        break;
+    case FILES:
+        result = NULL;
+        break;
+    case MAILTO:
+        result = NULL;
+        break;
+    case NEWS:
+        result = NULL;
+        break;
+    case NNTP:
+        result = NULL;
+        break;
+    case WAIS:
+        result = NULL;
+        break;
+    case PROSPERO:
+        result = NULL;
+        break;
+    }
+
+    return result;
 }

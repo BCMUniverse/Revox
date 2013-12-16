@@ -24,7 +24,7 @@
 #define VKB 256
 
 //Pilha
-typedef struct{
+typedef struct _pilha{
     char v[VKB];
     int topo, ind[VKB];
 }pilha;
@@ -32,6 +32,7 @@ void InitPilha(pilha *p);
 void InsrtPilha(pilha *p, char novo);
 char RemovePilha(pilha *p);
 
+void limpaVetor(char *vet, int tam);
 static size_t strnlen(const char *s, size_t max);
 int inet_pton4(const char *src, char *dst);
 int inet_pton6(const char *src, char *dst);

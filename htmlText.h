@@ -20,10 +20,10 @@
 
 #include "bonus.h"
 
-//Em Breve
-typedef struct{
-    char aux[32], aux2[32], html[BUF32KB], title[1024], head[10240], *body;
-}Parsers;
+//HTML Analisado
+typedef struct _phtml{
+    char title[2049], content[BUF32KB];
+}phtml;
 
 //Cria Elementos para compara-los
 char *CreateTag(char *inicio, char *tag, char *fim);
@@ -31,6 +31,8 @@ char *CreateTag(char *inicio, char *tag, char *fim);
 char *SubString(char *str, int inicio, int fim);
 //Copia várias substrings e remove-as dentro de uma string
 char *SubString2(char *str, char *inicio, char *fim);
+//Remove a substring de uma string
+void RemvSubString(char *str, char *substr);
 //Analisa documento HTML e converte em Texto
 char *InitHTMLText(char *content);
 

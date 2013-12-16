@@ -19,7 +19,8 @@
 #define NS_IN6ADDRSZ 16
 #define NS_INT16SZ   2
 
-#include<ctype.h>
+#include <omp.h>
+#include <ctype.h>
 #include <stdio.h>
 #include <stdint.h>
 #include <winsock2.h>
@@ -52,6 +53,14 @@ char RemovePilha(pilha *p){
     }
     p->topo--;
     return p->v[p->topo+1];
+}
+
+void limpaVetor(char *vet, int tam){
+    int i;
+    #pragma omp parallel for schedule(guided)
+    for(i=0; i<tam; i++){
+        vet[i] = '\0';
+    }
 }
 
 static size_t strnlen(const char *s, size_t max) {
