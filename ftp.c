@@ -32,6 +32,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <winsock2.h>
+#include "ftp.h"
 
 #define ERRO -1 // Constante de erro
 
@@ -60,27 +61,6 @@ char * env = NULL; //Buffer para envio de comandos
 char * buffer_file = NULL; // Buffer para receber armazenar conteúdo de arquivos
 
 unsigned long chunk = 0x1000,total=0; //Variíveis de controle : enviar e receber de arquivos
-
-/*
-erro = informa erros;
-fecha_socket = fecha sockets;
-conv_ip = converte o IP Local para o formato aceito no FTP;
-sock_dados = abre conexão de dados;
-iniciar = inicia comunicação com o servidor.
-*/
-
-void erro(const char*),fecha_socket(void),conv_ip(void),sock_dados (void),iniciar(void);
-char * receber(void); // Função para receber dados
-
-void listar(void); // Lista arquivos
-int upload(void); // Faz upload de arquivos
-int download(void); // Baixa arquivos
-void deleta_arquivo(void); // Deleta arquivos
-int ren_arq(void); // Renomeia arquivos
-void muda_dir(void); // Muda de diretório
-void cria_dir(void); // Cria diretório
-void deleta_dir(void); // Deleta diretórios
-void sair(); // Encerra
 
 int InitFTP(char host2){
     strcpy(servidor, host2);
