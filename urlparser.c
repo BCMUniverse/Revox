@@ -117,16 +117,20 @@ url UrlParser(char host[]){
         addr.host[i] = host[i];
     }
     RemvSubString(host, addr.host);
-    if(host[i]==bars[0]){
+    if(host[i]==':'){
         RemvSubString(host, bars[0]);
         limpaVetor(aux, 16);
-        for(i=0; host[i]!=bars[2]; i++){
+        for(i=0; host[i]!='/'; i++){
             aux[i] = host[i];
         }
         addr.port = atoi(aux);
     }
-    strcat(addr.url_path, host);
-    printf("-%s-\r\n\f", addr.url_path);
+    else if(host[i]=='/'){
+        strcpy(addr.url_path, host);
+    }
+    if(strchr(host, '/')==NULL){
+        strcpy(addr.url_path, "/");
+    }
 
     return addr;
 }
