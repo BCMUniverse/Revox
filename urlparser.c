@@ -20,6 +20,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "bonus.h"
+#include "ftp.h"
 #include "http.h"
 #include "htmlText.h"
 #include "urlparser.h"
@@ -154,7 +155,7 @@ char *UrlConnect(char *host){
         result = InitHTTP(url1.host, url1.port, url1.url_path, NULL);
         break;
     case FTP:
-        result = NULL;
+        InitFTP(url1.host);
         break;
     case TELNET:
         result = NULL;

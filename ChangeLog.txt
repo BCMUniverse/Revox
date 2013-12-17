@@ -1,5 +1,12 @@
-﻿-- BCM Revox Engine v0.1 --
+﻿-- BCM Revox Engine v0.2 --
 //ChangeLog
+	v0.2 - Alpha 2
+		* Analisador HTML Texto atualizado
+		+ Adicionado Analisador HTML com Interface Gráfica
+		+ Adicionado Analisador JavaScript
+		+ Adicionado Analisador CSS
+		+ Adicionado os seguintes protocolos: HTTPS, FTP, Gopher, Telnet, File, MailTo, News, NNTP, WAIS, Prospero e SFTP.
+		- Analisador HTML - Gumbo removido
 	v0.1 - Alpha 1
 		+ Adicionado o Analisador HTML - Gumbo
 		+ Adicionado o Analisador HTML em Texto
