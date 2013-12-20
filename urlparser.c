@@ -158,6 +158,12 @@ char *UrlConnect(char *host){
         InitFTP(url1.host);
         break;
     case TELNET:
+        char msg[2*BUFKB];
+        strcpy(msg, "telnet ");
+        strcat(msg, url1.host);
+        strcat(msg, " ");
+        strcat(msg, url1.port);
+        system(msg);
         result = NULL;
         break;
     case GOPHER:

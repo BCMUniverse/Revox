@@ -17,4 +17,8 @@
 */
 #ifndef _TELNET_H_
 #define _TELNET_H_
+
+//EmBreve
+char *InitTelnet(char *address, int port, char *caminho);
+
 #endif // _TELNET_H_
