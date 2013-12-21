@@ -74,7 +74,7 @@ url UrlParser(char host[]){
                 RemvSubString(host, aux);
                 break;
             case FILES:
-                addr.port = 0;
+                addr.port = 80;
                 strcpy(addr.prtcol, ports[i]);
                 RemvSubString(host, aux);
                 break;
@@ -170,7 +170,19 @@ char *UrlConnect(char *host){
         result = NULL;
         break;
     case FILES:
-        result = NULL;
+        FILE *input;
+        if(url1.host==NULL){
+            RemvSubString(url1.url_path, "/");
+            if((input = fopen(url1.url_path, "r"))==NULL){
+                fprintf(stderr, "Erro: Arquivo Invalido!\n");
+                return NULL;
+            }
+            fgets(result, BUF32KB, input);
+            fclose(input);
+        }
+        else{
+            result = InitHTTP(url1.host, url1.port, url1.url_path, NULL);
+        }
         break;
     case MAILTO:
         result = NULL;
