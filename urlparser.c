@@ -45,6 +45,13 @@ url UrlParser(char host[]){
         if(aux2==NULL){
             strcpy(aux2, strstr(host, strupr(aux)));
         }
+        if(aux2==NULL){
+            strcpy(aux, CreateTag(ports[i], bars[0], "\0"));
+            strcpy(aux2, strstr(host, aux));
+            if(aux2==NULL){
+                strcpy(aux2, strstr(host, strupr(aux)));
+            }
+        }
         if(aux2!=NULL){
             port1 = i;
             switch(port1){
@@ -114,7 +121,7 @@ url UrlParser(char host[]){
             RemvSubString(host, aux);
         }
     }
-    for(i=0; i<strlen(host) && host[i]!=':' && host[i]!='/'; i++){
+    for(i=0; i<strlen(host) && host[i]!=':' && host[i]!='/' && host[i]!='?'; i++){
         addr.host[i] = host[i];
     }
     RemvSubString(host, addr.host);
@@ -126,8 +133,15 @@ url UrlParser(char host[]){
         }
         addr.port = atoi(aux);
     }
-    else if(host[i]=='/'){
-        strcpy(addr.url_path, host);
+    else{
+        if(host[i]=='/'){
+            strcpy(addr.url_path, host);
+        }
+        else{
+            if(host[i]=='?'){
+                strcpy(addr.url_path, host);
+            }
+        }
     }
     if(strchr(host, '/')==NULL){
         strcpy(addr.url_path, "/");
