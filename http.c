@@ -24,6 +24,7 @@
 #include <unistd.h>
 #include <sys/time.h>
 #include "bonus.h"
+#include "socks.h"
 
 #define BUFKB 2048
 #pragma omp parallel
@@ -78,17 +79,13 @@ char *InitHTTP(char *address, int port, char *caminho, char *cookie){
     char ip[16];
 
     //Inicialização
-    printf("Inicializando Revox...");
-    if (WSAStartup(MAKEWORD(2,2),&wsa) != 0){
-        printf("Falhou. Codigo de Erro: %d\n",WSAGetLastError());
-        return NULL;
-    }
+    InitSock();
     //Criar o socket
 	//Socket IPv4
 	if((sock = socket(AF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET) {
 		printf("Nao pode criar o socket: %d\n" , WSAGetLastError());
 	}
-    printf("Inicializado\nBCM Revox Engine v0.2 - Cliente HTTP\nAcessando %s...\n", address);
+    printf("\fInicializado\nBCM Revox Engine v0.2 - Cliente HTTP\nAcessando %s...\n", address);
 
     //Estruturas do IPv4
     struct sockaddr_in {

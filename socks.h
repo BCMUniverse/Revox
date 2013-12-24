@@ -12,37 +12,13 @@
 	este programa, se não, escreva para a Fundação do Software Livre(FSF) Inc.,
 	51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 
-	BCM Revox Engine v0.1
+	BCM Revox Engine v0.2
 	BCM Revox Engine -> Ano: 2013|Tipo: WebEngine
 */
-#ifndef BONUS_H_
-#define BONUS_H_
+#ifndef _SOCKS_H_
+#define _SOCKS_H_
 
-//Buffer de saída de 512KB
-#define BUF32KB 524288
-//Tamanho do Vetor p.v
-#define VKB 256
-//Tamanho de 1024 bytes
-#define TKB 1024
-/*
-    Tamanho de 1025 bytes.
-    Utilizado para arquivos char incluindo o \0.
-*/
-#define STKB 1025
+//Inicia o socket
+int InitSock();
 
-//Pilha
-typedef struct _pilha{
-    char v[VKB];
-    int topo, ind[VKB];
-}pilha;
-void InitPilha(pilha *p);
-void InsrtPilha(pilha *p, char novo);
-char RemovePilha(pilha *p);
-
-void limpaVetor(char *vet, int tam);
-static size_t strnlen(const char *s, size_t max);
-int inet_pton4(const char *src, char *dst);
-int inet_pton6(const char *src, char *dst);
-int inet_pton(int af, const char *src, char *dst);
-
-#endif // BONUS_H_
+#endif // _SOCKS_H_
