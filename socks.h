@@ -20,5 +20,7 @@
 
 //Inicia o socket
 int InitSock();
+//Obtem o ip
+char *GetIP(char *address);
 
 #endif // _SOCKS_H_

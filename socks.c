@@ -34,4 +34,37 @@ int InitSock(){
     return EXIT_SUCCESS;
 }
 
-char *GetIP(char *){}
+char *GetIP(char *address){
+    in_addr ia;
+    hostent* hbn;
+    unsigned int addr;
+
+    if(isalpha(address[0])){
+        hbn = gethostbyname(address);
+    }
+    else{
+        addr = inet_addr(address);
+        hbn = gethostbyaddr((char *)&addr, 4, AF_INET);
+    }
+    if(hbn==0){
+        fprintf(stderr, "Erro: Falha ao procurar o IP: %d\n", WSAGetLastError());
+        return "";
+    }
+    ia.S_un.S_addr =* (DWORD *)hbn->h_addr_list[0];
+
+    return inet_ntoa(ia);
+}
+
+int ValidateEnvelope(char *h, char *r, char *s, char *ip){
+    if(h="" || r="" || s=""){
+        fprintf(stderr, "Erro: Endere\0207o de email, host ou remente/destinat\0240rio inv\0240lido!\r\n");
+        return EXIT_FAILURE;
+    }
+    *ip = GetIP(h);
+    if(*ip==""){
+        fprintf(stderr, "Erro: \r\n");
+        return EXIT_FAILURE;
+    }
+
+    return EXIT_SUCCESS;
+}

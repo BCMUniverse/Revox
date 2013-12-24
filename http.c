@@ -119,7 +119,7 @@ char *InitHTTP(char *address, int port, char *caminho, char *cookie){
 
     if((he = gethostbyname(address)) == NULL){
         //gethostbyname failed
-        printf("gethostbyname failed : %d" , WSAGetLastError());
+        printf("gethostbyname failed: %d" , WSAGetLastError());
         return NULL;
     }
     //Cast the h_addr_list to in_addr , since h_addr_list also has the ip address in long format only

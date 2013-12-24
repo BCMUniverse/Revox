@@ -24,10 +24,10 @@
 #include <winsock2.h>
 #include "bonus.h"
 
-typedef struct _mail{
+struct _mail{
     char host[STKB], ip[STKB], sender[STKB], recp[STKB], subj[STKB], body[STKB];
     SOCKET mSock;
-}mail;
+};
 
 InitMailGUI(){}
 
