@@ -23,12 +23,63 @@
 #include <windows.h>
 #include <winsock2.h>
 #include "bonus.h"
+#include "socks.h"
 
-struct _mail{
+typedef struct _mail{
     char host[STKB], ip[STKB], sender[STKB], recp[STKB], subj[STKB], body[STKB];
     SOCKET mSock;
-};
+}mail;
 
-InitMailGUI(){}
+int SendMail(mail sml){
+    char tmp[255];
 
-InitMailText(){}
+    if (!ValidateEnvelope(sml.host, sml.recp, sml.sender, &sml.ip)){
+        return 0;
+    }
+    if (sml.sender=="" || sml.recip=="" || sml.body=="" || sml.subject==""){
+        return 0;
+    }
+
+    sml.mSock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+    if (sml.mSock==SOCKET_ERROR){
+        return 0;
+    }
+
+    if (!ConnectTo(25, sml.ip, sml.mSock)){
+        fprintf(stderr, "Erro: Nao \0202 poss\0241vel conectar ao servidor!\n");
+        return 0;
+    }
+    snd("HELO", 1);
+
+    sprintf(tmp, "MAIL FROM: <%s>", sml.sender);
+    snd(tmp, 1);
+    sprintf(tmp, "RCPT TO:<%s>", sml.recp);
+    snd(tmp, 0);
+
+    snd("DATA", 1);
+    sprintf(tmp, "From: %s", sml.sender);
+    snd(tmp, 0);
+    sprintf(tmp, "To: %s", sml.recp);
+    snd(tmp, 0);
+    sprintf(tmp, "Subject: %s", sml.subj);
+    snd(tmp, 0);
+    snd("", 0);
+    snd(sml.body, 0);
+    snd(".", 1);
+
+    snd("NOOP", 1);
+    snd("QUIT", 1);
+    closesocket(sml.mSock);
+
+    return 1;
+}
+
+void InitMailGUI(){}
+
+void InitMailText(char *host, char *others){
+    mail m1;
+    if(InitSock()){
+        SendMail(m1);
+        WSACleanup();
+    }
+}

@@ -47,14 +47,6 @@
 		<Linker>
 			<Add option="-lmsvcrt" />
 		</Linker>
-		<Unit filename=".gitignore" />
-		<Unit filename="ChangeLog.txt" />
-		<Unit filename="LICENSE" />
-		<Unit filename="README.md" />
-		<Unit filename="Revox.cbp" />
-		<Unit filename="Revox.cscope_file_list" />
-		<Unit filename="Revox.depend" />
-		<Unit filename="Revox.layout" />
 		<Unit filename="bonus.c">
 			<Option compilerVar="CC" />
 		</Unit>

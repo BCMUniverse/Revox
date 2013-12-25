@@ -22,5 +22,11 @@
 int InitSock();
 //Obtem o ip
 char *GetIP(char *address);
+//Valida o Envelope
+int ValidateEnvelope(char *h, char *r, char *s, char *ip);
+//faz a cpnexão
+int ConnectTo(int port, char *ip, SOCKET sockt);
+//Envia os pacotes
+int snd(char *txt, int resp, SOCKET sockt);
 
 #endif // _SOCKS_H_
