@@ -39,7 +39,11 @@ typedef enum _uports{
 
 //Analisa URLs
 url UrlParser(char host[]);
-//Conecta as urls nos seus protocolos e recbe a resposta
-char *UrlConnect(char *host);
+/*
+    Conecta as urls nos seus protocolos e recbe a resposta
+    Mode igual a 0 -> Interface Gráfica (GUI)
+    Mode igual a 1 -> Interface em Texo (TUI)
+*/
+char *UrlConnect(char *host, int mode);
 
 #endif // _URLPARSER_H_

@@ -22,7 +22,7 @@
 #include "bonus.h"
 
 void InitText(char *host){
-    InitHTMLText(UrlConnect(host));
+    InitHTMLText(UrlConnect(host, 1));
 }
 void InitFileText(char *path){
     #pragma omp parallel schedule(guided)

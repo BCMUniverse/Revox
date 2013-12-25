@@ -22,6 +22,7 @@
 #include "bonus.h"
 #include "ftp.h"
 #include "http.h"
+#include "mail.h"
 #include "htmlText.h"
 #include "urlparser.h"
 
@@ -150,7 +151,7 @@ url UrlParser(char host[]){
     return addr;
 }
 
-char *UrlConnect(char *host){
+char *UrlConnect(char *host, int mode){
     char *result;
     int i;
     uports up1;
@@ -199,6 +200,14 @@ char *UrlConnect(char *host){
         }
         break;
     case MAILTO:
+        switch(mode){
+        case 0:
+        case 1:
+            InitMailText(url1.host, url1.url_path, url1.port);
+            break;
+        default:
+            fprintf(stderr, "Erro: Valor inexistente!\r\n");
+        }
         result = NULL;
         break;
     case NEWS:

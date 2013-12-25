@@ -19,8 +19,13 @@
 #define _MAIL_H_
 
 typedef struct _mail mail;
+typedef struct _hmail hmail;
 
-InitMailGUI();
-InitMailText();
+//Envia o email pelo smtp
+int SendMail(mail sml);
+//Envia o email por interface gráfica
+void InitMailGUI();
+//Envia o email por texto
+void InitMailText(char *host, char *others, int port);
 
 #endif // _MAIL_H_
