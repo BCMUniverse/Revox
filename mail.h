@@ -19,7 +19,8 @@
 #define _MAIL_H_
 
 typedef struct _mail mail;
-typedef struct _hmail hmail;
+typedef enum _hmail hmail;
+typedef enum _HeadMail HeadMail;
 
 //Envia o email pelo smtp
 int SendMail(mail sml);
