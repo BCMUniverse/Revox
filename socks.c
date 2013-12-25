@@ -15,6 +15,10 @@
 	BCM Revox Engine v0.2
 	BCM Revox Engine -> Ano: 2013|Tipo: WebEngine
 */
+/*
+    Baseado no código do site: http://www.news2news.com/vfp/?example=385&ver=vcpp.
+    Acessado em 25 de Dezembro de 2013
+*/
 #include <omp.h>
 #include <stdio.h>
 #include <stdlib.h>

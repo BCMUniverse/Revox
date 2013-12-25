@@ -12,7 +12,7 @@
 	este programa, se não, escreva para a Fundação do Software Livre(FSF) Inc.,
 	51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 
-	BCM Revox Engine v0.1
+	BCM Revox Engine v0.2
 	BCM Revox Engine -> Ano: 2013|Tipo: WebEngine
 */
 #include "resource.h"
@@ -35,7 +35,7 @@ VS_VERSION_INFO     VERSIONINFO
 {
     BLOCK "StringFileInfo"{
         BLOCK "041604B0"{
-            VALUE "Build",            "14 de Dezembro de 2013\0"
+            VALUE "Build",            "25 de Dezembro de 2013\0"
             VALUE "Comments",         "Gratuito para todos os Usuarios!\0"
             VALUE "CompanyName",      "Cleber Matheus Softwares\0"
             VALUE "Developer",        "Cleber Matheus\0"
@@ -45,7 +45,7 @@ VS_VERSION_INFO     VERSIONINFO
             VALUE "LegalCopyright",   "GNU General Public License Version 3\0"
             VALUE "LegalTrademarks",  "All rights reserved.\0"
             VALUE "OriginalFilename", "Revox.dll\0"
-            VALUE "PrivateBuild",     "a13v14 - Release 0.1\0"
+            VALUE "PrivateBuild",     "Release v0.2\0"
             VALUE "ProductName",      "BCM Revox Engine\0"
             VALUE "ProductVersion",   "0.2\0"
             VALUE "SpecialBuild",     "0.2.0.0\0"

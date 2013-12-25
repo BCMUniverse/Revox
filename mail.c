@@ -15,6 +15,10 @@
 	BCM Revox Engine v0.2
 	BCM Revox Engine -> Ano: 2013|Tipo: WebEngine
 */
+/*
+    Baseado no código do site: http://www.news2news.com/vfp/?example=385&ver=vcpp.
+    Acessado em 25 de Dezembro de 2013
+*/
 #include <omp.h>
 #include <conio.h>
 #include <stdio.h>
@@ -24,6 +28,7 @@
 #include <winsock2.h>
 #include "bonus.h"
 #include "socks.h"
+#include "htmlText.h"
 
 typedef struct _mail{
     char host[STKB], ip[STKB], sender[STKB], recp[64][STKB], subj[STKB], body[STKB];
@@ -44,6 +49,7 @@ typedef struct _hmail{
 }hmail;
 
 char email[][16] = {"@bol.com", "@gmail.com", "@hotmail.com", "@msn.com", "@live.com", "@outlook.com", "@yahoo.com", "@ymail.com", "@rocketmail.com"};
+char mailc[][8] = {"subject", "body", "CC", "BCC"};
 
 int SendMail(mail sml){
     char tmp[255];
@@ -99,6 +105,20 @@ void InitMailText(char *host, char *others, int port){
     int i, j;
     char aux[16];
     hmail hm;
+
+    for(j=0; j<64; j++){
+        for(i=0; host[i]!='\0' || host[i]!=';'; i++){
+            m1.recp[j][i] = host[i];
+        }
+        if(host[i]=='\0'){
+            break;
+        }
+    }
+    m1.vezs = j;
+    RemvSubString(others, "?");
+    for(i=0; i<4; i++){
+        strcpy(aux, strstr(others, mailc[i]));
+    }
 
     printf("Digite o remetente: ");
     fgets(m1.sender, 256, stdin);
