@@ -172,7 +172,7 @@ char *InitHTTP(char *address, int port, char *caminho, char *cookie){
     }
 
     //Receive a reply from the server
-    if((recv_size = recv(sock, server_reply, BUF32KB, 0))<SOCKET_ERROR){
+    if((recv_size = recv(sock, server_reply, BUF32KB, 0))<INVALID_SOCKET){
         puts("recv falhou");
     }
     printf("Resposta recebida\nBytes recebidos: %d\n", recv_size);

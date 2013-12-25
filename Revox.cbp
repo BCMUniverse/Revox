@@ -47,6 +47,14 @@
 		<Linker>
 			<Add option="-lmsvcrt" />
 		</Linker>
+		<Unit filename=".gitignore" />
+		<Unit filename="ChangeLog.txt" />
+		<Unit filename="LICENSE" />
+		<Unit filename="README.md" />
+		<Unit filename="Revox.cbp" />
+		<Unit filename="Revox.cscope_file_list" />
+		<Unit filename="Revox.depend" />
+		<Unit filename="Revox.layout" />
 		<Unit filename="bonus.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -63,6 +71,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="http.h" />
+		<Unit filename="mail.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="mail.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="resource.h" />
 		<Unit filename="revox.h" />
@@ -73,6 +85,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="socket.h" />
+		<Unit filename="socks.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="socks.h" />
 		<Unit filename="telnet.c">
 			<Option compilerVar="CC" />
 		</Unit>

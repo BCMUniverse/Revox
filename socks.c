@@ -62,7 +62,7 @@ int ValidateEnvelope(char *h, char *r, char *s, char *ip){
     }
     *ip = GetIP(h);
     if(*ip==""){
-        fprintf(stderr, "Erro: \r\n");
+        fprintf(stderr, "Erro: Nao pode resolver o nome do host %s para endere\0207o IP!\r\n", h);
         return EXIT_FAILURE;
     }
 
