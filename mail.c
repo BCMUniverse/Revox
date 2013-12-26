@@ -140,7 +140,7 @@ void InitMailText(char *host, char *others, int port){
         }
         else{
             RemvSubString(others, aux);
-            for(j=1; others[j]!='&' || others[j]!='\0'; j++){
+            for(j=1, l=m1.vezs; others[j]!='&' || others[j]!='\0'; j++){
                 switch(headm){
                 case SUBJECT:
                     m1.subj[j] = others[j];
@@ -149,25 +149,24 @@ void InitMailText(char *host, char *others, int port){
                     m1.body[j] = others[j];
                     break;
                 case CC:
-                    l = m1.vezs;
-                    for(k=0; others[k]!='\0' || others[k]!=';' || others[k]!='&'; k++){
+                    for(k=j; others[k]!='\0' || others[k]!=';' || others[k]!='&'; k++){
                         m1.recp[l][k] = others[k];
-                        l++;
                     }
-                    m1.vezs = l;
+                    l++;
+                    j = k;
                     break;
                 case BCC:
-                    l = m1.vezs;
-                    for(k=0; others[k]!='\0' || others[k]!=';' || others[k]!='&'; k++){
+                    for(k=j; others[k]!='\0' || others[k]!=';' || others[k]!='&'; k++){
                         m1.recp[l][k] = others[k];
-                        l++;
                     }
-                    m1.vezs = l;
+                    l++;
+                    j = k;
                     break;
                 default:
                     fprintf(stderr, "Erro: Valor Inexistente!\r\n");
                 }
             }
+            m1.vezs = l;
         }
     }
     printf("Digite o remetente: ");
