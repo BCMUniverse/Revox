@@ -58,6 +58,27 @@ typedef enum _HeadMail{
 char email[][16] = {"@bol.com", "@gmail.com", "@hotmail.com", "@msn.com", "@live.com", "@outlook.com", "@yahoo.com", "@ymail.com", "@rocketmail.com"};
 char mailc[][8] = {"subject", "body", "CC", "BCC"};
 
+//TODO: Terminar esta função e a função InitMailGUI
+BOOL CALLBACK AboutDlgProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam){
+    switch(Message){
+        case WM_INITDIALOG:
+        return TRUE;
+        case WM_COMMAND:
+            switch(LOWORD(wParam)){
+                case IDOK:
+                    EndDialog(hwnd, IDOK);
+                break;
+                case IDCANCEL:
+                    EndDialog(hwnd, IDCANCEL);
+                break;
+            }
+        break;
+        default:
+            return FALSE;
+    }
+    return TRUE;
+}
+
 int SendMail(mail sml){
     char tmp[255];
     int i;
@@ -105,7 +126,126 @@ int SendMail(mail sml){
     return 1;
 }
 
-void InitMailGUI(){}
+void InitMailGUI(char *host, char *others, int port, int nFunster){
+    mail m1;
+    int i, j, k, l;
+    char aux[16];
+    hmail hm;
+    HeadMail headm;
+    HWND hwnd;
+
+    for(j=0; j<64; j++){
+        for(i=0; host[i]!='\0' || host[i]!=';'; i++){
+            m1.recp[j][i] = host[i];
+        }
+        if(host[i]=='\0'){
+            break;
+        }
+    }
+    m1.vezs = j;
+    RemvSubString(others, "?");
+    for(i=0; i<4; i++){
+        headm = i;
+        strcpy(aux, strstr(others, mailc[i]));
+        if(aux==NULL){
+            for(j=0; j<8; j++){
+                strcpy(aux, strstr(others, toupper(mailc[j])));
+                if(aux!=NULL){
+                    break;
+                }
+            }
+            if(aux==NULL){
+                strcpy(aux, strstr(others, strupr(mailc[i])));
+            }
+        }
+        else{
+            RemvSubString(others, aux);
+            for(j=1, l=m1.vezs; others[j]!='&' || others[j]!='\0'; j++){
+                switch(headm){
+                case SUBJECT:
+                    m1.subj[j] = others[j];
+                    break;
+                case BODY:
+                    m1.body[j] = others[j];
+                    break;
+                case CC:
+                    for(k=j; others[k]!='\0' || others[k]!=';' || others[k]!='&'; k++){
+                        m1.recp[l][k] = others[k];
+                    }
+                    l++;
+                    j = k;
+                    break;
+                case BCC:
+                    for(k=j; others[k]!='\0' || others[k]!=';' || others[k]!='&'; k++){
+                        m1.recp[l][k] = others[k];
+                    }
+                    l++;
+                    j = k;
+                    break;
+                default:
+                    fprintf(stderr, "Erro: Valor Inexistente!\r\n");
+                }
+            }
+            m1.vezs = l;
+        }
+    }
+    //
+    for(i=0; i<9; i++){
+        strcpy(aux, strstr(host, email[i]));
+        if(aux==NULL){
+            strcpy(aux, strstr(host, strupr(email[i])));
+        }
+        else{
+            hm = i;
+            switch(hm){
+            case BOL:
+                m1.host = "smtps.bol.com.br";
+                m1.port = 587;
+                break;
+            case GMAIL:
+                m1.host = "smtp.gmail.com";
+                m1.port = 465;
+                break;
+            case HOTMAIL:
+                m1.host = "smtp.live.com";
+                m1.port = 587;
+                break;
+            case MSN:
+                m1.host = "smtp.live.com";
+                m1.port = 587;
+                break;
+            case LIVE:
+                m1.host = "smtp.live.com";
+                m1.port = 587;
+                break;
+            case OUTLOOK:
+                m1.host = "smtp-mail.outlook.com";
+                m1.port = 25;
+                break;
+            case YAHOO:
+                m1.host = "smtp.mail.yahoo.com";
+                m1.port = 465;
+                break;
+            case YMAIL:
+                m1.host = "smtp.mail.yahoo.com";
+                m1.port = 465;
+                break;
+            case ROCKETMAIL:
+                m1.host = "smtp.mail.yahoo.com";
+                m1.port = 465;
+                break;
+            default:
+                fprintf(stderr, "Erro: Valor Inxistente!\r\n");
+                m1.port = port;
+            }
+        }
+    }
+
+    if(InitSock()){
+        SendMail(m1);
+        WSACleanup();
+    }
+}
 
 void InitMailText(char *host, char *others, int port){
     mail m1;

@@ -18,6 +18,11 @@
 #ifndef RESOURCE_H_INCLUDED
 #define RESOURCE_H_INCLUDED
 
+#define IDD_DIALOG      101
+#define IDC_STATIC      102
+#define IDOK            103
+#define IDCTEXT         104
+
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 
