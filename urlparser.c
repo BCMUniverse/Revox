@@ -25,6 +25,7 @@
 #include "mail.h"
 #include "htmlText.h"
 #include "urlparser.h"
+#include "usenet.h"
 
 #pragma omp parallel
 
@@ -151,7 +152,7 @@ url UrlParser(char host[]){
     return addr;
 }
 
-char *UrlConnect(char *host, int mode, HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam){
+char *UrlConnect(char *host, int mode, HINSTANCE hInst, HWND hwnd){
     char *result;
     int i;
     uports up1;
@@ -202,7 +203,7 @@ char *UrlConnect(char *host, int mode, HWND hwnd, UINT Message, WPARAM wParam, L
     case MAILTO:
         switch(mode){
         case 0:
-            InitMailGUI(url1.host, url1.url_path, url1.port, hwnd, Message, wParam, lParam);
+            InitMailGUI(url1.host, url1.url_path, url1.port, hInst, hwnd);
             break;
         case 1:
             InitMailText(url1.host, url1.url_path, url1.port);

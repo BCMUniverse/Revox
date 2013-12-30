@@ -58,15 +58,16 @@ typedef enum _HeadMail{
 
 char email[][16] = {"@bol.com", "@gmail.com", "@hotmail.com", "@msn.com", "@live.com", "@outlook.com", "@yahoo.com", "@ymail.com", "@rocketmail.com"};
 char mailc[][8] = {"subject", "body", "CC", "BCC"};
+char sendr[1025];
 
-BOOL CALLBACK AboutDlgProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam, char *remt){
+BOOL CALLBACK AboutDlgProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam){
     switch(Message){
     case WM_INITDIALOG:
         return TRUE;
     case WM_COMMAND:
         switch(LOWORD(wParam)){
         case IDOK:
-            GetDlgItemText(hwnd, IDCTEXT, (LPSTR)remt, 1025);
+            GetDlgItemText(hwnd, IDCTEXT, (LPSTR)sendr, 1025);
             EndDialog(hwnd, IDOK);
             break;
         }
@@ -124,7 +125,7 @@ int SendMail(mail sml){
     return 1;
 }
 
-void InitMailGUI(char *host, char *others, int port, HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam){
+void InitMailGUI(char *host, char *others, int port, HINSTANCE hInst, HWND hwnd){
     mail m1;
     int i, j, k, l;
     char aux[16], remt[1025];
@@ -186,8 +187,8 @@ void InitMailGUI(char *host, char *others, int port, HWND hwnd, UINT Message, WP
             m1.vezs = l;
         }
     }
-    AboutDlgProc(hwnd, Message, wParam, lParam, remt);
-    strcpy(m1.sender, remt);
+    DialogBox(hInst, MAKEINTRESOURCE(IDD_DIALOG), hwnd, AboutDlgProc);
+    strcpy(m1.sender, sendr);
     for(i=0; i<9; i++){
         strcpy(aux, strstr(host, email[i]));
         if(aux==NULL){

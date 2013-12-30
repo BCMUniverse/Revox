@@ -15,36 +15,14 @@
 	BCM Revox Engine v0.2
 	BCM Revox Engine -> Ano: 2013|Tipo: WebEngine
 */
-#ifndef _URLPARSER_H_
-#define _URLPARSER_H_
+#include <omp.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <winsock2.h>
+#include "bonus.h"
+#include "socks.h"
 
-typedef struct _url{
-    int port;
-    char host[1025], url_path[1025], prtcol[16];
-}url;
+#pragma omp parallel
 
-typedef enum _uports{
-    HTTP,
-    HTTPS,
-    FTP,    //Revisar na versão v0.3
-    TELNET, //Revisar na versão v0.4
-    GOPHER, //EmBreve
-    FILES,  //Revisar na versão v0.3 ou superior
-    MAILTO,
-    NEWS,
-    NNTP,
-    WAIS,
-    PROSPERO
-}uports;
-
-//Analisa URLs
-url UrlParser(char host[]);
-/*
-    Conecta as urls nos seus protocolos e recbe a resposta
-    Mode igual a 0 -> Interface Gráfica (GUI)
-    Mode igual a 1 -> Interface em Texo (TUI)
-    hwnd e hInst são paramentos da interface gráfica do windows
-*/
-char *UrlConnect(char *host, int mode, HINSTANCE hInst, HWND hwnd);
-
-#endif // _URLPARSER_H_
+char *
