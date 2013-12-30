@@ -26,12 +26,12 @@ typedef struct _url{
 typedef enum _uports{
     HTTP,
     HTTPS,
-    FTP,    //Revisar na versão v0.3
-    TELNET, //Revisar na versão v0.4
-    GOPHER, //EmBreve
-    FILES,  //Revisar na versão v0.3 ou superior
+    FTP,    //TODO: Revisar na versão v0.3
+    TELNET, //TODO: Revisar na versão v0.4
+    GOPHER, //TODO: Implantar na versão v0.5
+    FILES,  //TODO: Revisar na versão v0.3
     MAILTO,
-    NEWS,
+    NEWS,   //TODO: Implantar na versão v0.4
     NNTP,
     WAIS,
     PROSPERO

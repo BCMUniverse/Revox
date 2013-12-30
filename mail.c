@@ -125,7 +125,7 @@ int SendMail(mail sml){
     return 1;
 }
 
-void InitMailGUI(char *host, char *others, int port, HINSTANCE hInst, HWND hwnd){
+char *InitMailGUI(char *host, char *others, int port, HINSTANCE hInst, HWND hwnd){
     mail m1;
     int i, j, k, l;
     char aux[16], remt[1025];
@@ -244,9 +244,10 @@ void InitMailGUI(char *host, char *others, int port, HINSTANCE hInst, HWND hwnd)
         SendMail(m1);
         WSACleanup();
     }
+    return "Email enviado com sucesso!\r\n";
 }
 
-void InitMailText(char *host, char *others, int port){
+char *InitMailText(char *host, char *others, int port){
     mail m1;
     int i, j, k, l;
     char aux[16];
@@ -365,4 +366,5 @@ void InitMailText(char *host, char *others, int port){
         SendMail(m1);
         WSACleanup();
     }
+    return "Email enviado com sucesso!\r\n";
 }

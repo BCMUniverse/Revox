@@ -89,6 +89,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="urlparser.h" />
+		<Unit filename="usenet.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="usenet.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

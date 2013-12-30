@@ -25,4 +25,5 @@
 
 #pragma omp parallel
 
-char *
+char *InitUsenetGUI(){}
+char *InitUsenetText(){}

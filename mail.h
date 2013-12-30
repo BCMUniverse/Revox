@@ -25,9 +25,9 @@ typedef enum _HeadMail HeadMail;
 //Envia o email pelo smtp
 int SendMail(mail sml);
 //Envia o email por interface gráfica
-void InitMailGUI(char *host, char *others, int port, HINSTANCE hInst, HWND hwnd);
+char *InitMailGUI(char *host, char *others, int port, HINSTANCE hInst, HWND hwnd);
 //Envia o email por texto
-void InitMailText(char *host, char *others, int port);
+char *InitMailText(char *host, char *others, int port);
 //Exibe a janela Remetente
 BOOL CALLBACK AboutDlgProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
 

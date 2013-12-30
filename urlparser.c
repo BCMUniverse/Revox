@@ -203,15 +203,15 @@ char *UrlConnect(char *host, int mode, HINSTANCE hInst, HWND hwnd){
     case MAILTO:
         switch(mode){
         case 0:
-            InitMailGUI(url1.host, url1.url_path, url1.port, hInst, hwnd);
+            result = InitMailGUI(url1.host, url1.url_path, url1.port, hInst, hwnd);
             break;
         case 1:
-            InitMailText(url1.host, url1.url_path, url1.port);
+            result = InitMailText(url1.host, url1.url_path, url1.port);
             break;
         default:
             fprintf(stderr, "Erro: Valor inexistente!\r\n");
+            result = NULL;
         }
-        result = NULL;
         break;
     case NEWS:
         result = NULL;

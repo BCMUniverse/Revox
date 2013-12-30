@@ -18,6 +18,9 @@
 #ifndef _USENET_H_
 #define _USENET_H_
 
-
+//EmBreve
+//TODO: Implantar na versão v0.4
+char *InitUsenetGUI();
+char *InitUsenetText();
 
 #endif // _USENET_H_
