@@ -5,7 +5,7 @@
 		+ Adicionado Analisador HTML com Interface Gráfica
 		+ Adicionado Analisador JavaScript
 		+ Adicionado Analisador CSS
-		+ Adicionado os seguintes protocolos: HTTPS, File, MailTo, News, NNTP, WAIS e Prospero.
+		+ Adicionado os seguintes protocolos: HTTPS, File, MailTo, NNTP, WAIS e Prospero.
 		- Analisador HTML - Gumbo removido
 	v0.1 - Alpha 1
 		+ Adicionado o Analisador HTML - Gumbo
