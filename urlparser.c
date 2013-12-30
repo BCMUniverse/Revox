@@ -151,7 +151,7 @@ url UrlParser(char host[]){
     return addr;
 }
 
-char *UrlConnect(char *host, int mode){
+char *UrlConnect(char *host, int mode, HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam){
     char *result;
     int i;
     uports up1;
@@ -202,6 +202,8 @@ char *UrlConnect(char *host, int mode){
     case MAILTO:
         switch(mode){
         case 0:
+            InitMailGUI(url1.host, url1.url_path, url1.port, hwnd, Message, wParam, lParam);
+            break;
         case 1:
             InitMailText(url1.host, url1.url_path, url1.port);
             break;

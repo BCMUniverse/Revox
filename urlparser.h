@@ -43,7 +43,8 @@ url UrlParser(char host[]);
     Conecta as urls nos seus protocolos e recbe a resposta
     Mode igual a 0 -> Interface Gráfica (GUI)
     Mode igual a 1 -> Interface em Texo (TUI)
+    hwnd, Message, wParam e lParam são paramentos da interface gráfica do windows
 */
-char *UrlConnect(char *host, int mode);
+char *UrlConnect(char *host, int mode, HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
 
 #endif // _URLPARSER_H_

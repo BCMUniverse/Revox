@@ -29,6 +29,7 @@
 #include "bonus.h"
 #include "socks.h"
 #include "htmlText.h"
+#include "resource.h"
 
 typedef struct _mail{
     char host[STKB], ip[STKB], sender[STKB], recp[64][STKB], subj[STKB], body[STKB];
@@ -58,23 +59,20 @@ typedef enum _HeadMail{
 char email[][16] = {"@bol.com", "@gmail.com", "@hotmail.com", "@msn.com", "@live.com", "@outlook.com", "@yahoo.com", "@ymail.com", "@rocketmail.com"};
 char mailc[][8] = {"subject", "body", "CC", "BCC"};
 
-//TODO: Terminar esta função e a função InitMailGUI
-BOOL CALLBACK AboutDlgProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam){
+BOOL CALLBACK AboutDlgProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam, char *remt){
     switch(Message){
-        case WM_INITDIALOG:
+    case WM_INITDIALOG:
         return TRUE;
-        case WM_COMMAND:
-            switch(LOWORD(wParam)){
-                case IDOK:
-                    EndDialog(hwnd, IDOK);
-                break;
-                case IDCANCEL:
-                    EndDialog(hwnd, IDCANCEL);
-                break;
-            }
+    case WM_COMMAND:
+        switch(LOWORD(wParam)){
+        case IDOK:
+            GetDlgItemText(hwnd, IDCTEXT, (LPSTR)remt, 1025);
+            EndDialog(hwnd, IDOK);
+            break;
+        }
         break;
-        default:
-            return FALSE;
+    default:
+        return FALSE;
     }
     return TRUE;
 }
@@ -126,13 +124,12 @@ int SendMail(mail sml){
     return 1;
 }
 
-void InitMailGUI(char *host, char *others, int port, int nFunster){
+void InitMailGUI(char *host, char *others, int port, HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam){
     mail m1;
     int i, j, k, l;
-    char aux[16];
+    char aux[16], remt[1025];
     hmail hm;
     HeadMail headm;
-    HWND hwnd;
 
     for(j=0; j<64; j++){
         for(i=0; host[i]!='\0' || host[i]!=';'; i++){
@@ -189,7 +186,8 @@ void InitMailGUI(char *host, char *others, int port, int nFunster){
             m1.vezs = l;
         }
     }
-    //
+    AboutDlgProc(hwnd, Message, wParam, lParam, remt);
+    strcpy(m1.sender, remt);
     for(i=0; i<9; i++){
         strcpy(aux, strstr(host, email[i]));
         if(aux==NULL){
