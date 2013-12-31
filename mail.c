@@ -98,28 +98,28 @@ int SendMail(mail sml){
         fprintf(stderr, "Erro: Nao \0202 poss\0241vel conectar ao servidor!\n");
         return 0;
     }
-    snd("HELO", 1);
+    snd("HELO", 1, sml.mSock);
 
     sprintf(tmp, "MAIL FROM: <%s>", sml.sender);
-    snd(tmp, 1);
+    snd(tmp, 1, sml.mSock);
     for(i=0; i<sml.vezs; i++){
         sprintf(tmp, "RCPT TO:<%s>", sml.recp[i]);
-        snd(tmp, 0);
+        snd(tmp, 0, sml.mSock);
     }
 
-    snd("DATA", 1);
+    snd("DATA", 1, sml.mSock);
     sprintf(tmp, "From: %s", sml.sender);
-    snd(tmp, 0);
+    snd(tmp, 0, sml.mSock);
     sprintf(tmp, "To: %s", sml.recp);
-    snd(tmp, 0);
+    snd(tmp, 0, sml.mSock);
     sprintf(tmp, "Subject: %s", sml.subj);
-    snd(tmp, 0);
-    snd("", 0);
-    snd(sml.body, 0);
-    snd(".", 1);
+    snd(tmp, 0, sml.mSock);
+    snd("", 0, sml.mSock);
+    snd(sml.body, 0, sml.mSock);
+    snd(".", 1, sml.mSock);
 
-    snd("NOOP", 1);
-    snd("QUIT", 1);
+    snd("NOOP", 1, sml.mSock);
+    snd("QUIT", 1, sml.mSock);
     closesocket(sml.mSock);
 
     return 1;

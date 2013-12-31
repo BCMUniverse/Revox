@@ -28,6 +28,8 @@ int InitSock();
 char *GetIP(char *address);
 //Valida o Envelope
 int ValidateEnvelope(char *h, char *r, char *s, char *ip);
+//Versão modificada do ValidateEnvelope que devolve o ip convertido e pede somente o endereço
+char *ValidEnvelope2(char *h);
 //faz a cpnexão
 int ConnectTo(int port, char *ip, SOCKET sockt);
 //Envia os pacotes

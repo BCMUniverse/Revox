@@ -72,6 +72,19 @@ int ValidateEnvelope(char *h, char *r, char *s, char *ip){
 
     return 1;
 }
+char *ValidEnvelope2(char *h){
+    char ip[TKB];
+    if(h=""){
+        fprintf(stderr, "Erro: Endere\0207o inv\0240lido!\r\n");
+        return NULL;
+    }
+    ip = GetIP(h);
+    if(ip==""){
+        fprintf(stderr, "Erro: Nao pode resolver o nome do host %s para endere\0207o IP!\r\n", h);
+        return NULL;
+    }
+    return ip;
+}
 
 int ConnectTo(int port, char *ip, SOCKET sockt){
     const u_short SMTP_PORT = port;

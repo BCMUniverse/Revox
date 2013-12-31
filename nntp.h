@@ -19,6 +19,6 @@
 #define _NNTP_H_
 
 void InitNNTPGUI();
-char *InitNNTPText(char address[], int port, char path[]);
+void InitNNTPText(char address[], int port, char path[]);
 
 #endif // _NNTP_H_
