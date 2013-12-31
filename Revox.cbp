@@ -68,6 +68,10 @@
 		</Unit>
 		<Unit filename="mail.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="nntp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="nntp.h" />
 		<Unit filename="resource.h" />
 		<Unit filename="revox.h" />
 		<Unit filename="revox.rc">

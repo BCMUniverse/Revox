@@ -111,13 +111,9 @@ int snd(char *txt, int resp, SOCKET sockt){
     while(1){
         char rcv[1024], outp[255] = "";
         HANDLE hEvent = WSACreateEvent();
-
         WSAEventSelect(sockt, hEvent, FD_READ);
-
-        DWORD nWait=WSAWaitForMultipleEvents(1, &hEvent, 0, 1000, 0);
-
+        DWORD nWait = WSAWaitForMultipleEvents(1, &hEvent, 0, 1000, 0);
         WSACloseEvent(hEvent);
-
         if (nWait!=0){
             return 0;
         }
