@@ -38,3 +38,14 @@ Pronto. A Biblioteca estará na pasta bin/Release ou bin/Dbg, compilada junto com
 
 - Para instalar o Revox no projeto, deve-se copiar o arquivo dll para a pasta de arquivos compilados do projeto ou a pasta bin do Revox na pasta bin do seu projeto.
 - Para utilizar o Revox no seu projeto deve seguir os passos que estão na pasta docs.
+
+##Copyright
+
+Copyright 2013, 2014 Cleber Matheus
+GNU General Public License v3.0
+
+Contato: clebermatheus@outlook.com
+
+###Autor(es)
+
+Cleber Matheus

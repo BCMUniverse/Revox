@@ -1,4 +1,4 @@
-/*
+﻿/*
 	Este arquivo faz parte do BCM Revox Engine;
 
 	BCM Revox Engine é Software Livre; você pode redistribui-lo e/ou
@@ -47,7 +47,7 @@ VS_VERSION_INFO     VERSIONINFO
     BLOCK "StringFileInfo"{
         BLOCK "041604B0"{
             VALUE "Build",            "25 de Dezembro de 2013\0"
-            VALUE "Comments",         "Gratuito para todos os Usuarios!\0"
+            VALUE "Comments",         "Livre para todos os Usuarios!\0"
             VALUE "CompanyName",      "Cleber Matheus Softwares\0"
             VALUE "Developer",        "Cleber Matheus\0"
             VALUE "FileDescription",  "WebEngine\0"
@@ -61,7 +61,7 @@ VS_VERSION_INFO     VERSIONINFO
             VALUE "ProductVersion",   "0.2\0"
             VALUE "SpecialBuild",     "0.2.0.0\0"
             VALUE "Support",          "http://clebermatheus.users.sf.net/support\0"
-            VALUE "Users",            "Todos os Usuarios!\0"
+            VALUE "Users",            "Livre para todos os Usuarios!\0"
         }
     }
     BLOCK "VarFileInfo"{
