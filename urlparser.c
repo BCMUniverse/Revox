@@ -24,6 +24,8 @@
 #include "http.h"
 #include "mail.h"
 #include "htmlText.h"
+#include "nntp.h"
+#include "prospero.h"
 #include "urlparser.h"
 #include "usenet.h"
 
@@ -219,10 +221,10 @@ char *UrlConnect(char *host, int mode, HINSTANCE hInst, HWND hwnd){
     case NNTP:
         switch(mode){
         case 0:
-            InitNNTPGUI(url1.host, url1.url_path, url1.port, hInst, hwnd);
+            InitNNTPGUI(url1.host, url1.port, url1.url_path, hInst, hwnd);
             break;
         case 1:
-            InitNNTPText(url1.host, url1.url_path, url1.port);
+            InitNNTPText(url1.host, url1.port, url1.url_path);
             break;
         default:
             fprintf(stderr, "Erro: Valor inexistente!\r\n");
@@ -233,7 +235,7 @@ char *UrlConnect(char *host, int mode, HINSTANCE hInst, HWND hwnd){
         result = NULL;
         break;
     case PROSPERO:
-        result = NULL;
+        result = InitProspero(url1.host, url1.port, url1.url_path, mode, hInst, hwnd);
         break;
     }
 
