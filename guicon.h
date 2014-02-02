@@ -1,4 +1,4 @@
-/*
+﻿/*
 	Este arquivo faz parte do BCM Revox Engine;
 
 	BCM Revox Engine é Software Livre; você pode redistribui-lo e/ou
@@ -12,27 +12,18 @@
 	este programa, se não, escreva para a Fundação do Software Livre(FSF) Inc.,
 	51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 
-	BCM Revox Engine v0.1
+	BCM Revox Engine v0.2
 	BCM Revox Engine -> Ano: 2013|Tipo: WebEngine
 */
-#ifndef RESOURCE_H_INCLUDED
-#define RESOURCE_H_INCLUDED
+/*
+    Baseado no código do site: http://dslweb.nwnexus.com/~ast/dload/guicon.htm.
+    Acessado em 2 de Fevereiro de 2014
+*/
+#ifndef __GUICON_H__
+#define __GUICON_H__
 
-#define IDD_DIALOG      101
-#define IDC_STATIC      102
-#define IDOK            103
-#define IDCTEXT         104
-#define IDD_DIALOG2     105
-
-#ifdef APSTUDIO_INVOKED
-#ifndef APSTUDIO_READONLY_SYMBOLS
-
-#define _APS_NO_MFC					130
-#define _APS_NEXT_RESOURCE_VALUE	129
-#define _APS_NEXT_COMMAND_VALUE		32771
-#define _APS_NEXT_CONTROL_VALUE		1000
-#define _APS_NEXT_SYMED_VALUE		110
-#endif
+#ifdef _DEBUG
+void RedirectIOToConsole();
 #endif
 
-#endif // RESOURCE_H_INCLUDED
+#endif /* End of File */

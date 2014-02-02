@@ -31,6 +31,16 @@ BEGIN
                     IDC_STATIC,16,18,144,33
 END
 
+IDD_DIALOG2 DIALOG DISCARDABLE 0, 0, 250, 50
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Console"
+FONT 10, "Segoe UI"
+BEGIN
+    DEFPUSHBUTTON   "&OK",IDOK,174,18,50,14
+    EDITTEXT        IDCTEXT, 30, 160, 100, 16
+                    IDC_STATIC,16,18,144,33
+END
+
 VS_VERSION_INFO     VERSIONINFO
     FILEVERSION     0, 2, 0, 0
     PRODUCTVERSION  0, 2, 0, 0
@@ -46,7 +56,7 @@ VS_VERSION_INFO     VERSIONINFO
 {
     BLOCK "StringFileInfo"{
         BLOCK "041604B0"{
-            VALUE "Build",            "25 de Dezembro de 2013\0"
+            VALUE "Build",            "2 de Fevereiro de 2014\0"
             VALUE "Comments",         "Livre para todos os Usuarios!\0"
             VALUE "CompanyName",      "Cleber Matheus Softwares\0"
             VALUE "Developer",        "Cleber Matheus\0"

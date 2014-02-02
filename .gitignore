@@ -20,6 +20,3 @@
 # Bin e Obj
 /bin
 /obj
-
-# Inicializador do git
-init.bat

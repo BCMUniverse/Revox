@@ -217,6 +217,16 @@ char *UrlConnect(char *host, int mode, HINSTANCE hInst, HWND hwnd){
         result = NULL;
         break;
     case NNTP:
+        switch(mode){
+        case 0:
+            InitNNTPGUI(url1.host, url1.url_path, url1.port, hInst, hwnd);
+            break;
+        case 1:
+            InitNNTPText(url1.host, url1.url_path, url1.port);
+            break;
+        default:
+            fprintf(stderr, "Erro: Valor inexistente!\r\n");
+        }
         result = NULL;
         break;
     case WAIS:

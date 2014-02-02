@@ -18,7 +18,8 @@
 #ifndef _NNTP_H_
 #define _NNTP_H_
 
-void InitNNTPGUI();
+void InitNNTPGUI(char address[], int port, char path[], HINSTANCE hInst, HWND hwnd);
 void InitNNTPText(char address[], int port, char path[]);
+BOOL CALLBACK AboutDlgProc2(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
 
 #endif // _NNTP_H_
