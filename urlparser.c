@@ -28,6 +28,7 @@
 #include "prospero.h"
 #include "urlparser.h"
 #include "usenet.h"
+#include "wais.h"
 
 #pragma omp parallel
 
@@ -232,7 +233,7 @@ char *UrlConnect(char *host, int mode, HINSTANCE hInst, HWND hwnd){
         result = NULL;
         break;
     case WAIS:
-        result = NULL;
+        result = InitWAIS(url1.host, url1.port, url1.url_path, mode, hInst, hwnd);
         break;
     case PROSPERO:
         result = InitProspero(url1.host, url1.port, url1.url_path, mode, hInst, hwnd);
