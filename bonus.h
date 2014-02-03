@@ -32,9 +32,9 @@
 /*
     Versão do Revox em diferentes formatos
 */
-#define VERSION v0.2
-#define RVXVERSION Revox/0.2
-#define RVXVERSIONFULL BCM Revox Engine/0.2
+#define VERSION "v0.2"
+#define RVXVERSION "Revox/0.2"
+#define RVXVERSIONFULL "BCM Revox Engine/0.2"
 
 //Pilha
 typedef struct _pilha{

@@ -23,11 +23,11 @@
 #include "bonus.h"
 #include "socks.h"
 #include "guicon.h"
+#include "resource.h"
 
 #pragma omp parallel
-#ifndef _USE_OLD_OSTREAMS
-using namespace std;
-#endif
+
+char sendr[1025];
 
 BOOL CALLBACK AboutDlgProc2(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam){
     switch(Message){
@@ -35,9 +35,9 @@ BOOL CALLBACK AboutDlgProc2(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lPara
         return TRUE;
     case WM_COMMAND:
         switch(LOWORD(wParam)){
-        case IDOK:
+        case IDOK2:
             GetDlgItemText(hwnd, IDCTEXT, (LPSTR)sendr, 1025);
-            EndDialog(hwnd, IDOK);
+            EndDialog(hwnd, IDOK2);
             #ifdef _DEBUG
             RedirectIOToConsole();
             #endif
@@ -53,11 +53,12 @@ BOOL CALLBACK AboutDlgProc2(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lPara
 
 void InitNNTPGUI(char address[], int port, char path[], HINSTANCE hInst, HWND hwnd){
     char ip[TKB], comnd[(4*STKB)], ng[STKB], tmp[VKB];
-    int cs = 0;
+    int cs = 0, i;
     SOCKET sock;
 
     InitSock();
-    if (!(ip = ValidEnvelope2(address)){
+    strcpy(ip, ValidEnvelope2(address));
+    if(!ip){
         return;
     }
     sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
@@ -78,7 +79,7 @@ void InitNNTPGUI(char address[], int port, char path[], HINSTANCE hInst, HWND hw
         fprintf(stdout, "Revox %s NNTP-> ", VERSION);
         fgets(comnd, 4096, stdin);
         sprintf(tmp, "%s", comnd);
-        if(strstr(cmnd, "QUIT")!=NULL){
+        if(strstr(comnd, "QUIT")!=NULL){
             cs = closesocket(sock);
         }
     }while(cs!=0);
@@ -87,11 +88,12 @@ void InitNNTPGUI(char address[], int port, char path[], HINSTANCE hInst, HWND hw
 
 void InitNNTPText(char address[], int port, char path[]){
     char ip[TKB], comnd[(4*STKB)], ng[STKB], tmp[VKB];
-    int cs = 0;
+    int cs = 0, i;
     SOCKET sock;
 
     InitSock();
-    if (!(ip = ValidEnvelope2(address)){
+    strcpy(ip, ValidEnvelope2(address));
+    if(!ip){
         return;
     }
     sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
@@ -111,7 +113,7 @@ void InitNNTPText(char address[], int port, char path[]){
         printf("Revox %s NNTP-> ", VERSION);
         fgets(comnd, 4096, stdin);
         sprintf(tmp, "%s", comnd);
-        if(strstr(cmnd, "QUIT")!=NULL){
+        if(strstr(comnd, "QUIT")!=NULL){
             cs = closesocket(sock);
         }
     }while(cs!=0);

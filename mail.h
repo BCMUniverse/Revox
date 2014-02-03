@@ -18,6 +18,8 @@
 #ifndef _MAIL_H_
 #define _MAIL_H_
 
+#include <windows.h>
+
 typedef struct _mail mail;
 typedef enum _hmail hmail;
 typedef enum _HeadMail HeadMail;

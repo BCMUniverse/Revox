@@ -25,6 +25,7 @@
 #include <string.h>
 #include <winsock2.h>
 #include <sys/types.h>
+#include "bonus.h"
 
 #pragma omp parallel
 
@@ -43,8 +44,8 @@ int InitSock(){
 }
 
 char *GetIP(char *address){
-    in_addr ia;
-    hostent* hbn;
+    struct in_addr ia;
+    struct hostent* hbn;
     unsigned int addr;
 
     if(isalpha(address[0])){
@@ -64,7 +65,7 @@ char *GetIP(char *address){
 }
 
 int ValidateEnvelope(char *h, char *r, char *s, char *ip){
-    if(h="" || r="" || s=""){
+    if(h=="" || r=="" || s==""){
         fprintf(stderr, "Erro: Endere\0207o de email, host ou remente/destinat\0240rio inv\0240lido!\r\n");
         return 0;
     }
@@ -82,7 +83,7 @@ char *ValidEnvelope2(char *h){
         fprintf(stderr, "Erro: Endere\0207o inv\0240lido!\r\n");
         return NULL;
     }
-    ip = GetIP(h);
+    strcpy(ip, GetIP(h));
     if(ip==""){
         fprintf(stderr, "Erro: Nao pode resolver o nome do host %s para endere\0207o IP!\r\n", h);
         return NULL;
@@ -92,7 +93,7 @@ char *ValidEnvelope2(char *h){
 
 int ConnectTo(int port, char *ip, SOCKET sockt){
     const u_short SMTP_PORT = port;
-    sockaddr_in sa;
+    struct sockaddr_in sa;
 
     sa.sin_family = AF_INET;
     sa.sin_addr.S_un.S_addr = inet_addr(ip);

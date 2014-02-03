@@ -31,6 +31,7 @@
 #include "wais.h"
 
 #pragma omp parallel
+#define BUFKB 2048
 
 char ports[][16] = {"http", "https", "ftp", "telnet", "gopher", "file", "mailto", "news", "nntp", "wais", "prospero"};
 char bars[][4] = {":", "//", "/", "?"};
@@ -156,9 +157,10 @@ url UrlParser(char host[]){
 }
 
 char *UrlConnect(char *host, int mode, HINSTANCE hInst, HWND hwnd){
-    char *result;
+    char *result, msg[2*BUFKB];
     int i;
     uports up1;
+    FILE *input;
     url url1 = UrlParser(host);
     for(i=0; i<11; i++){
         if(strcmp(url1.prtcol, ports[i])==0){
@@ -177,7 +179,6 @@ char *UrlConnect(char *host, int mode, HINSTANCE hInst, HWND hwnd){
         InitFTP(url1.host);
         break;
     case TELNET:
-        char msg[2*BUFKB];
         strcpy(msg, "telnet ");
         strcat(msg, url1.host);
         strcat(msg, " ");
@@ -189,7 +190,6 @@ char *UrlConnect(char *host, int mode, HINSTANCE hInst, HWND hwnd){
         result = NULL;
         break;
     case FILES:
-        FILE *input;
         if(url1.host==NULL){
             RemvSubString(url1.url_path, "/");
             if((input = fopen(url1.url_path, "r"))==NULL){

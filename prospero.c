@@ -30,16 +30,17 @@ char *InitProspero(char address[], int port, char path[], int mode, HINSTANCE hI
     SOCKET sock;
 
     InitSock();
-    if (!(ip = ValidEnvelope2(address)){
-        return;
+    strcpy(ip, ValidEnvelope2(address));
+    if (!ip){
+        return "\0";
     }
     sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     if (sock==SOCKET_ERROR){
-        return;
+        return "\0";
     }
     if (!ConnectTo(port, ip, sock)){
         fprintf(stderr, "Erro: Nao \0202 poss\0241vel conectar ao servidor!\r\n");
-        return;
+        return "\0";
     }
     WSACleanup();
 

@@ -23,6 +23,7 @@
 #define IDOK            103
 #define IDCTEXT         104
 #define IDD_DIALOG2     105
+#define IDOK2           106
 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS

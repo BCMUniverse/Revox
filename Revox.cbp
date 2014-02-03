@@ -55,6 +55,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="ftp.h" />
+		<Unit filename="guicon.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="guicon.h" />
 		<Unit filename="htmlText.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -72,6 +76,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="nntp.h" />
+		<Unit filename="prospero.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="prospero.h" />
 		<Unit filename="resource.h" />
 		<Unit filename="revox.h" />
 		<Unit filename="revox.rc">
@@ -97,6 +105,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="usenet.h" />
+		<Unit filename="wais.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="wais.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />

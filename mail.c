@@ -85,7 +85,7 @@ int SendMail(mail sml){
     if (!ValidateEnvelope(sml.host, sml.recp, sml.sender, &sml.ip)){
         return 0;
     }
-    if (sml.sender=="" || sml.recip=="" || sml.body=="" || sml.subject==""){
+    if (sml.sender=="" || sml.recp=="" || sml.body=="" || sml.subj==""){
         return 0;
     }
 
@@ -198,39 +198,39 @@ char *InitMailGUI(char *host, char *others, int port, HINSTANCE hInst, HWND hwnd
             hm = i;
             switch(hm){
             case BOL:
-                m1.host = "smtps.bol.com.br";
+                strcpy(m1.host, "smtps.bol.com.br");
                 m1.port = 587;
                 break;
             case GMAIL:
-                m1.host = "smtp.gmail.com";
+                strcpy(m1.host, "smtp.gmail.com");
                 m1.port = 465;
                 break;
             case HOTMAIL:
-                m1.host = "smtp.live.com";
+                strcpy(m1.host, "smtp.live.com");
                 m1.port = 587;
                 break;
             case MSN:
-                m1.host = "smtp.live.com";
+                strcpy(m1.host, "smtp.live.com");
                 m1.port = 587;
                 break;
             case LIVE:
-                m1.host = "smtp.live.com";
+                strcpy(m1.host, "smtp.live.com");
                 m1.port = 587;
                 break;
             case OUTLOOK:
-                m1.host = "smtp-mail.outlook.com";
+                strcpy(m1.host, "smtp-mail.outlook.com");
                 m1.port = 25;
                 break;
             case YAHOO:
-                m1.host = "smtp.mail.yahoo.com";
+                strcpy(m1.host, "smtp.mail.yahoo.com");
                 m1.port = 465;
                 break;
             case YMAIL:
-                m1.host = "smtp.mail.yahoo.com";
+                strcpy(m1.host, "smtp.mail.yahoo.com");
                 m1.port = 465;
                 break;
             case ROCKETMAIL:
-                m1.host = "smtp.mail.yahoo.com";
+                strcpy(m1.host, "smtp.mail.yahoo.com");
                 m1.port = 465;
                 break;
             default:
@@ -320,39 +320,39 @@ char *InitMailText(char *host, char *others, int port){
             hm = i;
             switch(hm){
             case BOL:
-                m1.host = "smtps.bol.com.br";
+                strcpy(m1.host, "smtps.bol.com.br");
                 m1.port = 587;
                 break;
             case GMAIL:
-                m1.host = "smtp.gmail.com";
+                strcpy(m1.host, "smtp.gmail.com");
                 m1.port = 465;
                 break;
             case HOTMAIL:
-                m1.host = "smtp.live.com";
+                strcpy(m1.host, "smtp.live.com");
                 m1.port = 587;
                 break;
             case MSN:
-                m1.host = "smtp.live.com";
+                strcpy(m1.host, "smtp.live.com");
                 m1.port = 587;
                 break;
             case LIVE:
-                m1.host = "smtp.live.com";
+                strcpy(m1.host, "smtp.live.com");
                 m1.port = 587;
                 break;
             case OUTLOOK:
-                m1.host = "smtp-mail.outlook.com";
+                strcpy(m1.host, "smtp-mail.outlook.com");
                 m1.port = 25;
                 break;
             case YAHOO:
-                m1.host = "smtp.mail.yahoo.com";
+                strcpy(m1.host, "smtp.mail.yahoo.com");
                 m1.port = 465;
                 break;
             case YMAIL:
-                m1.host = "smtp.mail.yahoo.com";
+                strcpy(m1.host, "smtp.mail.yahoo.com");
                 m1.port = 465;
                 break;
             case ROCKETMAIL:
-                m1.host = "smtp.mail.yahoo.com";
+                strcpy(m1.host, "smtp.mail.yahoo.com");
                 m1.port = 465;
                 break;
             default:
