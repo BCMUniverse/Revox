@@ -46,6 +46,7 @@
 		</Build>
 		<Linker>
 			<Add option="-lmsvcrt" />
+			<Add option="-fopenmp" />
 		</Linker>
 		<Unit filename="bonus.c">
 			<Option compilerVar="CC" />

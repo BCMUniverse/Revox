@@ -21,6 +21,7 @@
 #include <string.h>
 #include <ctype.h>
 #include "bonus.h"
+#include "html.h"
 #include "htmlText.h"
 
 #define KB 1024
