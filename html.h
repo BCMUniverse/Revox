@@ -33,7 +33,8 @@ typedef struct _htp{
 } htp;
 
 typedef struct{
-    htp *start;
+    htp *start, *end1;
+    int tam;
 } Fhtp;
 
 typedef enum _Elemts{
@@ -65,5 +66,19 @@ typedef enum _Elemts{
 
 //Cria um token
 Fhtp *aloca();
+/*
+    Insere os dados no token numa lista ligada
+    Mode igual a 0 -> Cria o Token numa lista vazia
+    Mode igual a 1 -> Cria o Token numa lista que tenha conteúdo
+    Mode igual a 2 -> Cria o Token antes de um elemento numa lista
+*/
+void CreateToken(Fhtp *f, stag[], etag[], cont[], ClassName[], id[], style[], attrs[], int mode, int pos);
+void CreateTokenEmpty(Fhtp *f, stag[], etag[], cont[], ClassName[], id[], style[], attrs[]);
+void CreateTokenNormal(Fhtp *f, stag[], etag[], cont[], ClassName[], id[], style[], attrs[]);
+void CreateTokenInCurse(Fhtp *f, stag[], etag[], cont[], ClassName[], id[], style[], attrs[], int pos);
+//Remove Token
+void RemvToken(Fhtp *f, int pos);
+//Destroi o Token
+void Delete(Fhtp *f);
 
 #endif // _HTML_H_

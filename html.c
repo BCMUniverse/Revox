@@ -26,10 +26,150 @@ char elemts[][16] = {"!doctype", "!--", "![CDATA[", "html", "head", "base", "lin
 
 Fhtp *aloca(){
     Fhtp *f = malloc(sizeof(Fhtp));
-    f->start = malloc(sizeof(htp));
-    f->start->ant = NULL;
-    f->start->prox = NULL;
+    f->start = NULL;
+    f->end1 = NULL;
+    tam = 0;
     return f;
 }
 
-void CreateToken(Fhtp *f, stag[], etag[], ClassName[], id[], style[], attrs[]){}
+void CreateToken(Fhtp *f, stag[], etag[], cont[], ClassName[], id[], style[], attrs[], int mode, int pos){
+    switch(mode){
+    case 0:
+        CreateTokenEmpty(f, stag, etag, cont, ClassName, id, style, attrs);
+        break;
+    case 1:
+        CreateTokenNormal(f, stag, etag, cont, ClassName, id, style, attrs);
+        break;
+    case 2:
+        CreateTokenInCurse(f, stag, etag, cont, ClassName, id, style, attrs, pos);
+        break;
+    default:
+        fprintf(stderr, "Erro: Modo inexistente!\r\n");
+    }
+}
+
+void CreateTokenEmpty(Fhtp *f, stag[], etag[], cont[], ClassName[], id[], style[], attrs[]){
+    htp *f2;
+
+    if((f2 = malloc(sizeof(htp)) == NULL)){
+        return;
+    }
+    //Copia os dados
+    strcpy(f2->stag, stag);
+    strcpy(f2->etag, etag);
+    strcpy(f2->cont, cont);
+    strcpy(f2->ClassName, ClassName);
+    strcpy(f2->id, id);
+    strcpy(f2->style, style);
+    strcpy(f2->attrs, attrs);
+    //Atualiza a Lista
+    f2->ant = f->start;
+    f2->prox = f->end1;
+    f->start = f2;
+    f->end1 = f2;
+    f->tam++;
+}
+
+void CreateTokenNormal(Fhtp *f, stag[], etag[], cont[], ClassName[], id[], style[], attrs[]){
+    htp *f2;
+
+    if((f2 = malloc(sizeof(htp)) == NULL)){
+        return;
+    }
+    //Copia os dados
+    strcpy(f2->stag, stag);
+    strcpy(f2->etag, etag);
+    strcpy(f2->cont, cont);
+    strcpy(f2->ClassName, ClassName);
+    strcpy(f2->id, id);
+    strcpy(f2->style, style);
+    strcpy(f2->attrs, attrs);
+    //Atualiza a Lista
+    f2->ant = f->end1;
+    f2->prox = NULL;
+    f->end1->prox = f2;
+    f->end1 = f2;
+    f->tam++;
+}
+
+void CreateTokenInCurse(Fhtp *f, stag[], etag[], cont[], ClassName[], id[], style[], attrs[], int pos){
+    htp *f2, *atual;
+    int i;
+
+    if((f2 = malloc(sizeof(htp)) == NULL)){
+        return;
+    }
+    //Copia os dados
+    strcpy(f2->stag, stag);
+    strcpy(f2->etag, etag);
+    strcpy(f2->cont, cont);
+    strcpy(f2->ClassName, ClassName);
+    strcpy(f2->id, id);
+    strcpy(f2->style, style);
+    strcpy(f2->attrs, attrs);
+    //Atualiza a Lista
+    atual = f->start;
+    #pragma omp parallel for
+    for(i=1; i<pos; i++){
+        atual = atual->prox;
+    }
+    f2->ant = atual->ant;
+    f2->prox = atual;
+    if(atual->ant == NULL){
+        f->start = f2;
+    }
+    else{
+        atual->ant->prox = f2;
+    }
+    atual->ant = f2;
+    f->tam++;
+}
+
+void RemvToken(Fhtp *f, int pos){
+    int i;
+    htp *remvElm, *atual;
+
+    if(f->tam == 0){
+        return;
+    }
+    if(pos == 1){
+        remvElm = f->start;
+        f->start = f->start->prox;
+        if(f->start == NULL){
+            f->end1 = NULL;
+        }
+        else{
+            f->start->ant = NULL;
+        }
+    }
+    else if(pos == f->tam){
+        remvElm = f->end1;
+        f->end1->ant->prox = NULL;
+        f->end1 = f->end1->ant;
+    }
+    else{
+        atual = f->start;
+        #pragma omp parallel for
+        for(i=1; i<pos; i++){
+            atual = atual->prox;
+        }
+        remvElm = atual;
+        atual->ant->prox = atual->prox;
+        atual->prox->ant = atual->ant;
+    }
+    free(remvElm->attrs);
+    free(remvElm->ClassName);
+    free(remvElm->cont);
+    free(remvElm->etag);
+    free(remvElm->id);
+    free(remvElm->stag);
+    free(remvElm->style);
+    free(remvElm);
+    f->tam--;
+}
+
+void Delete(Fhtp *f){
+    while(f->tam>0){
+        RemvToken(f, 1);
+    }
+}
