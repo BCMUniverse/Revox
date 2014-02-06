@@ -24,8 +24,7 @@
 #include "html.h"
 #include "htmlText.h"
 
-#define KB 1024
-#pragma omp parallel
+#pragma omp
 
 char *CreateTag(char *inicio, char *tag, char *fim){
     char *element = (char *)malloc(sizeof(char)*(32));
@@ -65,7 +64,6 @@ char *SubString2(char *str, char *inicio, char *fim){
     m = (char *)malloc(sizeof(char)*(strlen(str)));
     n = (char *)malloc(sizeof(char)*(strlen(str)));
 
-    #pragma omp parallel for schedule(guided)
     for(i=0; result[i]!='\0'; i++){
         result[i] = '\0';
     }
@@ -129,6 +127,8 @@ char *InitHTMLText(char *content){
     char cesp[][4] = {"<\0", ">\0", "</\0", "/>\0"};
     char *conthtml, aux[16], aux2[16], *intag, *intag2, html[BUF32KB], *head, *body;
     phtml cont;
+    htr htr1;
+    Fhtp *fhtp1 = aloca();
 
     //Alocando Memória
     conthtml = (char *)malloc(sizeof(char)*(strlen(content)));
@@ -137,8 +137,6 @@ char *InitHTMLText(char *content){
     head = (char *)malloc(sizeof(char)*(strlen(content)));
     body = (char *)malloc(sizeof(char)*(strlen(content)));
 
-    #pragma omp parallel for schedule(guided)
-    #pragma omp parallel private(conthtml, intag, intag2, head, body)
     for(i=0; i<5; i++){
         if(i==0 || i==3){
             // Tag <html e <body

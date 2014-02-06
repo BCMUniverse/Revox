@@ -20,4 +20,14 @@
 #include <stdlib.h>
 #include "html.h"
 
-#pragma omp parallel
+#pragma omp
+
+char doctp[16] = {"!doctype"};
+char extra[][16] = {"!--", "![CDATA["};
+char elemts[][16] = {"html", "head", "base", "link", "meta", "noscript", "script", "style", "template", "title", "body", "a", "abbr", "address", "area", "article", "aside", "audio", "b", "p"};
+
+Fhtp *aloca(){
+    Fhtp *f = malloc(sizeof(Fhtp));
+    f->start = NULL;
+    return f;
+}

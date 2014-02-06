@@ -21,11 +21,12 @@
 #include "revox.h"
 #include "bonus.h"
 
+#pragma omp
+
 void InitText(char *host){
     InitHTMLText(UrlConnect(host, 1, NULL, NULL));
 }
 void InitFileText(char *path){
-    #pragma omp parallel schedule(guided)
     char content[BUF32KB];
     FILE *input;
     int i;

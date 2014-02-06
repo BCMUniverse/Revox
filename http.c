@@ -24,10 +24,10 @@
 #include <unistd.h>
 #include <sys/time.h>
 #include "bonus.h"
+#include "http.h"
 #include "socks.h"
 
-#define BUFKB 2048
-#pragma omp parallel
+#pragma omp
 
 unsigned long mode = 1;
 char server_reply[BUF32KB];
@@ -44,7 +44,6 @@ int recvtimeout(int s, int timeout){
     for(i=0; i<BUFKB; i++){
         temp[i] = '\0';
     }
-    #pragma omp parallel while schedule(guided)
     while(1){
         gettimeofday(&now, NULL);
         timediff = (now.tv_sec - beg.tv_sec)+1e-6*(now.tv_usec - beg.tv_usec);
@@ -85,7 +84,7 @@ char *InitHTTP(char *address, int port, char *caminho, char *cookie){
 	if((sock = socket(AF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET) {
 		printf("Nao pode criar o socket: %d\n" , WSAGetLastError());
 	}
-    printf("\fInicializado\nBCM Revox Engine v0.2 - Cliente HTTP\nAcessando %s...\n", address);
+    printf("Inicializado\nBCM Revox Engine v0.2 - Cliente HTTP\nAcessando %s...\n", address);
 
     //Estruturas do IPv4
     struct sockaddr_in {

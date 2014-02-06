@@ -23,7 +23,7 @@
 #include "bonus.h"
 #include "socks.h"
 
-#pragma omp parallel
+#pragma omp
 
 char *InitWAIS(char address[], int port, char path[], int mode, HINSTANCE hInst, HWND hwnd){
     char result[BUF32KB], ip[TKB];

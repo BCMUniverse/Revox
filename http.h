@@ -18,6 +18,8 @@
 #ifndef HTTP_H_INCLUDED
 #define HTTP_H_INCLUDED
 
+#define BUFKB 2048
+
 int recvtimeout(int s, int timeout);
 char *InitHTTP(char *address, int port, char *caminho, char *cookie);
 

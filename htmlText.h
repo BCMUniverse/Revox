@@ -20,6 +20,8 @@
 
 #include "bonus.h"
 
+#define KB 1024
+
 //HTML Analisado
 typedef struct _phtml{
     char title[2049], content[BUF32KB];

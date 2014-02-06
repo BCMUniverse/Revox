@@ -18,23 +18,21 @@
 #ifndef _HTML_H_
 #define _HTML_H_
 
-#include "bonus.h"
+#include "http.h"
 
-char doctp[16] = {"!doctype"};
-char extra[][16] = {"!--", "![CDATA["};
-char elemts[][16] = {"html", "head", "base", "link", "meta", "noscript", "script", "style", "template", "title", "body", "a", "abbr", "address", "area", "article", "aside", "audio", "b", "p"};
+extern char doctp[16], extra[][16], elemts[][16];
 
 typedef struct _htr{
     char title[4096], *content, *favicon;
 } htr;
 
 typedef struct _htp{
-    char *stag, cont[5*BUFKB], *etag;
+    char stag[16], cont[5*BUFKB], etag[16];
     struct _htp *ant, **prox;
 } htp;
 
 typedef struct{
-    htp start;
+    htp *start;
 } Fhtp;
 
 typedef enum _Elemts{
@@ -60,5 +58,8 @@ typedef enum _Elemts{
     P,
     UNKNOWN
 } Elemts;
+
+//Cria um token
+Fhtp *aloca();
 
 #endif // _HTML_H_

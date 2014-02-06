@@ -30,8 +30,7 @@
 #include "usenet.h"
 #include "wais.h"
 
-#pragma omp parallel
-#define BUFKB 2048
+#pragma omp
 
 char ports[][16] = {"http", "https", "ftp", "telnet", "gopher", "file", "mailto", "news", "nntp", "wais", "prospero"};
 char bars[][4] = {":", "//", "/", "?"};
@@ -44,7 +43,6 @@ url UrlParser(char host[]){
 
     limpaVetor(addr.host, 1025);
     limpaVetor(addr.url_path, 1025);
-    #pragma omp parallel for schedule(guided)
     for(i=0; i<11; i++){
         strcpy(aux, CreateTag(ports[i], bars[0], bars[1]));
         strcpy(aux2, strstr(host, aux));

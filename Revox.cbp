@@ -44,9 +44,11 @@
 				</Linker>
 			</Target>
 		</Build>
+		<Compiler>
+			<Add option="-fopenmp" />
+		</Compiler>
 		<Linker>
 			<Add option="-lmsvcrt" />
-			<Add option="-fopenmp" />
 		</Linker>
 		<Unit filename="bonus.c">
 			<Option compilerVar="CC" />
@@ -60,6 +62,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="guicon.h" />
+		<Unit filename="html.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="html.h" />
 		<Unit filename="htmlText.c">
 			<Option compilerVar="CC" />
 		</Unit>

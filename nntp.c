@@ -25,7 +25,7 @@
 #include "guicon.h"
 #include "resource.h"
 
-#pragma omp parallel
+#pragma omp
 
 char sendr[1025];
 

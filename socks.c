@@ -27,7 +27,7 @@
 #include <sys/types.h>
 #include "bonus.h"
 
-#pragma omp parallel
+#pragma omp
 
 int InitSock(){
     WSADATA wsa;

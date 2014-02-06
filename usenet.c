@@ -23,7 +23,7 @@
 #include "bonus.h"
 #include "socks.h"
 
-#pragma omp parallel
+#pragma omp
 
 char *InitUsenetGUI(){}
 char *InitUsenetText(){}
