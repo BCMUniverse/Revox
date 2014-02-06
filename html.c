@@ -22,12 +22,14 @@
 
 #pragma omp
 
-char doctp[16] = {"!doctype"};
-char extra[][16] = {"!--", "![CDATA["};
-char elemts[][16] = {"html", "head", "base", "link", "meta", "noscript", "script", "style", "template", "title", "body", "a", "abbr", "address", "area", "article", "aside", "audio", "b", "p"};
+char elemts[][16] = {"!doctype", "!--", "![CDATA[", "html", "head", "base", "link", "meta", "noscript", "script", "style", "template", "title", "body", "a", "abbr", "address", "area", "article", "aside", "audio", "b", "p"};
 
 Fhtp *aloca(){
     Fhtp *f = malloc(sizeof(Fhtp));
-    f->start = NULL;
+    f->start = malloc(sizeof(htp));
+    f->start->ant = NULL;
+    f->start->prox = NULL;
     return f;
 }
+
+void CreateToken(Fhtp *f, stag[], etag[], ClassName[], id[], style[], attrs[]){}

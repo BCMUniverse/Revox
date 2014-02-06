@@ -20,14 +20,15 @@
 
 #include "http.h"
 
-extern char doctp[16], extra[][16], elemts[][16];
+extern char elemts[][16];
 
 typedef struct _htr{
     char title[4096], *content, *favicon;
 } htr;
 
+//Nesta etrutura é um token onde se obten os atributos, id e class do elemento, que será usado para cria o layout da página
 typedef struct _htp{
-    char stag[16], cont[5*BUFKB], etag[16];
+    char stag[16], cont[5*BUFKB], etag[16], id[1024], ClassName[1024], style[4096], attrs[4096];
     struct _htp *ant, **prox;
 } htp;
 
@@ -36,6 +37,9 @@ typedef struct{
 } Fhtp;
 
 typedef enum _Elemts{
+    DOCTYPE,
+    COMMENTS,
+    CDATA,
     HTML,
     HEAD,
     BASE,
