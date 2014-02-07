@@ -18,7 +18,7 @@
 	<unistd.h>
 	"bonus.h"
 
-1391651419 source:e:\bcmuniverse\revox\v1.x\htmltext.c
+1391807986 source:e:\bcmuniverse\revox\v1.x\htmltext.c
 	<omp.h>
 	<stdio.h>
 	<stdlib.h>
@@ -186,10 +186,11 @@
 	"bonus.h"
 	"socks.h"
 
-1391651368 source:e:\bcmuniverse\revox\v1.x\html.c
+1391715401 source:e:\bcmuniverse\revox\v1.x\html.c
 	<omp.h>
 	<stdio.h>
 	<stdlib.h>
+	<string.h>
 	"html.h"
 
 1391715314 e:\bcmuniverse\revox\v1.x\html.h
