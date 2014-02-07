@@ -122,10 +122,10 @@ void RemvSubString(char *str, char *substr){
 }
 
 char *InitHTMLText(char *content){
-    int i, j, k, l, inicio, fim;
+    int a, b, c, i, j, k, l, inicio, fim;
     char tags[][16] = {"html\0", "head\0", "title\0", "body\0", "p\0"};
     char cesp[][4] = {"<\0", ">\0", "</\0", "/>\0"};
-    char *conthtml, aux[16], aux2[16], *intag, *intag2, html[BUF32KB], *head, *body;
+    char *conthtml, aux[16], aux2[16], *intag, *intag2, html[BUF32KB], *head, *body, header[8192], *buffer;
     phtml cont;
     htr htr1;
     Fhtp *fhtp1 = aloca();
@@ -136,6 +136,14 @@ char *InitHTMLText(char *content){
     intag2 = (char *)malloc(sizeof(char)*(strlen(content)));
     head = (char *)malloc(sizeof(char)*(strlen(content)));
     body = (char *)malloc(sizeof(char)*(strlen(content)));
+
+    strncpy(header, content, (a = strstr(content, "\r\n\r\n")));
+    b = strstr(header, "Content-Length: ");
+    strcpy(aux, b, strstr(header, "\r\n"));
+    c = atoi(aux);
+    for(i=0; i<16; i++){
+        aux[i] = "\0";
+    }
 
     for(i=0; i<5; i++){
         if(i==0 || i==3){

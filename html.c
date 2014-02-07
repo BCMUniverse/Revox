@@ -18,6 +18,7 @@
 #include <omp.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "html.h"
 
 #pragma omp
@@ -28,11 +29,11 @@ Fhtp *aloca(){
     Fhtp *f = malloc(sizeof(Fhtp));
     f->start = NULL;
     f->end1 = NULL;
-    tam = 0;
+    f->tam = 0;
     return f;
 }
 
-void CreateToken(Fhtp *f, stag[], etag[], cont[], ClassName[], id[], style[], attrs[], int mode, int pos){
+void CreateToken(Fhtp *f, char stag[], char etag[], char cont[], char ClassName[], char id[], char style[], char attrs[], int mode, int pos){
     switch(mode){
     case 0:
         CreateTokenEmpty(f, stag, etag, cont, ClassName, id, style, attrs);
@@ -48,7 +49,7 @@ void CreateToken(Fhtp *f, stag[], etag[], cont[], ClassName[], id[], style[], at
     }
 }
 
-void CreateTokenEmpty(Fhtp *f, stag[], etag[], cont[], ClassName[], id[], style[], attrs[]){
+void CreateTokenEmpty(Fhtp *f, char stag[], char etag[], char cont[], char ClassName[], char id[], char style[], char attrs[]){
     htp *f2;
 
     if((f2 = malloc(sizeof(htp)) == NULL)){
@@ -70,7 +71,7 @@ void CreateTokenEmpty(Fhtp *f, stag[], etag[], cont[], ClassName[], id[], style[
     f->tam++;
 }
 
-void CreateTokenNormal(Fhtp *f, stag[], etag[], cont[], ClassName[], id[], style[], attrs[]){
+void CreateTokenNormal(Fhtp *f, char stag[], char etag[], char cont[], char ClassName[], char id[], char style[], char attrs[]){
     htp *f2;
 
     if((f2 = malloc(sizeof(htp)) == NULL)){
@@ -92,7 +93,7 @@ void CreateTokenNormal(Fhtp *f, stag[], etag[], cont[], ClassName[], id[], style
     f->tam++;
 }
 
-void CreateTokenInCurse(Fhtp *f, stag[], etag[], cont[], ClassName[], id[], style[], attrs[], int pos){
+void CreateTokenInCurse(Fhtp *f, char stag[], char etag[], char cont[], char ClassName[], char id[], char style[], char attrs[], int pos){
     htp *f2, *atual;
     int i;
 
@@ -109,7 +110,6 @@ void CreateTokenInCurse(Fhtp *f, stag[], etag[], cont[], ClassName[], id[], styl
     strcpy(f2->attrs, attrs);
     //Atualiza a Lista
     atual = f->start;
-    #pragma omp parallel for
     for(i=1; i<pos; i++){
         atual = atual->prox;
     }
@@ -149,7 +149,6 @@ void RemvToken(Fhtp *f, int pos){
     }
     else{
         atual = f->start;
-        #pragma omp parallel for
         for(i=1; i<pos; i++){
             atual = atual->prox;
         }

@@ -29,10 +29,10 @@ typedef struct _htr{
 //Nesta etrutura é um token onde se obten os atributos, id e class do elemento, que será usado para cria o layout da página
 typedef struct _htp{
     char stag[16], cont[5*BUFKB], etag[16], id[1024], ClassName[1024], style[4096], attrs[4096];
-    struct _htp *ant, **prox;
+    struct _htp *ant, *prox;
 } htp;
 
-typedef struct{
+typedef struct _Fhtp{
     htp *start, *end1;
     int tam;
 } Fhtp;
@@ -72,10 +72,10 @@ Fhtp *aloca();
     Mode igual a 1 -> Cria o Token numa lista que tenha conteúdo
     Mode igual a 2 -> Cria o Token antes de um elemento numa lista
 */
-void CreateToken(Fhtp *f, stag[], etag[], cont[], ClassName[], id[], style[], attrs[], int mode, int pos);
-void CreateTokenEmpty(Fhtp *f, stag[], etag[], cont[], ClassName[], id[], style[], attrs[]);
-void CreateTokenNormal(Fhtp *f, stag[], etag[], cont[], ClassName[], id[], style[], attrs[]);
-void CreateTokenInCurse(Fhtp *f, stag[], etag[], cont[], ClassName[], id[], style[], attrs[], int pos);
+void CreateToken(Fhtp *f, char stag[], char etag[], char cont[], char ClassName[], char id[], char style[], char attrs[], int mode, int pos);
+void CreateTokenEmpty(Fhtp *f, char stag[], char etag[], char cont[], char ClassName[], char id[], char style[], char attrs[]);
+void CreateTokenNormal(Fhtp *f, char stag[], char etag[], char cont[], char ClassName[], char id[], char style[], char attrs[]);
+void CreateTokenInCurse(Fhtp *f, char stag[], char etag[], char cont[], char ClassName[], char id[], char style[], char attrs[], int pos);
 //Remove Token
 void RemvToken(Fhtp *f, int pos);
 //Destroi o Token
