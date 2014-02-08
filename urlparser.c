@@ -26,6 +26,7 @@
 #include "htmlText.h"
 #include "nntp.h"
 #include "prospero.h"
+#include "typeparser.h"
 #include "urlparser.h"
 #include "usenet.h"
 #include "wais.h"
@@ -154,11 +155,12 @@ url UrlParser(char host[]){
     return addr;
 }
 
-char *UrlConnect(char *host, int mode, HINSTANCE hInst, HWND hwnd){
-    char *result, msg[2*BUFKB];
+Type UrlConnect(char *host, int mode, HINSTANCE hInst, HWND hwnd){
+    char msg[2*BUFKB];
     int i;
     uports up1;
     FILE *input;
+    Type tp1;
     url url1 = UrlParser(host);
     for(i=0; i<11; i++){
         if(strcmp(url1.prtcol, ports[i])==0){
@@ -168,10 +170,12 @@ char *UrlConnect(char *host, int mode, HINSTANCE hInst, HWND hwnd){
     }
     switch(up1){
     case HTTP:
-        result = InitHTTP(url1.host, url1.port, url1.url_path, NULL);
+        tp1.content = InitHTTP(url1.host, url1.port, url1.url_path, NULL);
+        tp1.url = CreateTag(url1.prtcol, CreateTag(bars[0], bars[1], "\0"), url1.host);
         break;
     case HTTPS:
-        result = InitHTTP(url1.host, url1.port, url1.url_path, NULL);
+        tp1.content = InitHTTP(url1.host, url1.port, url1.url_path, NULL);
+        tp1.url = CreateTag(url1.prtcol, CreateTag(bars[0], bars[1], "\0"), url1.host);
         break;
     case FTP:
         InitFTP(url1.host);
@@ -182,40 +186,46 @@ char *UrlConnect(char *host, int mode, HINSTANCE hInst, HWND hwnd){
         strcat(msg, " ");
         strcat(msg, url1.port);
         system(msg);
-        result = NULL;
+        tp1.content = NULL;
+        tp1.url = CreateTag(url1.prtcol, bars[0], url1.host);
         break;
     case GOPHER:
-        result = NULL;
+        tp1.content = NULL;
         break;
     case FILES:
         if(url1.host==NULL){
             RemvSubString(url1.url_path, "/");
             if((input = fopen(url1.url_path, "r"))==NULL){
                 fprintf(stderr, "Erro: Arquivo Invalido!\n");
-                return NULL;
+                tp1.content = NULL;
+                tp1.url = url1.url_path;
+                return tp1;
             }
-            fgets(result, BUF32KB, input);
+            tp1.url = url1.url_path;
+            fgets(tp1.content, BUF32KB, input);
             fclose(input);
         }
         else{
-            result = InitHTTP(url1.host, url1.port, url1.url_path, NULL);
+            tp1.content = InitHTTP(url1.host, url1.port, url1.url_path, NULL);
+            tp1.url = CreateTag(url1.prtcol, CreateTag(bars[0], bars[1], "\0"), url1.host);
         }
         break;
     case MAILTO:
         switch(mode){
         case 0:
-            result = InitMailGUI(url1.host, url1.url_path, url1.port, hInst, hwnd);
+            tp1.content = InitMailGUI(url1.host, url1.url_path, url1.port, hInst, hwnd);
             break;
         case 1:
-            result = InitMailText(url1.host, url1.url_path, url1.port);
+            tp1.content = InitMailText(url1.host, url1.url_path, url1.port);
             break;
         default:
             fprintf(stderr, "Erro: Valor inexistente!\r\n");
-            result = NULL;
+            tp1.content = NULL;
         }
+        tp1.url = NULL;
         break;
     case NEWS:
-        result = NULL;
+        tp1.content = NULL;
         break;
     case NNTP:
         switch(mode){
@@ -228,15 +238,17 @@ char *UrlConnect(char *host, int mode, HINSTANCE hInst, HWND hwnd){
         default:
             fprintf(stderr, "Erro: Valor inexistente!\r\n");
         }
-        result = NULL;
+        tp1.content = NULL;
         break;
     case WAIS:
-        result = InitWAIS(url1.host, url1.port, url1.url_path, mode, hInst, hwnd);
+        tp1.content = InitWAIS(url1.host, url1.port, url1.url_path, mode, hInst, hwnd);
+        tp1.url = CreateTag(url1.prtcol, bars[0], url1.host);
         break;
     case PROSPERO:
-        result = InitProspero(url1.host, url1.port, url1.url_path, mode, hInst, hwnd);
+        tp1.content = InitProspero(url1.host, url1.port, url1.url_path, mode, hInst, hwnd);
+        tp1.url = CreateTag(url1.prtcol, bars[0], url1.host);
         break;
     }
 
-    return result;
+    return tp1;
 }

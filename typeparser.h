@@ -12,46 +12,16 @@
 	este programa, se não, escreva para a Fundação do Software Livre(FSF) Inc.,
 	51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 
-	BCM Revox Engine v0.1
-	BCM Revox Engine -> Ano: 2013|Tipo: WebEngine
+	BCM Revox Engine v0.2
+	BCM Revox Engine -> Ano: 2014|Tipo: WebEngine
 */
-#ifndef __MAIN_H__
-#define __MAIN_H__
+#ifndef _TYPEPARSER_H_
+#define _TYPEPARSER_H_
 
-#include <windows.h>
+typedef struct _Type{
+    char *url, *content;
+} Type;
 
-#ifdef BUILD_DLL
-    #define EXPORT __declspec(dllexport)
-#else
-    #define EXPORT __declspec(dllimport)
-#endif
+char *InitTypeParser(Type tp1);
 
-#define CALDLL __cdecl
-
-#ifdef __cplusplus
-extern "C"{
-#endif
-
-#include "bonus.h"
-//Biblioteca HTML e HTMLText
-#include "html.h"
-#include "htmlText.h"
-//Biblioteca HTTP
-#include "http.h"
-//Biblioteca Socket
-#include "socket.h"
-//Biblioteca TypeParser
-#include "typeparser.h"
-//Biblioteca UrlParser
-#include "urlparser.h"
-
-//Inicia o Modo Texto
-void InitText(char *host);
-//Ler um arquivo HTML
-void InitFileText(char *path);
-
-#ifdef __cplusplus
-}
-#endif
-
-#endif // __MAIN_H__
+#endif // _TYPEPARSER_H_

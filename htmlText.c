@@ -23,6 +23,7 @@
 #include "bonus.h"
 #include "html.h"
 #include "htmlText.h"
+#include "typeparser.h"
 
 #pragma omp
 
@@ -125,7 +126,7 @@ char *InitHTMLText(char *content){
     int c, i, j, k, l, inicio, mode = 0, fim;
     char tags[][16] = {"html\0", "head\0", "title\0", "body\0", "p\0"};
     char cesp[][4] = {"<\0", ">\0", "</\0", "/>\0"};
-    char *conthtml, aux[16], aux2[16], *intag, *intag2, html[BUF32KB], *head, *body, header[8192], *buffer, *a, *b, BufTag[2048];
+    char *conthtml, aux[16], aux2[16], *intag, *intag2, html[BUF32KB], *head, *body, header[8192], *buffer, *a, *b, BufTag[2048], BufAttr[2048];
     phtml cont;
     htr htr1;
     Elemts elts;
@@ -159,7 +160,7 @@ char *InitHTMLText(char *content){
         if(buffer[i]=='<' && buffer[i+1]=='!'){
             #pragma omp parallel for private(j)
             for(j=0; j<3; j++){
-                strcpy(aux, CreateTag(elemts[j], "\0", "\0"));
+                strcpy(aux, elemts[j]);
                 intag = strstr(buffer, aux);
                 if(intag==NULL){
                     intag = strstr(buffer, strupr(aux));
@@ -175,18 +176,20 @@ char *InitHTMLText(char *content){
                 elts = (j+200);
                 switch(elts){
                 case DOCTYPE:
-                    for(i=i; buffer[i]!='>';i++){
-                        BufTag[i] = buffer[i];
+                    for(i=i, k=0; buffer[i]!='>';i++, k++){
+                        BufTag[k] = buffer[i];
                     }
-                    BufTag[i++] = '>';
+                    BufTag[k++] = '>';
                     CreateToken(fhtp1, BufTag, "\0", "\0", "\0", "\0", "\0", "\0", elts, mode, 0);
+                    mode = 1;
                     break;
                 case COMMENTS:
-                    for(i=i; buffer[i]!='>';i++){
-                        BufTag[i] = buffer[i];
+                    for(i=i, k=0; buffer[i]!='>';i++, k++){
+                        BufTag[k] = buffer[i];
                     }
-                    BufTag[i++] = '>';
+                    BufTag[k++] = '>';
                     CreateToken(fhtp1, BufTag, "\0", "\0", "\0", "\0", "\0", "\0", elts, mode, 0);
+                    mode = 1;
                     break;
                 case CDATA:
                     //Em Breve
@@ -194,7 +197,38 @@ char *InitHTMLText(char *content){
                 default:
                     fprintf(stderr, "Erro: Valor Invalido!\r\n");
                 }
-                mode++;
+            }
+        }
+        if(buffer[i]=='<' && buffer[i+1]!='!'){
+            #pragma omp parallel for schedule(guided)
+            for(j=3; j<25; j++){
+                strcpy(aux, elemts[j]);
+                intag = strstr(buffer, aux);
+                if(intag==NULL){
+                    intag = strstr(buffer, strupr(aux));
+                    if(intag==NULL){
+                        for(k=(i+1); buffer[k]!='>' || buffer[k]!=' '; k++){
+                            if(buffer[k]>64 && buffer[k]<91){
+                                buffer[k] += 32;
+                            }
+                        }
+                        intag = strstr(buffer, strlwr(aux));
+                    }
+                }
+                elts = (j-3);
+                switch(elts){
+                case HTML:
+                    for(i=i, k=0; buffer[i]!='>';i++, k++){
+                        BufTag[k] = buffer[i];
+                        BufAttr[k] = buffer[i];
+                    }
+                    BufTag[k++] = '>';
+                    mode = 1;
+                    break;
+                default:
+                    fprintf(stderr, "Erro: Valor Invalido!\r\n");
+                }
+                mode = 1;
             }
         }
     }

@@ -18,6 +18,9 @@
 #ifndef _URLPARSER_H_
 #define _URLPARSER_H_
 
+#include <windows.h>
+#include "typeparser.h"
+
 typedef struct _url{
     int port;
     char host[1025], url_path[1025], prtcol[16];
@@ -45,6 +48,6 @@ url UrlParser(char host[]);
     Mode igual a 1 -> Interface em Texo (TUI)
     hwnd e hInst são paramentos da interface gráfica do windows
 */
-char *UrlConnect(char *host, int mode, HINSTANCE hInst, HWND hwnd);
+Type UrlConnect(char *host, int mode, HINSTANCE hInst, HWND hwnd);
 
 #endif // _URLPARSER_H_

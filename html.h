@@ -20,7 +20,7 @@
 
 #include "http.h"
 
-extern char elemts[][16], extras[][16];
+extern char elemts[][16];
 
 typedef struct _htr{
     char title[4096], *content, *favicon;
