@@ -20,7 +20,7 @@
 
 #include "http.h"
 
-extern char elemts[][16];
+extern char elemts[][16], extras[][16];
 
 typedef struct _htr{
     char title[4096], *content, *favicon;
@@ -30,6 +30,7 @@ typedef struct _htr{
 typedef struct _htp{
     char stag[16], cont[5*BUFKB], etag[16], id[1024], ClassName[1024], style[4096], attrs[4096];
     struct _htp *ant, *prox;
+    Elemts TagID;
 } htp;
 
 typedef struct _Fhtp{
@@ -37,10 +38,13 @@ typedef struct _Fhtp{
     int tam;
 } Fhtp;
 
-typedef enum _Elemts{
+typedef enum _Extras{
     DOCTYPE,
     COMMENTS,
-    CDATA,
+    CDATA
+} Extras;
+
+typedef enum _Elemts{
     HTML,
     HEAD,
     BASE,
@@ -72,10 +76,10 @@ Fhtp *aloca();
     Mode igual a 1 -> Cria o Token numa lista que tenha conteúdo
     Mode igual a 2 -> Cria o Token antes de um elemento numa lista
 */
-void CreateToken(Fhtp *f, char stag[], char etag[], char cont[], char ClassName[], char id[], char style[], char attrs[], int mode, int pos);
-void CreateTokenEmpty(Fhtp *f, char stag[], char etag[], char cont[], char ClassName[], char id[], char style[], char attrs[]);
-void CreateTokenNormal(Fhtp *f, char stag[], char etag[], char cont[], char ClassName[], char id[], char style[], char attrs[]);
-void CreateTokenInCurse(Fhtp *f, char stag[], char etag[], char cont[], char ClassName[], char id[], char style[], char attrs[], int pos);
+void CreateToken(Fhtp *f, char stag[], char etag[], char cont[], char ClassName[], char id[], char style[], char attrs[], Elemts tagid, int mode, int pos);
+void CreateTokenEmpty(Fhtp *f, char stag[], char etag[], char cont[], char ClassName[], char id[], char style[], char attrs[], Elemts tagid);
+void CreateTokenNormal(Fhtp *f, char stag[], char etag[], char cont[], char ClassName[], char id[], char style[], char attrs[], Elemts tagid);
+void CreateTokenInCurse(Fhtp *f, char stag[], char etag[], char cont[], char ClassName[], char id[], char style[], char attrs[], Elemts tagid, int pos);
 //Remove Token
 void RemvToken(Fhtp *f, int pos);
 //Destroi o Token

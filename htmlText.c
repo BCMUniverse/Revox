@@ -12,8 +12,8 @@
 	este programa, se não, escreva para a Fundação do Software Livre(FSF) Inc.,
 	51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 
-	BCM Revox Engine v0.1
-	BCM Revox Engine -> Ano: 2013|Tipo: WebEngine
+	BCM Revox Engine v0.2
+	BCM Revox Engine -> Ano: 2014|Tipo: WebEngine
 */
 #include <omp.h>
 #include <stdio.h>
@@ -142,13 +142,37 @@ char *InitHTMLText(char *content){
     inicio = b-header;
     a = strstr(header, "\r\n");
     fim = a-header;
-    SubString(aux, inicio, fim);
+    aux = SubString(header, inicio, fim);
     c = atoi(aux);
     #pragma omp parallel for schedule(guided)
     for(i=0; i<16; i++){
         aux[i] = "\0";
     }
-    buffer = (char *)malloc(sizeof(char)*c);
+    buffer = (char *)malloc(sizeof(char)*(2*c));
+    a = strstr(content, "\r\n\r\n");
+    inicio = a - content;
+    buffer = SubString(content, inicio+4, "\0");
+
+    #pragma omp parallel for schedule(guided)
+    for(i=0, j=0; buffer[i]!='\0'; i++){
+        if(buffer[i]=='<' && buffer[i+1]=='!'){
+            i++;
+            strcpy(aux, CreateTag(extras[j], "\0", "\0"));
+            intag = strstr(buffer, aux);
+            if(intag==NULL){
+                intag = strstr(buffer, strupr(aux));
+                if(intag==NULL){
+                    #pragma omp parallel for private(k)
+                    for(k=i; buffer[k]!='>' || buffer[k]!=' '){
+                        if(buffer[k]>64 &&buffer[k]<90){
+                            buffer[k] += 32;
+                        }
+                    }
+                    intag = strstr(buffer, strlwr(aux));
+                }
+            }
+        }
+    }
 
     for(i=0; i<5; i++){
         if(i==0 || i==3){

@@ -26,6 +26,7 @@
 					<Add library="user32" />
 					<Add library="C:\Program Files\CodeBlocks\MinGW\lib\libws2_32.a" />
 					<Add library="C:\Program Files\CodeBlocks\MinGW\lib\libwsock32.a" />
+					<Add library="C:\Program Files\CodeBlocks\MinGW\libexec\gcc\mingw32\4.7.1\libgmp-3.dll" />
 				</Linker>
 			</Target>
 			<Target title="Dbg">
@@ -49,6 +50,7 @@
 		</Compiler>
 		<Linker>
 			<Add option="-lmsvcrt" />
+			<Add library="C:\Program Files\CodeBlocks\MinGW\lib\gcc\mingw32\4.7.1\libgomp.dll.a" />
 		</Linker>
 		<Unit filename="bonus.c">
 			<Option compilerVar="CC" />
