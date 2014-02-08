@@ -64,7 +64,7 @@ void CreateTokenEmpty(Fhtp *f, char stag[], char etag[], char cont[], char Class
     strcpy(f2->id, id);
     strcpy(f2->style, style);
     strcpy(f2->attrs, attrs);
-    strcpy(f2->TagID, tagid);
+    f2->TagID = tagid;
     //Atualiza a Lista
     f2->ant = f->start;
     f2->prox = f->end1;
@@ -87,7 +87,7 @@ void CreateTokenNormal(Fhtp *f, char stag[], char etag[], char cont[], char Clas
     strcpy(f2->id, id);
     strcpy(f2->style, style);
     strcpy(f2->attrs, attrs);
-    strcpy(f2->TagID, tagid);
+    f2->TagID = tagid;
     //Atualiza a Lista
     f2->ant = f->end1;
     f2->prox = NULL;
@@ -111,7 +111,7 @@ void CreateTokenInCurse(Fhtp *f, char stag[], char etag[], char cont[], char Cla
     strcpy(f2->id, id);
     strcpy(f2->style, style);
     strcpy(f2->attrs, attrs);
-    strcpy(f2->TagID, tagid);
+    f2->TagID = tagid;
     //Atualiza a Lista
     atual = f->start;
     for(i=1; i<pos; i++){
@@ -167,7 +167,6 @@ void RemvToken(Fhtp *f, int pos){
     free(remvElm->id);
     free(remvElm->stag);
     free(remvElm->style);
-    free(remvElm->TagID);
     free(remvElm);
     f->tam--;
 }

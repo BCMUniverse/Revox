@@ -26,18 +26,6 @@ typedef struct _htr{
     char title[4096], *content, *favicon;
 } htr;
 
-//Nesta etrutura é um token onde se obten os atributos, id e class do elemento, que será usado para cria o layout da página
-typedef struct _htp{
-    char stag[16], cont[5*BUFKB], etag[16], id[1024], ClassName[1024], style[4096], attrs[4096];
-    struct _htp *ant, *prox;
-    Elemts TagID;
-} htp;
-
-typedef struct _Fhtp{
-    htp *start, *end1;
-    int tam;
-} Fhtp;
-
 typedef enum _Extras{
     DOCTYPE,
     COMMENTS,
@@ -67,6 +55,18 @@ typedef enum _Elemts{
     P,
     UNKNOWN
 } Elemts;
+
+//Nesta etrutura é um token onde se obten os atributos, id e class do elemento, que será usado para cria o layout da página
+typedef struct _htp{
+    char stag[16], cont[5*BUFKB], etag[16], id[1024], ClassName[1024], style[4096], attrs[4096];
+    struct _htp *ant, *prox;
+    Elemts TagID;
+} htp;
+
+typedef struct _Fhtp{
+    htp *start, *end1;
+    int tam;
+} Fhtp;
 
 //Cria um token
 Fhtp *aloca();

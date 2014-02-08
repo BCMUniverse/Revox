@@ -39,6 +39,22 @@ void InitPilha(pilha *p){
     }
 }
 
+void InitPilha2(pilha2 *p){
+    int i, j;
+    p->topo = -1;
+    #pragma omp parallel for schedule(guided)
+    for(i=0; i<VKB; i++){
+        p->ind[i] = -1;
+    }
+    #pragma omp parallel for schedule(guided)
+    for(i=0; i<VKB; i++){
+        #pragma omp parallel for schedule(guided)
+        for(j=0; j<16; j++){
+            p->vt[i] = '\0';
+        }
+    }
+}
+
 void InsrtPilha(pilha *p, char novo){
     if(p->topo==VKB-1){
         fprintf(stderr, "Erro: Pilha Cheia!\n");
@@ -48,7 +64,25 @@ void InsrtPilha(pilha *p, char novo){
     p->v[p->topo] = novo;
 }
 
+void InsrtPilha2(pilha2 *p, char novo[]){
+    if(p->topo==VKB-1){
+        fprintf(stderr, "Erro: Pilha Cheia!\n");
+        exit(EXIT_FAILURE);
+    }
+    p->topo++;
+    strcpy(p->vt[p->topo], novo);
+}
+
 char RemovePilha(pilha *p){
+    if(p->topo == -1){
+        fprintf(stderr, "Erro: Pilha Vazia!\n");
+        exit(EXIT_FAILURE);
+    }
+    p->topo--;
+    return p->v[p->topo+1];
+}
+
+char *RemovePilha2(pilha2 *p){
     if(p->topo == -1){
         fprintf(stderr, "Erro: Pilha Vazia!\n");
         exit(EXIT_FAILURE);

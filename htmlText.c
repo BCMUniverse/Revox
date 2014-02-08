@@ -128,6 +128,7 @@ char *InitHTMLText(char *content){
     char *conthtml, aux[16], aux2[16], *intag, *intag2, html[BUF32KB], *head, *body, header[8192], *buffer, *a, *b;
     phtml cont;
     htr htr1;
+    Extras exts;
     Fhtp *fhtp1 = aloca();
 
     //Alocando Memória
@@ -142,7 +143,7 @@ char *InitHTMLText(char *content){
     inicio = b-header;
     a = strstr(header, "\r\n");
     fim = a-header;
-    aux = SubString(header, inicio, fim);
+    strcpy(aux, SubString(header, inicio, fim));
     c = atoi(aux);
     #pragma omp parallel for schedule(guided)
     for(i=0; i<16; i++){
@@ -153,22 +154,23 @@ char *InitHTMLText(char *content){
     inicio = a - content;
     buffer = SubString(content, inicio+4, "\0");
 
-    #pragma omp parallel for schedule(guided)
-    for(i=0, j=0; buffer[i]!='\0'; i++){
+    for(i=0; buffer[i]!='\0'; i++){
         if(buffer[i]=='<' && buffer[i+1]=='!'){
             i++;
-            strcpy(aux, CreateTag(extras[j], "\0", "\0"));
-            intag = strstr(buffer, aux);
-            if(intag==NULL){
-                intag = strstr(buffer, strupr(aux));
+            #pragma omp parallel for private(j)
+            for(j=0; j<3; j++){
+                strcpy(aux, CreateTag(extras[j], "\0", "\0"));
+                intag = strstr(buffer, aux);
                 if(intag==NULL){
-                    #pragma omp parallel for private(k)
-                    for(k=i; buffer[k]!='>' || buffer[k]!=' '){
-                        if(buffer[k]>64 &&buffer[k]<90){
-                            buffer[k] += 32;
+                    intag = strstr(buffer, strupr(aux));
+                    if(intag==NULL){
+                        for(k=i; buffer[k]!='>' || buffer[k]!=' '; k++){
+                            if(buffer[k]>64 && buffer[k]<91){
+                                buffer[k] += 32;
+                            }
                         }
+                        intag = strstr(buffer, strlwr(aux));
                     }
-                    intag = strstr(buffer, strlwr(aux));
                 }
             }
         }

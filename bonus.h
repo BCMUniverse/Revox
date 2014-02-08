@@ -41,9 +41,20 @@ typedef struct _pilha{
     char v[VKB];
     int topo, ind[VKB];
 }pilha;
+//Pilha com Matriz
+typedef struct _pilha2{
+    char vt[VKB][16];
+    int topo, ind[VKB];
+} pilha2;
+
+//Funções para tipo pilha comum
 void InitPilha(pilha *p);
 void InsrtPilha(pilha *p, char novo);
 char RemovePilha(pilha *p);
+//Funções para tipo de pilha de matriz
+void InitPilha2(pilha2 *p);
+void InsrtPilha2(pilha2 *p, char novo[]);
+char *RemovePilha2(pilha2 *p);
 
 void limpaVetor(char *vet, int tam);
 static size_t strnlen(const char *s, size_t max);
