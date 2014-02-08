@@ -2,7 +2,7 @@
 	Este arquivo faz parte do BCM Revox Engine;
 
 	BCM Revox Engine é Software Livre; você pode redistribui-lo e/ou
-	modificá-lo dentro dos termos da Licença Pública Geru GNU como
+	modificá-lo dentro dos termos da Licença Pública Geral GNU como
 	publicada pela Fundação do Software Livre (FSF); na versão 3 da Licença.
 	Este programa é distribuído na esperança que possa ser util,
 	mas SEM NENHUMA GARANTIA; sem uma garantia implicita de ADEQUAÇÂO a
@@ -117,13 +117,14 @@ url UrlParser(char host[]){
                 break;
             default:
                 fprintf(stderr, "Erro: protocolo não encontrado!\r\n");
+                addr.port = 80;
+                strcpy(addr.prtcol, ports[i]);
             }
             break;
         }
-        else{
+        else if(aux2==NULL){
             addr.port = 80;
             strcpy(addr.prtcol, ports[i]);
-            RemvSubString(host, aux);
         }
     }
     for(i=0; i<strlen(host) && host[i]!=':' && host[i]!='/' && host[i]!='?'; i++){

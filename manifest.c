@@ -12,30 +12,24 @@
 	este programa, se não, escreva para a Fundação do Software Livre(FSF) Inc.,
 	51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 
-	BCM Revox Engine v0.1
-	BCM Revox Engine -> Ano: 2013|Tipo: WebEngine
+	BCM Revox Engine v0.2
+	BCM Revox Engine -> Ano: 2014|Tipo: WebEngine
 */
-#ifndef _HTMLTEXT_H_
-#define _HTMLTEXT_H_
-
+#include <omp.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "bonus.h"
 
-#define KB 1024
+char *InitManifest(char content[]){
+    char *result;
+    FILE *output, *index;
 
-//HTML Analisado
-typedef struct _phtml{
-    char title[2049], content[BUF32KB];
-}phtml;
+    if((output = fopen("./cache/manifest1", "a+"))==NULL){
+        fprintf(stderr, "Erro: Arquivo Invalido!\r\n");
+        return "\0";
+    }
+    fclose(output);
 
-//Cria Elementos para compara-los
-char *CreateTag(char *inicio, char *tag, char *fim);
-//Copia Substrings dentro de um string
-char *SubString(char *str, int inicio, int fim);
-//Copia várias substrings e remove-as dentro de uma string
-char *SubString2(char *str, char *inicio, char *fim);
-//Remove a substring de uma string
-void RemvSubString(char *str, char *substr);
-//Analisa documento HTML e converte em Texto
-char *InitHTMLText(char *content);
-
-#endif // _HTMLTEXT_H_
+    return result;
+}
