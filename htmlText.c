@@ -122,14 +122,15 @@ void RemvSubString(char *str, char *substr){
 }
 
 char *InitHTMLText(char *content){
-    int c, i, j, k, l, inicio, fim;
+    int c, i, j, k, l, inicio, mode = 0, fim;
     char tags[][16] = {"html\0", "head\0", "title\0", "body\0", "p\0"};
     char cesp[][4] = {"<\0", ">\0", "</\0", "/>\0"};
-    char *conthtml, aux[16], aux2[16], *intag, *intag2, html[BUF32KB], *head, *body, header[8192], *buffer, *a, *b;
+    char *conthtml, aux[16], aux2[16], *intag, *intag2, html[BUF32KB], *head, *body, header[8192], *buffer, *a, *b, BufTag[2048];
     phtml cont;
     htr htr1;
-    Extras exts;
+    Elemts elts;
     Fhtp *fhtp1 = aloca();
+    pilha2 p2;
 
     //Alocando Memória
     conthtml = (char *)malloc(sizeof(char)*(strlen(content)));
@@ -156,15 +157,14 @@ char *InitHTMLText(char *content){
 
     for(i=0; buffer[i]!='\0'; i++){
         if(buffer[i]=='<' && buffer[i+1]=='!'){
-            i++;
             #pragma omp parallel for private(j)
             for(j=0; j<3; j++){
-                strcpy(aux, CreateTag(extras[j], "\0", "\0"));
+                strcpy(aux, CreateTag(elemts[j], "\0", "\0"));
                 intag = strstr(buffer, aux);
                 if(intag==NULL){
                     intag = strstr(buffer, strupr(aux));
                     if(intag==NULL){
-                        for(k=i; buffer[k]!='>' || buffer[k]!=' '; k++){
+                        for(k=(i+1); buffer[k]!='>' || buffer[k]!=' '; k++){
                             if(buffer[k]>64 && buffer[k]<91){
                                 buffer[k] += 32;
                             }
@@ -172,6 +172,29 @@ char *InitHTMLText(char *content){
                         intag = strstr(buffer, strlwr(aux));
                     }
                 }
+                elts = (j+200);
+                switch(elts){
+                case DOCTYPE:
+                    for(i=i; buffer[i]!='>';i++){
+                        BufTag[i] = buffer[i];
+                    }
+                    BufTag[i++] = '>';
+                    CreateToken(fhtp1, BufTag, "\0", "\0", "\0", "\0", "\0", "\0", elts, mode, 0);
+                    break;
+                case COMMENTS:
+                    for(i=i; buffer[i]!='>';i++){
+                        BufTag[i] = buffer[i];
+                    }
+                    BufTag[i++] = '>';
+                    CreateToken(fhtp1, BufTag, "\0", "\0", "\0", "\0", "\0", "\0", elts, mode, 0);
+                    break;
+                case CDATA:
+                    //Em Breve
+                    break;
+                default:
+                    fprintf(stderr, "Erro: Valor Invalido!\r\n");
+                }
+                mode++;
             }
         }
     }

@@ -50,7 +50,7 @@ void InitPilha2(pilha2 *p){
     for(i=0; i<VKB; i++){
         #pragma omp parallel for schedule(guided)
         for(j=0; j<16; j++){
-            p->vt[i] = '\0';
+            p->vt[i][j] = '\0';
         }
     }
 }
@@ -88,7 +88,7 @@ char *RemovePilha2(pilha2 *p){
         exit(EXIT_FAILURE);
     }
     p->topo--;
-    return p->v[p->topo+1];
+    return p->vt[p->topo+1];
 }
 
 void limpaVetor(char *vet, int tam){

@@ -26,14 +26,11 @@ typedef struct _htr{
     char title[4096], *content, *favicon;
 } htr;
 
-typedef enum _Extras{
-    DOCTYPE,
-    COMMENTS,
-    CDATA
-} Extras;
-
 typedef enum _Elemts{
-    HTML,
+    DOCTYPE = 200,
+    COMMENTS = 201,
+    CDATA = 202,
+    HTML = 0,
     HEAD,
     BASE,
     LINK,

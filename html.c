@@ -23,8 +23,7 @@
 
 #pragma omp
 
-char extras[][16] = {"!doctype", "!--", "![CDATA["};
-char elemts[][16] = {"html", "head", "base", "link", "meta", "noscript", "script", "style", "template", "title", "body", "a", "abbr", "address", "area", "article", "aside", "audio", "b", "p"};
+char elemts[][16] = {"doctype", "--", "[CDATA[", "html", "head", "base", "link", "meta", "noscript", "script", "style", "template", "title", "body", "a", "abbr", "address", "area", "article", "aside", "audio", "b", "p"};
 
 Fhtp *aloca(){
     Fhtp *f = malloc(sizeof(Fhtp));
