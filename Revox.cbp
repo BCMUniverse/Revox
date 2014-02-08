@@ -106,6 +106,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="telnet.h" />
+		<Unit filename="typeparser.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="typeparser.h" />
 		<Unit filename="urlparser.c">
 			<Option compilerVar="CC" />
 		</Unit>

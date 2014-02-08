@@ -24,7 +24,7 @@
 #pragma omp
 
 void InitText(char *host){
-    InitTypeParser(UrlConnect(host, 1, NULL, NULL));
+    InitTypeParser(UrlConnect(host, 1, NULL, NULL), 1);
 }
 void InitFileText(char *path){
     char content[BUF32KB];

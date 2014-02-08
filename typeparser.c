@@ -19,8 +19,47 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <time.h>
 #include "bonus.h"
+#include "html.h"
+#include "htmlText.h"
+#include "typeparser.h"
 #include "urlparser.h"
 
-char *InitTypeParser(Type tp1){}
+char types[][128] = {"text/html", "text/cache-manifest", "text/plain"};
+
+char *InitTypeParser(Type tp1, int mode){
+    char *result, *vtyp = (char *)malloc(sizeof(char)*4096);
+    int i, j;
+    type typ1;
+
+    for(i=0; tp1.content[i]!='\0'; i++){
+        for(j=0; j<3; j++){
+            vtyp = strstr(tp1.content, types[j]);
+            if(vtyp!=NULL){
+                typ1 = j;
+                break;
+            }
+        }
+        switch(typ1){
+        case THTML:
+            switch(mode){
+            case 0:
+                break;
+            case 1:
+                result = InitHTMLText(tp1.content);
+                break;
+            default:
+                fprintf(stderr, "Erro: Valor Invalido!\r\n");
+            }
+            break;
+        case MANIFEST:
+            break;
+        case PLAIN:
+            break;
+        default:
+            //f
+        }
+    }
+
+    return result;
+}

@@ -22,6 +22,17 @@ typedef struct _Type{
     char *url, *content;
 } Type;
 
-char *InitTypeParser(Type tp1);
+typedef enum _type{
+    THTML,
+    MANIFEST,
+    PLAIN
+} type;
+
+/*
+    Converte o conteúdo recebido em um formato legivel
+    Mode igual a 0 -> Interface Gráfica (GUI)
+    Mode igual a 1 -> Interface em Texo (TUI)
+*/
+char *InitTypeParser(Type tp1, int mode);
 
 #endif // _TYPEPARSER_H_

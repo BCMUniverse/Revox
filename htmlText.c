@@ -158,7 +158,6 @@ char *InitHTMLText(char *content){
 
     for(i=0; buffer[i]!='\0'; i++){
         if(buffer[i]=='<' && buffer[i+1]=='!'){
-            #pragma omp parallel for private(j)
             for(j=0; j<3; j++){
                 strcpy(aux, elemts[j]);
                 intag = strstr(buffer, aux);
@@ -171,36 +170,44 @@ char *InitHTMLText(char *content){
                             }
                         }
                         intag = strstr(buffer, strlwr(aux));
+                        if(intag!=NULL){
+                            break;
+                        }
+                    }
+                    else{
+                        break;
                     }
                 }
-                elts = (j+200);
-                switch(elts){
-                case DOCTYPE:
-                    for(i=i, k=0; buffer[i]!='>';i++, k++){
-                        BufTag[k] = buffer[i];
-                    }
-                    BufTag[k++] = '>';
-                    CreateToken(fhtp1, BufTag, "\0", "\0", "\0", "\0", "\0", "\0", elts, mode, 0);
-                    mode = 1;
+                else{
                     break;
-                case COMMENTS:
-                    for(i=i, k=0; buffer[i]!='>';i++, k++){
-                        BufTag[k] = buffer[i];
-                    }
-                    BufTag[k++] = '>';
-                    CreateToken(fhtp1, BufTag, "\0", "\0", "\0", "\0", "\0", "\0", elts, mode, 0);
-                    mode = 1;
-                    break;
-                case CDATA:
-                    //Em Breve
-                    break;
-                default:
-                    fprintf(stderr, "Erro: Valor Invalido!\r\n");
                 }
+            }
+            elts = (j+200);
+            switch(elts){
+            case DOCTYPE:
+                for(i=i, k=0; buffer[i]!='>';i++, k++){
+                    BufTag[k] = buffer[i];
+                }
+                BufTag[k++] = '>';
+                CreateToken(fhtp1, BufTag, "\0", "\0", "\0", "\0", "\0", "\0", elts, mode, 0);
+                mode = 1;
+                break;
+            case COMMENTS:
+                for(i=i, k=0; buffer[i]!='>';i++, k++){
+                    BufTag[k] = buffer[i];
+                }
+                BufTag[k++] = '>';
+                CreateToken(fhtp1, BufTag, "\0", "\0", "\0", "\0", "\0", "\0", elts, mode, 0);
+                mode = 1;
+                break;
+            case CDATA:
+                //Em Breve
+                break;
+            default:
+                fprintf(stderr, "Erro: Valor Invalido!\r\n");
             }
         }
         if(buffer[i]=='<' && buffer[i+1]!='!'){
-            #pragma omp parallel for schedule(guided)
             for(j=3; j<25; j++){
                 strcpy(aux, elemts[j]);
                 intag = strstr(buffer, aux);
@@ -213,22 +220,30 @@ char *InitHTMLText(char *content){
                             }
                         }
                         intag = strstr(buffer, strlwr(aux));
+                        if(intag!=NULL){
+                            break;
+                        }
+                    }
+                    else{
+                        break;
                     }
                 }
-                elts = (j-3);
-                switch(elts){
-                case HTML:
-                    for(i=i, k=0; buffer[i]!='>';i++, k++){
-                        BufTag[k] = buffer[i];
-                        BufAttr[k] = buffer[i];
-                    }
-                    BufTag[k++] = '>';
-                    mode = 1;
+                else{
                     break;
-                default:
-                    fprintf(stderr, "Erro: Valor Invalido!\r\n");
                 }
+            }
+            elts = (j-3);
+            switch(elts){
+            case HTML:
+                for(i=i, k=0; buffer[i]!='>';i++, k++){
+                    BufTag[k] = buffer[i];
+                    BufAttr[k] = buffer[i];
+                }
+                BufTag[k++] = '>';
                 mode = 1;
+                break;
+            default:
+                fprintf(stderr, "Erro: Valor Invalido!\r\n");
             }
         }
     }

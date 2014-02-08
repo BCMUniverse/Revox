@@ -43,7 +43,7 @@ typedef enum _uports{
 //Analisa URLs
 url UrlParser(char host[]);
 /*
-    Conecta as urls nos seus protocolos e recbe a resposta
+    Conecta as urls nos seus protocolos e recebe a resposta
     Mode igual a 0 -> Interface Gráfica (GUI)
     Mode igual a 1 -> Interface em Texo (TUI)
     hwnd e hInst são paramentos da interface gráfica do windows

@@ -150,7 +150,6 @@ char *InitHTTP(char *address, int port, char *caminho, char *cookie){
     strcat(buffer, "Connection: keep-alive\r\n");
     sprintf(tmp, "User-Agent: %s (Windows NT 6.1; %s)\r\n", RVXVERSION, RVXVERSIONFULL);
     strcat(buffer, tmp);
-    strcat(buffer, "Accept: text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5\r\n");
     strcat(buffer, "Accept-Language: pt-br,pt;q=0.7;en-us,en;q=0.5\r\n");
     strcat(buffer, "Accept-Charset: ISO-8859-1,UTF-8;q=0.7,*;q=0.7\r\n");
     strcat(buffer, "Cache-Control: no-cache\r\n");
