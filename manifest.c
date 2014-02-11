@@ -20,14 +20,30 @@
 #include <stdlib.h>
 #include <string.h>
 #include "bonus.h"
+#include "urlparser.h"
 
-char *InitManifest(char content[]){
-    char *result;
+char *InitManifest(char content[], char url1[]){
+    char *result, c, buffer[2048], host[2048];
     FILE *output, *index;
+    int i, j;
 
     if((output = fopen("./cache/manifest1", "a+"))==NULL){
         fprintf(stderr, "Erro: Arquivo Invalido!\r\n");
         return "\0";
+    }
+    for(i=0; content[i]!='\0'; i++){
+        if((i = strstr(content, "CACHE:"))!=NULL){
+            do{
+                c = content[i];
+                i++;
+            }while(content[i]!='\n');
+            i++;
+            for(i=i, j=0; content[i]!='\r' || content[i]!='\n'; i++, j++){
+                buffer[j] = content[i];
+            }
+            strcpy(host, url1);
+            UrlConnect(host, 1, NULL, NULL);
+        }
     }
     fclose(output);
 

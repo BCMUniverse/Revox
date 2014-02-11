@@ -26,7 +26,6 @@
 					<Add library="user32" />
 					<Add library="C:\Program Files\CodeBlocks\MinGW\lib\libws2_32.a" />
 					<Add library="C:\Program Files\CodeBlocks\MinGW\lib\libwsock32.a" />
-					<Add library="C:\Program Files\CodeBlocks\MinGW\libexec\gcc\mingw32\4.7.1\libgmp-3.dll" />
 				</Linker>
 			</Target>
 			<Target title="Dbg">
@@ -81,6 +80,10 @@
 		</Unit>
 		<Unit filename="mail.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="manifest.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="manifest.h" />
 		<Unit filename="nntp.c">
 			<Option compilerVar="CC" />
 		</Unit>

@@ -54,7 +54,7 @@ char *InitTypeParser(Type tp1, int mode){
             }
             break;
         case MANIFEST:
-            result = InitManifest(tp1.content);
+            result = InitManifest(tp1.content, tp1.url);
             break;
         case PLAIN:
             break;
