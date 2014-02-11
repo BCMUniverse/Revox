@@ -29,7 +29,7 @@
 char types[][128] = {"text/html", "text/cache-manifest", "text/plain"};
 
 char *InitTypeParser(Type tp1, int mode){
-    char *result, *vtyp = (char *)malloc(sizeof(char)*4096);
+    char *result, *vtyp;
     int i, j;
     type typ1;
 

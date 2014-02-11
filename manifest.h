@@ -18,6 +18,6 @@
 #ifndef _MANIFEST_H_
 #define _MANIFEST_H_
 
-char *InitManifest(char content[]);
+char *InitManifest(char content[], char url1[]);
 
 #endif // _MANIFEST_H_

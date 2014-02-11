@@ -21,6 +21,8 @@
 #include <windows.h>
 #include "typeparser.h"
 
+extern char ports[][16], bars[][4];
+
 typedef struct _url{
     int port;
     char host[1025], url_path[1025], prtcol[16];
