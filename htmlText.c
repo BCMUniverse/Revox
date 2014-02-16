@@ -133,17 +133,10 @@ char *InitHTMLText(char *content){
     Fhtp *fhtp1 = aloca();
     pilha2 p2;
 
-    //Alocando Memória
-    conthtml = (char *)malloc(sizeof(char)*(strlen(content)));
-    intag = (char *)malloc(sizeof(char)*(strlen(content)));
-    intag2 = (char *)malloc(sizeof(char)*(strlen(content)));
-    head = (char *)malloc(sizeof(char)*(strlen(content)));
-    body = (char *)malloc(sizeof(char)*(strlen(content)));
-
-    strncpy(header, content, strstr(content, "\r\n\r\n"));
+    strncpy(header, content, 2048);
     b = strstr(header, "Content-Length: ");
-    inicio = b-header;
     a = strstr(header, "\r\n");
+    inicio = b-header;
     fim = a-header;
     strcpy(aux, SubString(header, inicio, fim));
     c = atoi(aux);
@@ -333,13 +326,6 @@ char *InitHTMLText(char *content){
 
     printf("%s", html);
     strcpy(cont.content, html);
-
-    //Liberando Memória Alocada
-    /*free(conthtml);
-    free(intag);
-    free(intag2);
-    free(head);
-    free(body);*/
 
     //Adicionando Null aos ponteiros
     conthtml = NULL;
