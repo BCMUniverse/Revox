@@ -55,6 +55,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="bonus.h" />
+		<Unit filename="conctd.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="conctd.h" />
 		<Unit filename="ftp.c">
 			<Option compilerVar="CC" />
 		</Unit>
