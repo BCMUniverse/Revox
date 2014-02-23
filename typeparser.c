@@ -30,9 +30,14 @@ char types[][128] = {"text/html", "text/cache-manifest", "text/plain"};
 
 char *InitTypeParser(Type tp1, int mode){
     char *result, *vtyp;
+    FILE *index;
     int i, j;
     type typ1;
 
+    if((index = fopen(".\\cache\\index", "r+"))==NULL){
+        fprintf(stderr, "Erro: Arquivo Invalido!\r\n");
+        return "\0";
+    }
     for(i=0; tp1.content[i]!='\0'; i++){
         for(j=0; j<3; j++){
             vtyp = strstr(tp1.content, types[j]);
@@ -62,6 +67,7 @@ char *InitTypeParser(Type tp1, int mode){
             break;
         }
     }
+    fclose(index);
 
     return result;
 }

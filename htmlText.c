@@ -133,6 +133,10 @@ char *InitHTMLText(char *content){
     Fhtp *fhtp1 = aloca();
     pilha2 p2;
 
+    conthtml = (char *)malloc(sizeof(char)*(strlen(content)));
+    head = (char *)malloc(sizeof(char)*(strlen(content)));
+    body = (char *)malloc(sizeof(char)*(strlen(content)));
+
     strncpy(header, content, 2048);
     b = strstr(header, "Content-Length: ");
     a = strstr(header, "\r\n");

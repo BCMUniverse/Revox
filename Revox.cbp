@@ -46,19 +46,17 @@
 		</Build>
 		<Compiler>
 			<Add option="-fopenmp" />
+			<Add option="-lRasapi32" />
 		</Compiler>
 		<Linker>
 			<Add option="-lmsvcrt" />
 			<Add library="C:\Program Files\CodeBlocks\MinGW\lib\gcc\mingw32\4.7.1\libgomp.dll.a" />
+			<Add library="C:\Program Files\CodeBlocks\MinGW\lib\librasapi32.a" />
 		</Linker>
 		<Unit filename="bonus.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="bonus.h" />
-		<Unit filename="conctd.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="conctd.h" />
 		<Unit filename="ftp.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -134,12 +132,12 @@
 			<envvars />
 			<debugger />
 			<DoxyBlocks>
-				<comment_style block="0" line="0" />
+				<comment_style block="4" line="0" />
 				<doxyfile_project output_language="Brazilian" />
 				<doxyfile_build />
 				<doxyfile_warnings />
 				<doxyfile_output />
-				<doxyfile_dot />
+				<doxyfile_dot class_diagrams="1" />
 				<general />
 			</DoxyBlocks>
 		</Extensions>

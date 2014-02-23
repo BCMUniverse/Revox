@@ -20,9 +20,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include "bonus.h"
-#include "conctd.h"
 #include "typeparser.h"
 #include "urlparser.h"
+
+char manisec[][16] = {"CACHE:", "FALLBACK:", "SETTINGS:", "prefer-online", "fast"};
 
 char *InitManifest(char content[], char url1[]){
     char *result, c, buffer[2048], host[2048], *aux, *cont2, *cache, onbuff[2048], *fallbck, *settings, *def;
@@ -35,73 +36,76 @@ char *InitManifest(char content[], char url1[]){
     */
     int defcache = 0;
 
+    if((index = fopen(".\\cache\\index", "r+"))==NULL){
+        fprintf(stderr, "Erro: Arquivo Invalido!\r\n");
+        return "\0";
+    }
     if((output = fopen("./cache/manifest1", "a+"))==NULL){
         fprintf(stderr, "Erro: Arquivo Invalido!\r\n");
         return "\0";
     }
     for(i=0; content[i]!='\0'; i++){
-        cache = strstr(content, "CACHE:");
-        fallbck = strstr(content, "FALLBACK:");
-        settings = strstr(content, "SETTINGS:");
+        cache = strstr(content, manisec[0]);
+        fallbck = strstr(content, manisec[1]);
+        settings = strstr(content, manisec[2]);
         if(settings!=NULL){
-            def = strstr(content, "prefer-online");
-            if(def!=NULL){
-            }
-            else{
-                if(cache!=NULL){
-                    for(i=i; i!=(fallbck-content) || i!=(settings-content); i++){
-                        while(content[i]!='\n'){
-                            i++;
-                        }
+            def = strstr(content, manisec[3]);
+            if(cache!=NULL){
+                for(i=i; i!=(fallbck-content) || i!=(settings-content); i++){
+                    while(content[i]!='\n' || content[i]!=' '){
                         i++;
-                        for(i=i, j=0; content[i]!='\r' || content[i]!='\n'; i++, j++){
-                            buffer[j] = content[i];
-                        }
-                        for(k=0; k<11; k++){
-                            aux = strstr(buffer, ports[k]);
-                            if(aux!=NULL){
-                                strcpy(host, buffer);
-                                break;
-                            }
-                        }
-                        if(aux==NULL){
-                            strcpy(host, "/");
-                            strcat(host, buffer);
-                        }
-                        cont2 = InitTypeParser(UrlConnect(host, 1, NULL, NULL), 1);
-                        fprintf(output, "%s\r\n", cont2);
                     }
-                }
-                if(fallbck!=NULL){
-                    for(i=i; i!=(cache-content) || i!=(settings-content); i++){
-                        while(content[i]!='\n'){
-                            i++;
-                        }
-                        i++;
-                        for(i=i, j=0; content[i]!=' '; i++, j++){
-                            onbuff[j] = content[i];
-                        }
-                        for(i=i, j=0; content[i]!='\r' || content[i]!='\n'; i++, j++){
-                            buffer[j] = content[i];
-                        }
-                        for(k=0; k<11; k++){
-                            aux = strstr(buffer, ports[k]);
-                            if(aux!=NULL){
-                                strcpy(host, buffer);
-                                break;
-                            }
-                        }
-                        if(aux==NULL){
-                            strcpy(host, "/");
-                            strcat(host, buffer);
-                        }
-                        cont2 = InitTypeParser(UrlConnect(host, 1, NULL, NULL), 1);
-                        fprintf(output, "%s\r\n", cont2);
+                    i++;
+                    for(i=i, j=0; content[i]!='\r' || content[i]!='\n' || content[i]!=' '; i++, j++){
+                        buffer[j] = content[i];
                     }
+                    for(k=0; k<11; k++){
+                        aux = strstr(buffer, ports[k]);
+                        if(aux!=NULL){
+                            strcpy(host, buffer);
+                            break;
+                        }
+                    }
+                    if(aux==NULL){
+                        strcpy(host, "/");
+                        strcat(host, buffer);
+                    }
+                    cont2 = InitTypeParser(UrlConnect(host, 1, NULL, NULL), 1);
+                    fprintf(output, "%s\r\n", cont2);
                 }
             }
+            if(fallbck!=NULL){
+                for(i=i; i!=(cache-content) || i!=(settings-content); i++){
+                    while(content[i]!='\n'){
+                        i++;
+                    }
+                    i++;
+                    for(i=i, j=0; content[i]!=' '; i++, j++){
+                        onbuff[j] = content[i];
+                    }
+                    for(i=i, j=0; content[i]!='\r' || content[i]!='\n'; i++, j++){
+                        buffer[j] = content[i];
+                    }
+                    for(k=0; k<11; k++){
+                        aux = strstr(buffer, ports[k]);
+                        if(aux!=NULL){
+                            strcpy(host, buffer);
+                            break;
+                        }
+                    }
+                    if(aux==NULL){
+                        strcpy(host, "/");
+                        strcat(host, buffer);
+                    }
+                    cont2 = InitTypeParser(UrlConnect(host, 1, NULL, NULL), 1);
+                    fprintf(output, "%s\r\n", cont2);
+                }
+            }
+            if(def!=NULL){}
+            else{}
         }
     }
+    fclose(index);
     fclose(output);
 
     return result;
