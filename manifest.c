@@ -23,10 +23,11 @@
 #include "typeparser.h"
 #include "urlparser.h"
 
-char manisec[][16] = {"CACHE:", "FALLBACK:", "SETTINGS:", "prefer-online", "fast"};
+char manisec[][16] = {"CACHE:", "FALLBACK:", "SETTINGS:"};
+char setts[][16] = {"prefer-online", "fast"};
 
 char *InitManifest(char content[], char url1[]){
-    char *result, c, buffer[2048], host[2048], *aux, *cont2, *cache, onbuff[2048], *fallbck, *settings, *def;
+    char *result, c, buffer[2048], host[2048], aux[1024], *cont2, onbuff[2048] *def;
     FILE *output, *index;
     int i, j, k;
     /*
@@ -40,73 +41,13 @@ char *InitManifest(char content[], char url1[]){
         fprintf(stderr, "Erro: Arquivo Invalido!\r\n");
         return "\0";
     }
-    if((output = fopen("./cache/manifest1", "a+"))==NULL){
-        fprintf(stderr, "Erro: Arquivo Invalido!\r\n");
-        return "\0";
-    }
     for(i=0; content[i]!='\0'; i++){
-        cache = strstr(content, manisec[0]);
-        fallbck = strstr(content, manisec[1]);
-        settings = strstr(content, manisec[2]);
-        if(settings!=NULL){
-            def = strstr(content, manisec[3]);
-            if(cache!=NULL){
-                for(i=i; i!=(fallbck-content) || i!=(settings-content); i++){
-                    while(content[i]!='\n' || content[i]!=' '){
-                        i++;
-                    }
-                    i++;
-                    for(i=i, j=0; content[i]!='\r' || content[i]!='\n' || content[i]!=' '; i++, j++){
-                        buffer[j] = content[i];
-                    }
-                    for(k=0; k<11; k++){
-                        aux = strstr(buffer, ports[k]);
-                        if(aux!=NULL){
-                            strcpy(host, buffer);
-                            break;
-                        }
-                    }
-                    if(aux==NULL){
-                        strcpy(host, "/");
-                        strcat(host, buffer);
-                    }
-                    cont2 = InitTypeParser(UrlConnect(host, 1, NULL, NULL), 1);
-                    fprintf(output, "%s\r\n", cont2);
-                }
-            }
-            if(fallbck!=NULL){
-                for(i=i; i!=(cache-content) || i!=(settings-content); i++){
-                    while(content[i]!='\n'){
-                        i++;
-                    }
-                    i++;
-                    for(i=i, j=0; content[i]!=' '; i++, j++){
-                        onbuff[j] = content[i];
-                    }
-                    for(i=i, j=0; content[i]!='\r' || content[i]!='\n'; i++, j++){
-                        buffer[j] = content[i];
-                    }
-                    for(k=0; k<11; k++){
-                        aux = strstr(buffer, ports[k]);
-                        if(aux!=NULL){
-                            strcpy(host, buffer);
-                            break;
-                        }
-                    }
-                    if(aux==NULL){
-                        strcpy(host, "/");
-                        strcat(host, buffer);
-                    }
-                    cont2 = InitTypeParser(UrlConnect(host, 1, NULL, NULL), 1);
-                    fprintf(output, "%s\r\n", cont2);
-                }
-            }
-            if(def!=NULL){}
-            else{}
+        for(i=i, j=0; content[i]!=' ' || content[i]!='\r' || content[i]!='\n'; i++, j++){
+            aux[j] = content[i];
         }
+        strcmp();
     }
     fclose(index);
-    fclose(output);
 
     return result;
 }
