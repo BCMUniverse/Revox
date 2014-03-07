@@ -20,14 +20,27 @@
 #include <stdlib.h>
 #include <string.h>
 #include "bonus.h"
+#include "hex.h"
 #include "typeparser.h"
 #include "urlparser.h"
 
 char manisec[][16] = {"CACHE:", "FALLBACK:", "SETTINGS:"};
 char setts[][16] = {"prefer-online", "fast"};
 
+char *CopyManifst(char content[], int *i){
+    char result[4096];
+    int j, k;
+
+    for(k=*i, j=0; content[k]!=' ' || content[k]!='\r' || content[k]!='\n'; k++, j++){
+        result[j] = content[k];
+    }
+    *i = k;
+
+    return result;
+}
+
 char *InitManifest(char content[], char url1[]){
-    char *result, c, buffer[2048], host[2048], aux[1024], *cont2, onbuff[2048] *def;
+    char *result, *aux, cache[4096], *apt;
     FILE *output, *index;
     int i, j, k;
     /*
@@ -42,10 +55,25 @@ char *InitManifest(char content[], char url1[]){
         return "\0";
     }
     for(i=0; content[i]!='\0'; i++){
-        for(i=i, j=0; content[i]!=' ' || content[i]!='\r' || content[i]!='\n'; i++, j++){
-            aux[j] = content[i];
+        aux = CopyManifst(content, &i);
+        if(strcmp(aux, manisec[0])==0){
+            aux = CopyManifst(content, &i);
+            strcpy(cache, aux);
+            if(strcmp(index, HexCreater(aux))==0){
+                if((output = fopen(cache, "a+"))==NULL){
+                    fprintf(stderr, "Erro: Arquivo Invalido!\r\n");
+                    return "\0";
+                }
+                fclose(output);
+            }
+            if((output = fopen(cache, "a+"))==NULL){
+                fprintf(stderr, "Erro: Arquivo Invalido!\r\n");
+                return "\0";
+            }
+            fclose(output);
         }
-        strcmp();
+        if(strcmp(aux, manisec[1])==0){}
+        if(strcmp(aux, manisec[2])==0){}
     }
     fclose(index);
 

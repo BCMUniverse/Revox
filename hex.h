@@ -15,10 +15,10 @@
 	BCM Revox Engine v0.2
 	BCM Revox Engine -> Ano: 2014|Tipo: WebEngine
 */
-#ifndef _MANIFEST_H_
-#define _MANIFEST_H_
+#ifndef _HEX_H_
+#define _HEX_H_
 
-char *CopyManifst(char content[], int *i);
-char *InitManifest(char content[], char url1[]);
+char *HexCreater(char str[]);
+char *HexDecoder(char HexStr[]);
 
-#endif // _MANIFEST_H_
+#endif // _HEX_H_
