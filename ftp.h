@@ -18,7 +18,7 @@
 #ifndef _FTP_H_
 #define _FTP_H_
 
-int InitFTP(char host2);
+int InitFTP(char host2[]);
 void listar(void); // Lista arquivos
 int upload(void); // Faz upload de arquivos
 int download(void); // Baixa arquivos

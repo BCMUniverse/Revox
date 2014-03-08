@@ -24,6 +24,7 @@
 #include "http.h"
 #include "mail.h"
 #include "htmlText.h"
+#include "manifest.h"
 #include "nntp.h"
 #include "prospero.h"
 #include "typeparser.h"
@@ -35,6 +36,10 @@
 
 char ports[][16] = {"http", "https", "ftp", "telnet", "gopher", "file", "mailto", "news", "nntp", "wais", "prospero"};
 char bars[][4] = {":", "//", "/", "?"};
+
+char *UrlConstructor(char url[], char path[]){
+    return "";
+}
 
 url UrlParser(char host[]){
     char aux[16], aux2[16];
@@ -156,13 +161,18 @@ url UrlParser(char host[]){
     return addr;
 }
 
-Type UrlConnect(char *host, int mode, HINSTANCE hInst, HWND hwnd){
-    char msg[2*BUFKB];
+Type UrlConnect(char host[], int mode, HINSTANCE hInst, HWND hwnd){
+    char msg[2*BUFKB], *cached;
     int i;
     uports up1;
     FILE *input;
     Type tp1;
     url url1 = UrlParser(host);
+    if((cached = IsCached(host))!=NULL){
+        strcpy(tp1.content, cached);
+        strcpy(tp1.url, host);
+        return tp1;
+    }
     for(i=0; i<11; i++){
         if(strcmp(url1.prtcol, ports[i])==0){
             up1 = i;

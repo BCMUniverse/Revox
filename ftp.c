@@ -62,7 +62,7 @@ char * buffer_file = NULL; // Buffer para receber armazenar conteúdo de arquivo
 
 unsigned long chunk = 0x1000,total=0; //Variíveis de controle : enviar e receber de arquivos
 
-int InitFTP(char host2){
+int InitFTP(char host2[]){
     strcpy(servidor, host2);
     iniciar(); // Inicia comunicação
     unsigned char op;

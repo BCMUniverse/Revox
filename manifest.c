@@ -15,7 +15,6 @@
 	BCM Revox Engine v0.2
 	BCM Revox Engine -> Ano: 2014|Tipo: WebEngine
 */
-#include <omp.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -26,15 +25,27 @@
 #include "typeparser.h"
 #include "urlparser.h"
 
-char manisec[][16] = {"CACHE:", "FALLBACK:", "SETTINGS:"};
+char manisec[][16] = {"CACHE:", "FALLBACK:", "SETTINGS:", "NETWORK:"};
 char setts[][16] = {"prefer-online", "fast"};
 
 char *CopyManifst(char content[], int *i){
-    char result[4096];
-    int j, k;
+    char result[4096], c;
+    int j, k = *i;
 
-    for(k=*i, j=0; content[k]!=' ' || content[k]!='\r' || content[k]!='\n'; k++, j++){
-        result[j] = content[k];
+    if(content[k]=='#'){
+        while(content[k]!='\n' || content[k]!='\r'){
+            c = content[k];
+            k++;
+        }
+    }
+    else{
+        for(k=*i, j=0; content[k]!=' ' || content[k]!='\r' || content[k]!='\n'; k++, j++){
+            result[j] = content[k];
+        }
+    }
+    while(content[k]=='\n' || content[k]=='\r' || content[k]==' '){
+        c = content[k];
+        k++;
     }
     *i = k;
 
@@ -51,7 +62,7 @@ char *IsCached(char url[]){
 
     if((index = fopen(".\\cache\\index", "r+"))==NULL){
         fprintf(stderr, "Erro: Arquivo Invalido!\r\n");
-        return "\0";
+        return NULL;
     }
     tam = TamFile(index);
     contIndex = (char *)malloc(sizeof(char)*tam);
@@ -73,11 +84,11 @@ char *IsCached(char url[]){
         }while(date[i]!='\n' || date[i]!='\r' || date[i]!=' ');
     }
     else{
-        return "\0";
+        return NULL;
     }
     if((output = fopen(path, "r+"))==NULL){
         fprintf(stderr, "Erro: Arquivo Invalido!\r\n");
-        return "\0";
+        return NULL;
     }
     tam = TamFile(output);
     cont = (char *)malloc(sizeof(char)*tam);
@@ -94,8 +105,8 @@ char *IsCached(char url[]){
 
 char *InitManifest(char content[], char url1[]){
     char *result, *aux, cache[4096], *apt;
-    FILE *output, *index;
-    int i, j, k;
+    FILE *output;
+    int i, j, k, cache1, fallbck, setts, net;
     /*
         A varíavel defcache define baseado nas prefefências do manifesto, se deve ou não salvar os arquivos indicado no manifesto.
         defcache igual a 0 -> fast
@@ -103,32 +114,25 @@ char *InitManifest(char content[], char url1[]){
     */
     int defcache = 0;
 
-    if((index = fopen(".\\cache\\index", "r+"))==NULL){
-        fprintf(stderr, "Erro: Arquivo Invalido!\r\n");
-        return "\0";
-    }
+    cache1 = SearchString(content, manisec[0]);
+    fallbck = SearchString(content, manisec[1]);
+    setts = SearchString(content, manisec[2]);
+    net = SearchString(content, manisec[3]);
+
     for(i=0; content[i]!='\0'; i++){
         aux = CopyManifst(content, &i);
-        if(strcmp(aux, manisec[0])==0){
+        if(strcmp(aux, manisec[0])==0 && i!=fallbck && i!=setts && i!=net){
             aux = CopyManifst(content, &i);
-            strcpy(cache, aux);
-            if(strcmp(index, HexCreater(aux))==0){
-                if((output = fopen(cache, "a+"))==NULL){
-                    fprintf(stderr, "Erro: Arquivo Invalido!\r\n");
-                    return "\0";
-                }
-                fclose(output);
+            if(aux[0]!='#'){
+                strcpy(cache, aux);
             }
-            if((output = fopen(cache, "a+"))==NULL){
-                fprintf(stderr, "Erro: Arquivo Invalido!\r\n");
-                return "\0";
+            else{
+                CopyManifst(content, &i);
             }
-            fclose(output);
         }
-        if(strcmp(aux, manisec[1])==0){}
-        if(strcmp(aux, manisec[2])==0){}
+        if(strcmp(aux, manisec[1])==0 && i!=cache1 && i!=setts && i!=net){}
+        if(strcmp(aux, manisec[2])==0 && i!=fallbck && i!=cache1 && i!=net){}
     }
-    fclose(index);
 
     return result;
 }
