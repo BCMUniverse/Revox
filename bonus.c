@@ -240,3 +240,11 @@ int inet_pton(int af, const char *src, char *dst){
         return -1;
     }
 }
+
+long TamFile(FILE *arq){
+    long pos = ftell(arq);
+    fseek(arq, 0, SEEK_END);
+    long tam = ftell(arq);
+    fseek(arq, pos, SEEK_SET);
+    return tam;
+}

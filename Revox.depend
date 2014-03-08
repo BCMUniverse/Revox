@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1391861045 source:e:\bcmuniverse\revox\v1.x\bonus.c
+1394303663 source:e:\bcmuniverse\revox\v1.x\bonus.c
 	<omp.h>
 	<ctype.h>
 	<stdio.h>
@@ -7,7 +7,7 @@
 	<winsock2.h>
 	"bonus.h"
 
-1391859378 e:\bcmuniverse\revox\v1.x\bonus.h
+1394303663 e:\bcmuniverse\revox\v1.x\bonus.h
 
 1387299141 source:e:\bcmuniverse\revox\v1.x\ftp.c
 	<omp.h>
@@ -228,15 +228,24 @@
 1394155967 source:e:\bcmuniverse\revox\v1.x\hex.c
 	<stdio.h>
 
-1394156978 source:e:\bcmuniverse\revox\v1.x\manifest.c
+1394295110 source:e:\bcmuniverse\revox\v1.x\manifest.c
 	<omp.h>
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	"bonus.h"
 	"hex.h"
+	"strs.h"
 	"typeparser.h"
 	"urlparser.h"
 
 1394155906 e:\bcmuniverse\revox\v1.x\hex.h
+
+1394294527 e:\bcmuniverse\revox\v1.x\strs.h
+
+1394303985 source:e:\bcmuniverse\revox\v1.x\strs.c
+	<ctype.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
 

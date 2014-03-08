@@ -65,6 +65,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="guicon.h" />
+		<Unit filename="hex.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="hex.h" />
 		<Unit filename="html.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -107,6 +111,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="socks.h" />
+		<Unit filename="strs.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="strs.h" />
 		<Unit filename="telnet.c">
 			<Option compilerVar="CC" />
 		</Unit>

@@ -19,8 +19,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include "bonus.h"
 #include "hex.h"
+#include "strs.h"
 #include "typeparser.h"
 #include "urlparser.h"
 
@@ -37,6 +39,57 @@ char *CopyManifst(char content[], int *i){
     *i = k;
 
     return result;
+}
+
+char *IsCached(char url[]){
+    char *cont, *contIndex, *aux, Time[64], c, path[4096], date[64];
+    int aux2, i = 0;
+    FILE *index, *output;
+    long tam;
+    struct tm *defTime;
+    time_t currentTime;
+
+    if((index = fopen(".\\cache\\index", "r+"))==NULL){
+        fprintf(stderr, "Erro: Arquivo Invalido!\r\n");
+        return "\0";
+    }
+    tam = TamFile(index);
+    contIndex = (char *)malloc(sizeof(char)*tam);
+    fscanf(output, "%s", contIndex);
+    aux2 = SearchString(contIndex, url);
+    if(aux2!=-1){
+        fseek(index, aux2, SEEK_SET);
+        do{
+            fscanf(index, "%c", c);
+        }while(c!='\n' || c!='\r' || c!=' ');
+        do{
+            fscanf(index, "%c", path[i]);
+            i++;
+        }while(path[i]!='\n' || path[i]!='\r' || path[i]!=' ');
+        i = 0;
+        do{
+            fscanf(index, "%c", date[i]);
+            i++;
+        }while(date[i]!='\n' || date[i]!='\r' || date[i]!=' ');
+    }
+    else{
+        return "\0";
+    }
+    if((output = fopen(path, "r+"))==NULL){
+        fprintf(stderr, "Erro: Arquivo Invalido!\r\n");
+        return "\0";
+    }
+    tam = TamFile(output);
+    cont = (char *)malloc(sizeof(char)*tam);
+    fscanf(output, "%s", cont);
+    //Gerar o tempo atual antes de grava-lo na index
+    currentTime = time(NULL);
+    defTime = localtime(&currentTime);
+    strftime(time, 64, "%d/%m/%Y", defTime);
+    fclose(output);
+    fclose(index);
+
+    return cont;
 }
 
 char *InitManifest(char content[], char url1[]){
