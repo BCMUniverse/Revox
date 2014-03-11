@@ -13,7 +13,7 @@
 	51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 
 	BCM Revox Engine v0.2
-	BCM Revox Engine -> Ano: 2013|Tipo: WebEngine
+	BCM Revox Engine -> Ano: 2013, 2014|Tipo: WebEngine
 */
 #include <omp.h>
 #include <stdio.h>
@@ -27,19 +27,14 @@
 #include "manifest.h"
 #include "nntp.h"
 #include "prospero.h"
+#include "strs.h"
 #include "typeparser.h"
 #include "urlparser.h"
 #include "usenet.h"
 #include "wais.h"
 
-#pragma omp
-
 char ports[][16] = {"http", "https", "ftp", "telnet", "gopher", "file", "mailto", "news", "nntp", "wais", "prospero"};
 char bars[][4] = {":", "//", "/", "?"};
-
-char *UrlConstructor(char url[], char path[]){
-    return "";
-}
 
 url UrlParser(char host[]){
     char aux[16], aux2[16];
@@ -161,6 +156,23 @@ url UrlParser(char host[]){
     return addr;
 }
 
+char *UrlConstructor(char Url[], char path[]){
+    char result[strlen(Url)+strlen(path)], aux[16];
+    int i;
+    url url1;
+
+    #pragma omp parallel for
+    for(i=0; i<11; i++){
+        strcpy(aux, SearchString(path, CreateTag(ports[i], bars[0], bars[1])));
+    }
+    if(aux==NULL){
+        url1 = UrlParser(Url);
+        strcpy(result, CreateTag(url1.prtcol, CreateTag(bars[0], bars[1], "\0"), CreateTag(url1.host, bars[2], path)));
+    }
+
+    return result;
+}
+
 Type UrlConnect(char host[], int mode, HINSTANCE hInst, HWND hwnd){
     char msg[2*BUFKB], *cached;
     int i;
@@ -174,7 +186,7 @@ Type UrlConnect(char host[], int mode, HINSTANCE hInst, HWND hwnd){
         return tp1;
     }
     for(i=0; i<11; i++){
-        if(strcmp(url1.prtcol, ports[i])==0){
+        if(strstr(url1.prtcol, ports[i])!=NULL){
             up1 = i;
             break;
         }

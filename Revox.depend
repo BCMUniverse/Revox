@@ -92,7 +92,7 @@
 
 1391897611 e:\bcmuniverse\revox\v1.x\typeparser.h
 
-1394309431 e:\bcmuniverse\revox\v1.x\urlparser.h
+1394503133 e:\bcmuniverse\revox\v1.x\urlparser.h
 	<windows.h>
 	"typeparser.h"
 
@@ -159,9 +159,9 @@
 	"typeparser.h"
 	"urlparser.h"
 
-1394156995 e:\bcmuniverse\revox\v1.x\manifest.h
+1394501819 e:\bcmuniverse\revox\v1.x\manifest.h
 
-1394309431 source:e:\bcmuniverse\revox\v1.x\urlparser.c
+1394502422 source:e:\bcmuniverse\revox\v1.x\urlparser.c
 	<omp.h>
 	<stdio.h>
 	<stdlib.h>
@@ -171,8 +171,10 @@
 	"http.h"
 	"mail.h"
 	"htmlText.h"
+	"manifest.h"
 	"nntp.h"
 	"prospero.h"
+	"strs.h"
 	"typeparser.h"
 	"urlparser.h"
 	"usenet.h"
@@ -228,8 +230,7 @@
 1394155967 source:e:\bcmuniverse\revox\v1.x\hex.c
 	<stdio.h>
 
-1394309079 source:e:\bcmuniverse\revox\v1.x\manifest.c
-	<omp.h>
+1394309898 source:e:\bcmuniverse\revox\v1.x\manifest.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>

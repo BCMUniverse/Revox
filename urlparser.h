@@ -43,7 +43,7 @@ typedef enum _uports{
 }uports;
 
 //Constroi Urls
-char *UrlConstructor(char url[], char path[]);
+char *UrlConstructor(char Url[], char path[]);
 //Analisa URLs
 url UrlParser(char host[]);
 /*

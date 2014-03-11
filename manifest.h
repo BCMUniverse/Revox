@@ -18,6 +18,7 @@
 #ifndef _MANIFEST_H_
 #define _MANIFEST_H_
 
+char *IsCached(char url[]);
 char *CopyManifst(char content[], int *i);
 char *InitManifest(char content[], char url1[]);
 
