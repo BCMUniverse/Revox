@@ -158,7 +158,7 @@ url UrlParser(char host[]){
 
 char *UrlConstructor(char Url[], char path[]){
     char result[strlen(Url)+strlen(path)], aux[16];
-    int i, Surl;
+    int i;
     url url1;
 
     #pragma omp parallel for schedule(guided)

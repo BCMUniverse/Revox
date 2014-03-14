@@ -12,16 +12,14 @@
 	este programa, se não, escreva para a Fundação do Software Livre(FSF) Inc.,
 	51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 
-	BCM Revox Engine v0.1
-	BCM Revox Engine -> Ano: 2013|Tipo: WebEngine
+	BCM Revox Engine v0.2
+	BCM Revox Engine -> Ano: 2013, 2014|Tipo: WebEngine
 */
 #include <omp.h>
 #include <stdio.h>
 #include <windef.h>
 #include "revox.h"
 #include "bonus.h"
-
-#pragma omp
 
 void InitText(char *host){
     InitTypeParser(UrlConnect(host, 1, NULL, NULL), 1);
