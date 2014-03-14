@@ -158,19 +158,21 @@ url UrlParser(char host[]){
 
 char *UrlConstructor(char Url[], char path[]){
     char result[strlen(Url)+strlen(path)], aux[16];
-    int i;
+    int i, Surl;
     url url1;
 
-    #pragma omp parallel for
+    #pragma omp parallel for schedule(guided)
     for(i=0; i<11; i++){
-        strcpy(aux, SearchString(path, CreateTag(ports[i], bars[0], bars[1])));
+        strcpy(aux, strstr(path, CreateTag(ports[i], bars[0], bars[1])));
     }
     if(aux==NULL){
         url1 = UrlParser(Url);
         strcpy(result, CreateTag(url1.prtcol, CreateTag(bars[0], bars[1], "\0"), CreateTag(url1.host, bars[2], path)));
+        return result;
     }
-
-    return result;
+    else{
+        return path;
+    }
 }
 
 Type UrlConnect(char host[], int mode, HINSTANCE hInst, HWND hwnd){
@@ -204,10 +206,7 @@ Type UrlConnect(char host[], int mode, HINSTANCE hInst, HWND hwnd){
         InitFTP(url1.host);
         break;
     case TELNET:
-        strcpy(msg, "telnet ");
-        strcat(msg, url1.host);
-        strcat(msg, " ");
-        strcat(msg, url1.port);
+        sprintf(msg, "telnet %s %d", url1.host, url1.port);
         system(msg);
         tp1.content = NULL;
         tp1.url = CreateTag(url1.prtcol, bars[0], url1.host);

@@ -20,6 +20,6 @@
 
 char *IsCached(char url[]);
 char *CopyManifst(char content[], int *i);
-char *InitManifest(char content[], char url1[]);
+char *InitManifest(char content[], char url1[], char tipo[]);
 
 #endif // _MANIFEST_H_

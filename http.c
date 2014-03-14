@@ -70,12 +70,11 @@ int recvtimeout(int s, int timeout){
 char *InitHTTP(char *address, int port, char *caminho, char *cookie){
     struct sockaddr_in Server;
     SOCKET sock;
-    char buffer[1024];
+    char buffer[1024], buf2[512], ip[16];
     int recv_size, i;
     WSADATA wsa;
     struct hostent *he;
     struct in_addr **addr_list;
-    char ip[16], tmp[VKB];
 
     //Inicialização
     InitSock();
@@ -137,19 +136,16 @@ char *InitHTTP(char *address, int port, char *caminho, char *cookie){
     //Connect to remote server
     if (connect(sock, &Server, sizeof(Server)) < 0){
         puts("Erro ao Conectar!");
-        return 1;
+        return "\0";
     }
     puts("Connectado.");
     //Send some data
-    strcpy(buffer, "GET ");
-    strcat(buffer, caminho);
-    strcat(buffer, " HTTP/1.1\r\n");
-    strcat(buffer, "Host: ");
-    strcat(buffer, address);
-    strcat(buffer, "\r\n");
+    sprintf(buffer, "GET %s HTTP/1.1\r\n", caminho);
+    sprintf(buf2, "Host: %s\r\n", address);
+    strcat(buffer, buf2);
     strcat(buffer, "Connection: keep-alive\r\n");
-    sprintf(tmp, "User-Agent: %s (Windows NT 6.1; %s)\r\n", RVXVERSION, RVXVERSIONFULL);
-    strcat(buffer, tmp);
+    sprintf(buf2, "User-Agent: %s (Windows NT 6.1; %s)\r\n", RVXVERSION, RVXVERSIONFULL);
+    strcat(buffer, buf2);
     strcat(buffer, "Accept-Language: pt-br,pt;q=0.7;en-us,en;q=0.5\r\n");
     strcat(buffer, "Accept-Charset: ISO-8859-1,UTF-8;q=0.7,*;q=0.7\r\n");
     strcat(buffer, "Cache-Control: no-cache\r\n");

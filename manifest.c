@@ -94,17 +94,17 @@ char *IsCached(char url[]){
     cont = (char *)malloc(sizeof(char)*tam);
     fscanf(output, "%s", cont);
     //Gerar o tempo atual antes de grava-lo na index
-    currentTime = time(NULL);
+    /*currentTime = time(NULL);
     defTime = localtime(&currentTime);
     strftime(time, 64, "%d/%m/%Y", defTime);
     fclose(output);
-    fclose(index);
+    fclose(index);*/
 
     return cont;
 }
 
-char *InitManifest(char content[], char url1[]){
-    char *result, *aux, cache[4096], *apt;
+char *InitManifest(char content[], char url1[], char tipo[]){
+    char *result, *aux, cache[4096], hexUrl[8192], *cached, file[12288];
     FILE *output;
     int i, j, k, cache1, fallbck, setts, net;
     /*
@@ -124,7 +124,21 @@ char *InitManifest(char content[], char url1[]){
         if(strcmp(aux, manisec[0])==0 && i!=fallbck && i!=setts && i!=net){
             aux = CopyManifst(content, &i);
             if(aux[0]!='#'){
-                strcpy(cache, aux);
+                strcpy(cache, UrlConstructor(url1, aux));
+                strcpy(hexUrl, HexCreater(cache));
+                if((cached = IsCached(cache))!=NULL){
+                    strcpy(result, cached);
+                }
+                else{
+                    sprintf(file, ".\\cache\\%s", hexUrl);
+                    if((output, fopen(file, "w+"))==NULL){
+                        fprintf(stderr, "Erro: Arquivo Invalido!\r\n");
+                        return NULL;
+                    }
+                    fprintf(output, "Content-Type: %s\r\n", tipo);
+                    fprintf(output, "%s\r\n", UrlParser(cache));
+                    fclose(output);
+                }
             }
             else{
                 CopyManifst(content, &i);

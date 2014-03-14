@@ -38,7 +38,7 @@
 
 1391645278 e:\bcmuniverse\revox\v1.x\http.h
 
-1391893276 source:e:\bcmuniverse\revox\v1.x\http.c
+1394758118 source:e:\bcmuniverse\revox\v1.x\http.c
 	<omp.h>
 	<stdio.h>
 	<stdlib.h>
@@ -147,7 +147,7 @@
 	<string.h>
 	<winsock2.h>
 
-1393125046 source:e:\bcmuniverse\revox\v1.x\typeparser.c
+1394760840 source:e:\bcmuniverse\revox\v1.x\typeparser.c
 	<omp.h>
 	<stdio.h>
 	<stdlib.h>
@@ -156,12 +156,13 @@
 	"html.h"
 	"htmlText.h"
 	"manifest.h"
+	"strs.h"
 	"typeparser.h"
 	"urlparser.h"
 
-1394501819 e:\bcmuniverse\revox\v1.x\manifest.h
+1394760901 e:\bcmuniverse\revox\v1.x\manifest.h
 
-1394502422 source:e:\bcmuniverse\revox\v1.x\urlparser.c
+1394757694 source:e:\bcmuniverse\revox\v1.x\urlparser.c
 	<omp.h>
 	<stdio.h>
 	<stdlib.h>
@@ -230,7 +231,7 @@
 1394155967 source:e:\bcmuniverse\revox\v1.x\hex.c
 	<stdio.h>
 
-1394309898 source:e:\bcmuniverse\revox\v1.x\manifest.c
+1394760901 source:e:\bcmuniverse\revox\v1.x\manifest.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>

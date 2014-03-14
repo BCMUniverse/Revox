@@ -23,49 +23,59 @@
 #include "html.h"
 #include "htmlText.h"
 #include "manifest.h"
+#include "strs.h"
 #include "typeparser.h"
 #include "urlparser.h"
 
 char types[][128] = {"text/html", "text/cache-manifest", "text/plain"};
 
 char *InitTypeParser(Type tp1, int mode){
-    char *result, *vtyp;
+    char *result, *vtyp, *aux, TypFile[VKB];
     FILE *index;
-    int i, j;
+    int i, j, tipo;
     type typ1;
 
     if((index = fopen(".\\cache\\index", "r+"))==NULL){
         fprintf(stderr, "Erro: Arquivo Invalido!\r\n");
         return "\0";
     }
-    for(i=0; tp1.content[i]!='\0'; i++){
-        for(j=0; j<3; j++){
-            vtyp = strstr(tp1.content, types[j]);
-            if(vtyp!=NULL){
-                typ1 = j;
-                break;
+    #pragma omp parallel for schedule(guided)
+    for(j=0; j<3; j++){
+        vtyp = strstr(tp1.content, types[j]);
+        if(vtyp!=NULL){
+            typ1 = j;
+        }
+    }
+    if(vtyp==NULL){
+        for(i=0; tp1.content[i]!='\0'; i++){
+            aux = CopyManifst(tp1.content, &i);
+            if((tipo = SearchString(aux, "Content-Type: "))!=NULL){
+                i = aux-tp1.content;
+                for(i=i-tipo, j=0; tp1.content[i]!='\r' || tp1.content[i]!='\n'; i++, j++){
+                    TypFile[j] = tp1.content[i];
+                }
             }
         }
-        switch(typ1){
-        case THTML:
-            switch(mode){
-            case 0:
-                break;
-            case 1:
-                result = InitHTMLText(tp1.content);
-                break;
-            default:
-                fprintf(stderr, "Erro: Valor Invalido!\r\n");
-            }
+    }
+    switch(typ1){
+    case THTML:
+        switch(mode){
+        case 0:
             break;
-        case MANIFEST:
-            result = InitManifest(tp1.content, tp1.url);
-            break;
-        case PLAIN:
+        case 1:
+            result = InitHTMLText(tp1.content);
             break;
         default:
-            break;
+            fprintf(stderr, "Erro: Valor Invalido!\r\n");
         }
+        break;
+    case MANIFEST:
+        result = InitManifest(tp1.content, tp1.url, TypFile);
+        break;
+    case PLAIN:
+        break;
+    default:
+        break;
     }
     fclose(index);
 
