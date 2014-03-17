@@ -53,12 +53,10 @@ char *CopyManifst(char content[], int *i){
 }
 
 char *IsCached(char url[]){
-    char *cont, *contIndex, *aux, Time[64], c, path[4096], date[64];
+    char *cont, *contIndex, *aux, c, path[4096], date[64];
     int aux2, i = 0;
     FILE *index, *output;
     long tam;
-    struct tm *defTime;
-    time_t currentTime;
 
     if((index = fopen(".\\cache\\index", "r+"))==NULL){
         fprintf(stderr, "Erro: Arquivo Invalido!\r\n");
@@ -93,20 +91,18 @@ char *IsCached(char url[]){
     tam = TamFile(output);
     cont = (char *)malloc(sizeof(char)*tam);
     fscanf(output, "%s", cont);
-    //Gerar o tempo atual antes de grava-lo na index
-    /*currentTime = time(NULL);
-    defTime = localtime(&currentTime);
-    strftime(time, 64, "%d/%m/%Y", defTime);
     fclose(output);
-    fclose(index);*/
+    fclose(index);
 
     return cont;
 }
 
 char *InitManifest(char content[], char url1[], char tipo[]){
-    char *result, *aux, cache[4096], hexUrl[8192], *cached, file[12288];
-    FILE *output;
+    char *result, *aux, cache[4096], hexUrl[8192], *cached, file[12288], Time[64];
+    FILE *output, *index;
     int i, j, k, cache1, fallbck, setts, net;
+    struct tm *defTime;
+    time_t currentTime;
     /*
         A varíavel defcache define baseado nas prefefências do manifesto, se deve ou não salvar os arquivos indicado no manifesto.
         defcache igual a 0 -> fast
@@ -131,12 +127,25 @@ char *InitManifest(char content[], char url1[], char tipo[]){
                 }
                 else{
                     sprintf(file, ".\\cache\\%s", hexUrl);
+                    //Abre ou cria a index e o arquivo no cache
                     if((output, fopen(file, "w+"))==NULL){
                         fprintf(stderr, "Erro: Arquivo Invalido!\r\n");
                         return NULL;
                     }
-                    fprintf(output, "Content-Type: %s\r\n", tipo);
-                    fprintf(output, "%s\r\n", UrlParser(cache));
+                    if((index, fopen(".\\cache\\index", "a+"))==NULL){
+                        fprintf(stderr, "Erro: Arquivo Invalido!\r\n");
+                        return NULL;
+                    }
+                    //Gerar o tempo atual antes de grava-lo na index
+                    currentTime = time(NULL);
+                    defTime = localtime(&currentTime);
+                    strftime(Time, 64, "%d/%m/%Y", defTime);
+                    //Registra o cache na index
+                    fprintf(index, "%s\r\n%s\r\n%s\r\n\r\n", url1, HexCreater(cache), time);
+                    //Armazena o cache
+                    fprintf(output, "Content-Type: %s\r\n%s\r\n", tipo, UrlConnect(cache, 1, NULL, NULL));
+                    //Fecha os arquivos
+                    fclose(index);
                     fclose(output);
                 }
             }
@@ -147,6 +156,7 @@ char *InitManifest(char content[], char url1[], char tipo[]){
         if(strcmp(aux, manisec[1])==0 && i!=cache1 && i!=setts && i!=net){}
         if(strcmp(aux, manisec[2])==0 && i!=fallbck && i!=cache1 && i!=net){}
     }
+    strcpy(result, "CACHED");
 
     return result;
 }
