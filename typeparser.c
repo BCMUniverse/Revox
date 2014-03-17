@@ -35,15 +35,11 @@ char *InitTypeParser(Type tp1, int mode){
     int i, j, tipo;
     type typ1;
 
-    if((index = fopen(".\\cache\\index", "r+"))==NULL){
-        fprintf(stderr, "Erro: Arquivo Invalido!\r\n");
-        return "\0";
-    }
     #pragma omp parallel for schedule(guided)
     for(j=0; j<3; j++){
         vtyp = strstr(tp1.content, types[j]);
         if(vtyp!=NULL){
-            typ1 = j;
+            typ1 = (type)j;
         }
     }
     if(vtyp==NULL){
@@ -77,7 +73,6 @@ char *InitTypeParser(Type tp1, int mode){
     default:
         break;
     }
-    fclose(index);
 
     return result;
 }

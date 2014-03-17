@@ -37,10 +37,10 @@ char ports[][16] = {"http", "https", "ftp", "telnet", "gopher", "file", "mailto"
 char bars[][4] = {":", "//", "/", "?"};
 
 url UrlParser(char host[]){
-    char aux[16], aux2[16];
-    int i, j;
+    char aux[16], aux2[VKB];
+    int i = 0, j = 0, k = 0;
     url addr;
-    uports port1;
+    uports port1 = (uports)0;
 
     limpaVetor(addr.host, 1025);
     limpaVetor(addr.url_path, 1025);
@@ -58,7 +58,8 @@ url UrlParser(char host[]){
             }
         }
         if(aux2!=NULL){
-            port1 = i;
+            k = i;
+            port1 = k;
             switch(port1){
             case HTTP:
                 addr.port = 80;
@@ -131,7 +132,7 @@ url UrlParser(char host[]){
         addr.host[i] = host[i];
     }
     RemvSubString(host, addr.host);
-    if(host[i]==':'){
+    if(strchr(host, ':')!=NULL){
         RemvSubString(host, bars[0]);
         limpaVetor(aux, 16);
         for(i=0; host[i]!='/'; i++){
@@ -140,11 +141,11 @@ url UrlParser(char host[]){
         addr.port = atoi(aux);
     }
     else{
-        if(host[i]=='/'){
+        if(strchr(host, '/')!=NULL){
             strcpy(addr.url_path, host);
         }
         else{
-            if(host[i]=='?'){
+            if(strchr(host, '?')!=NULL){
                 strcpy(addr.url_path, host);
             }
         }

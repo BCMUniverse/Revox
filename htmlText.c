@@ -179,7 +179,7 @@ char *InitHTMLText(char *content){
                     break;
                 }
             }
-            elts = (j+200);
+            elts = (Elemts)(j+200);
             switch(elts){
             case DOCTYPE:
                 for(i=i, k=0; buffer[i]!='>';i++, k++){
