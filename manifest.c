@@ -30,7 +30,7 @@ char setts[][16] = {"prefer-online", "fast"};
 
 char *CopyManifst(char content[], int *i){
     char result[4096], c;
-    int j, k = *i;
+    int j = 0, k = *i;
 
     if(content[k]=='#'){
         while(content[k]!='\n' || content[k]!='\r'){
@@ -39,11 +39,11 @@ char *CopyManifst(char content[], int *i){
         }
     }
     else{
-        for(k=*i, j=0; content[k]!=' ' || content[k]!='\r' || content[k]!='\n'; k++, j++){
-            result[j] = content[k];
+        while(content[k]!='\r' && content[k]!='\n' && content[k]!=' '){
+            result[j++] = content[k++];
         }
     }
-    while(content[k]=='\n' || content[k]=='\r' || content[k]==' '){
+    while(content[k]=='\r' || content[k]=='\n' || content[k]==' '){
         c = content[k];
         k++;
     }

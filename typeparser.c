@@ -43,13 +43,17 @@ char *InitTypeParser(Type tp1, int mode){
         }
     }
     if(vtyp==NULL){
-        for(i=0; tp1.content[i]!='\0'; i++){
+        for(i=0; tp1.content[i]!='\0';){
+            if(aux!=NULL){
+                limpaVetor(aux, strlen(aux));
+                aux = NULL;
+            }
             aux = CopyManifst(tp1.content, &i);
-            if((tipo = SearchString(aux, "Content-Type: "))!=NULL){
-                i = aux-tp1.content;
-                for(i=i-tipo, j=0; tp1.content[i]!='\r' || tp1.content[i]!='\n'; i++, j++){
+            if(SearchString(aux, "Content-Type:")>-1){
+                for(i=i, j=0; tp1.content[i]!='\r' || tp1.content[i]!='\n'; i++, j++){
                     TypFile[j] = tp1.content[i];
                 }
+                break;
             }
         }
     }

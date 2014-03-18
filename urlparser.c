@@ -38,7 +38,7 @@ char bars[][4] = {":", "//", "/", "?"};
 
 url UrlParser(char host[]){
     char aux[16], aux2[VKB];
-    int i = 0, j = 0, k = 0;
+    int i = 0;
     url addr;
     uports port1 = (uports)0;
 
@@ -58,8 +58,7 @@ url UrlParser(char host[]){
             }
         }
         if(aux2!=NULL){
-            k = i;
-            port1 = k;
+            port1 = i;
             switch(port1){
             case HTTP:
                 addr.port = 80;
