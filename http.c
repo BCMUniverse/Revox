@@ -27,12 +27,10 @@
 #include "http.h"
 #include "socks.h"
 
-#pragma omp
-
 unsigned long mode = 1;
 char server_reply[BUF32KB];
 
-int recvtimeout(int s, int timeout){
+int recvtimeout(SOCKET s, int timeout){
     int tamanho, total = 0, i;
     struct timeval beg, now;
     double timediff;
@@ -40,10 +38,7 @@ int recvtimeout(int s, int timeout){
 
     ioctlsocket(s, FIONBIO, &mode);
     gettimeofday(&beg, NULL);
-
-    for(i=0; i<BUFKB; i++){
-        temp[i] = '\0';
-    }
+    limpaVetor(temp, BUFKB);
     while(1){
         gettimeofday(&now, NULL);
         timediff = (now.tv_sec - beg.tv_sec)+1e-6*(now.tv_usec - beg.tv_usec);
@@ -55,7 +50,7 @@ int recvtimeout(int s, int timeout){
         }
         memset(temp, 0, BUFKB);
         if((tamanho = recv(s, temp, BUFKB, 0))<0){
-            usleep(100000);
+            usleep(10000);
         }
         else{
             total += tamanho;
@@ -70,16 +65,15 @@ int recvtimeout(int s, int timeout){
 char *InitHTTP(char *address, int port, char *caminho, char *cookie){
     struct sockaddr_in Server;
     SOCKET sock;
-    char buffer[1024], buf2[512], ip[16];
-    int recv_size, i;
+    char buffer[1024], buf2[512], ip[16], *aux, len[256];
+    int recv_size, i, j;
     WSADATA wsa;
     struct hostent *he;
     struct in_addr **addr_list;
 
     //Inicialização
     InitSock();
-    //Criar o socket
-	//Socket IPv4
+    //Criar o socket IPv4
 	if((sock = socket(AF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET) {
 		printf("Nao pode criar o socket: %d\n" , WSAGetLastError());
 	}
@@ -134,7 +128,7 @@ char *InitHTTP(char *address, int port, char *caminho, char *cookie){
     Server.sin_port = htons(port);
 
     //Connect to remote server
-    if (connect(sock, &Server, sizeof(Server)) < 0){
+    if (connect(sock, (SOCKADDR *)&Server, sizeof(Server)) < 0){
         puts("Erro ao Conectar!");
         return "\0";
     }
@@ -170,14 +164,26 @@ char *InitHTTP(char *address, int port, char *caminho, char *cookie){
     }
     printf("Resposta recebida\nBytes recebidos: %d\n", recv_size);
 
-    //Now receive full data
-    int total = recvtimeout(sock, 4);
-    printf("\nPronto. Tamanho total do pacote: %d bytes\n", total);
+    for(i=0; server_reply[i]!='\0';){
+        if(aux!=NULL){
+            limpaVetor(aux, strlen(aux));
+            aux = NULL;
+        }
+        aux = CopyManifst(server_reply, &i);
+        if(SearchString(aux, "Content-Length:")>-1){
+            for(i=i, j=0; server_reply[i]!='\r' && server_reply[i]!='\n'; i++, j++){
+                len[j] = server_reply[i];
+            }
+            break;
+        }
+    }
+    if(recv_size<(atoi(len)-512)){
+        int total = recvtimeout(sock, 4);
+        printf("\nPronto. Tamanho total do pacote: %d bytes\n", total);
+    }
 
     char *conteudo = (char *)malloc(sizeof(char)*BUF32KB);
-    for(i=0; i<BUF32KB; i++){
-        conteudo[i] = '\0';
-    }
+    limpaVetor(conteudo, BUF32KB);
     strcpy(conteudo, server_reply);
 
     closesocket(sock);

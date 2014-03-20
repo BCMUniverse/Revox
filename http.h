@@ -18,9 +18,11 @@
 #ifndef HTTP_H_INCLUDED
 #define HTTP_H_INCLUDED
 
+#include <winsock2.h>
+
 #define BUFKB 2048
 
-int recvtimeout(int s, int timeout);
+int recvtimeout(SOCKET s, int timeout);
 char *InitHTTP(char *address, int port, char *caminho, char *cookie);
 
 #endif // HTTP_H_INCLUDED
