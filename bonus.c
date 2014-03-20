@@ -26,8 +26,6 @@
 #include <winsock2.h>
 #include "bonus.h"
 
-#pragma omp
-
 void InitPilha(pilha *p){
     int i;
     p->topo = -1;
@@ -93,6 +91,7 @@ char *RemovePilha2(pilha2 *p){
 
 void limpaVetor(char *vet, int tam){
     int i;
+    #pragma omp parallel for schedule(guided)
     for(i=0; i<tam; i++){
         vet[i] = '\0';
     }

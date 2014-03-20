@@ -50,7 +50,7 @@ char *InitTypeParser(Type tp1, int mode){
             }
             aux = CopyManifst(tp1.content, &i);
             if(SearchString(aux, "Content-Type:")>-1){
-                for(i=i, j=0; tp1.content[i]!='\r' || tp1.content[i]!='\n'; i++, j++){
+                for(i=i, j=0; tp1.content[i]!='\r' && tp1.content[i]!='\n'; i++, j++){
                     TypFile[j] = tp1.content[i];
                 }
                 break;

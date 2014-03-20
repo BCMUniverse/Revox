@@ -162,9 +162,7 @@ char *InitHTTP(char *address, int port, char *caminho, char *cookie){
     }
     puts("Dados enviados");
 
-    for(i=0; i<BUF32KB; i++){
-        server_reply[i] = '\0';
-    }
+    limpaVetor(server_reply, BUF32KB);
 
     //Receive a reply from the server
     if((recv_size = recv(sock, server_reply, BUF32KB, 0))<INVALID_SOCKET){
