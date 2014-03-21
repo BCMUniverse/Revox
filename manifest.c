@@ -33,9 +33,8 @@ char *CopyManifst(char content[], int *i){
     int j = 0, k = *i;
 
     if(content[k]=='#'){
-        while(content[k]!='\n' || content[k]!='\r'){
-            c = content[k];
-            k++;
+        while(content[k]!='\r' && content[k]!='\n'){
+            c = content[k++];
         }
     }
     else{
@@ -43,9 +42,8 @@ char *CopyManifst(char content[], int *i){
             result[j++] = content[k++];
         }
     }
-    while(content[k]=='\r' || content[k]=='\n' || content[k]==' '){
-        c = content[k];
-        k++;
+    while(content[k]!='\r' && content[k]!='\n' && content[k]!=' '){
+        c = content[k++];
     }
     *i = k;
 
@@ -98,7 +96,7 @@ char *IsCached(char url[]){
 }
 
 char *InitManifest(char content[], char url1[], char tipo[]){
-    char *result, *aux, cache[4096], hexUrl[8192], *cached, file[12288], Time[64];
+    char *result, *aux = NULL, cache[4096], hexUrl[8192], *cached, file[12288], Time[64];
     FILE *output, *index;
     int i, j, k, cache1, fallbck, setts, net;
     struct tm *defTime;
@@ -115,9 +113,17 @@ char *InitManifest(char content[], char url1[], char tipo[]){
     setts = SearchString(content, manisec[2]);
     net = SearchString(content, manisec[3]);
 
-    for(i=0; content[i]!='\0'; i++){
+    for(i=0; content[i]!='\0';){
+        if(aux!=NULL){
+            limpaVetor(aux, strlen(aux));
+            aux = NULL;
+        }
         aux = CopyManifst(content, &i);
         if(strcmp(aux, manisec[0])==0 && i!=fallbck && i!=setts && i!=net){
+            if(aux!=NULL){
+                limpaVetor(aux, strlen(aux));
+                aux = NULL;
+            }
             aux = CopyManifst(content, &i);
             if(aux[0]!='#'){
                 strcpy(cache, UrlConstructor(url1, aux));
@@ -155,6 +161,46 @@ char *InitManifest(char content[], char url1[], char tipo[]){
         }
         if(strcmp(aux, manisec[1])==0 && i!=cache1 && i!=setts && i!=net){}
         if(strcmp(aux, manisec[2])==0 && i!=fallbck && i!=cache1 && i!=net){}
+        if(SearchString(aux, "CACHE")>-1 && SearchString(CopyManifst(content, &i), "MANIFEST")>-1 && SearchString(aux, manisec[0])==-1 && i!=fallbck && i!=cache1 && i!=net && i!=setts){
+            if(aux!=NULL){
+                limpaVetor(aux, strlen(aux));
+                aux = NULL;
+            }
+            aux = CopyManifst(content, &i);
+            if(aux[0]!='#'){
+                strcpy(cache, UrlConstructor(url1, aux));
+                strcpy(hexUrl, HexCreater(cache));
+                if((cached = IsCached(cache))!=NULL){
+                    strcpy(result, cached);
+                }
+                else{
+                    sprintf(file, ".\\cache\\%s", hexUrl);
+                    //Abre ou cria a index e o arquivo no cache
+                    if((output, fopen(file, "w+"))==NULL){
+                        fprintf(stderr, "Erro: Arquivo Invalido!\r\n");
+                        return NULL;
+                    }
+                    if((index, fopen(".\\cache\\index", "a+"))==NULL){
+                        fprintf(stderr, "Erro: Arquivo Invalido!\r\n");
+                        return NULL;
+                    }
+                    //Gerar o tempo atual antes de grava-lo na index
+                    currentTime = time(NULL);
+                    defTime = localtime(&currentTime);
+                    strftime(Time, 64, "%d/%m/%Y", defTime);
+                    //Registra o cache na index
+                    fprintf(index, "%s\r\n%s\r\n%s\r\n\r\n", url1, HexCreater(cache), time);
+                    //Armazena o cache
+                    fprintf(output, "Content-Type: %s\r\n%s\r\n", tipo, UrlConnect(cache, 1, NULL, NULL));
+                    //Fecha os arquivos
+                    fclose(index);
+                    fclose(output);
+                }
+            }
+            else{
+                CopyManifst(content, &i);
+            }
+        }
     }
     strcpy(result, "CACHED");
 
