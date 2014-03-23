@@ -46,12 +46,12 @@ typedef enum _uports{
 char *UrlConstructor(char Url[], char path[]);
 //Analisa URLs
 url UrlParser(char host[]);
-/*
+/**
     Conecta as urls nos seus protocolos e recebe a resposta
     Mode igual a 0 -> Interface Gráfica (GUI)
     Mode igual a 1 -> Interface em Texo (TUI)
     hwnd e hInst são paramentos da interface gráfica do windows
-*/
+**/
 Type UrlConnect(char host[], int mode, HINSTANCE hInst, HWND hwnd);
 
 #endif // _URLPARSER_H_
