@@ -15,7 +15,6 @@
 	BCM Revox Engine v0.2
 	BCM Revox Engine -> Ano: 2013, 2014|Tipo: WebEngine
 */
-#include <omp.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -157,17 +156,21 @@ url UrlParser(char host[]){
 }
 
 char *UrlConstructor(char Url[], char path[]){
-    char result[strlen(Url)+strlen(path)], aux[16];
-    int i;
+    char result[strlen(Url)+strlen(path)], aux2[128];
+    int i = 0, aux;
     url url1;
 
-    #pragma omp parallel for schedule(guided)
-    for(i=0; i<11; i++){
-        strcpy(aux, strstr(path, CreateTag(ports[i], bars[0], bars[1])));
+    while(i<11){
+        sprintf(aux2, "%s%s%s", ports[i++], bars[0], bars[1]);
+        aux = SearchString(path, aux2);
+        if(aux>-1){
+            break;
+        }
     }
-    if(aux==NULL){
+    if(aux==-1){
         url1 = UrlParser(Url);
-        strcpy(result, CreateTag(url1.prtcol, CreateTag(bars[0], bars[1], "\0"), CreateTag(url1.host, bars[2], path)));
+        limpaVetor(result, strlen(result));
+        sprintf(result, "%s%s%s%s%s%s", url1.prtcol, bars[0], bars[1], url1.host, bars[2], path);
         return result;
     }
     else{

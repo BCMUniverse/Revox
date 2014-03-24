@@ -46,7 +46,6 @@
 		</Build>
 		<Compiler>
 			<Add option="-fopenmp" />
-			<Add option="-lRasapi32" />
 		</Compiler>
 		<Linker>
 			<Add option="-lmsvcrt" />

@@ -19,6 +19,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <windows.h>
 #include "bonus.h"
 #include "hex.h"
 #include "strs.h"
@@ -96,7 +97,7 @@ char *IsCached(char url[]){
 }
 
 char *InitManifest(char content[], char url1[], char tipo[]){
-    char *result, *aux = NULL, *aux2 = NULL, cache[4096], cache2[4096], hexUrl[8192], *cached, file[12288], Time[64];
+    char *result, *aux = NULL, *aux2 = NULL, cache[4096], cache2[4096], hexUrl[8192], *cached, file[8500], Time[64], url2[strlen(url1)];
     FILE *output, *index;
     int i, CacheManfst;
     struct tm *defTime;
@@ -117,6 +118,7 @@ char *InitManifest(char content[], char url1[], char tipo[]){
     **/
     int state = 0;
 
+    strcpy(url2, url1);
     CacheManfst = SearchString(content, "CACHE MANIFEST");
 
     for(i=0; content[i]!='\0';){
@@ -125,7 +127,22 @@ char *InitManifest(char content[], char url1[], char tipo[]){
             aux = NULL;
         }
         aux = CopyManifst(content, &i);
-        if(i>CacheManfst){
+        strcpy(url1, url2);
+        if(i>CacheManfst+14){
+            if(strcmp(aux, "MANIFEST")==0){
+                if(aux!=NULL){
+                    limpaVetor(aux, strlen(aux));
+                    aux = NULL;
+                }
+                aux = CopyManifst(content, &i);
+            }
+            if(strcmp(aux, "")==0){
+                if(aux!=NULL){
+                    limpaVetor(aux, strlen(aux));
+                    aux = NULL;
+                }
+                aux = CopyManifst(content, &i);
+            }
             if(strcmp(aux, manisec[0])==0){
                 if(aux!=NULL){
                     limpaVetor(aux, strlen(aux));
@@ -170,13 +187,14 @@ char *InitManifest(char content[], char url1[], char tipo[]){
                     strcpy(result, cached);
                 }
                 else{
-                    sprintf(file, ".\\cache\\%s", hexUrl);
+                    sprintf(file, "cache\\%s", hexUrl);
+                    system("mkdir cache");
                     //Abre/cria a index e o arquivo no cache
                     if((output, fopen(file, "w+"))==NULL){
                         fprintf(stderr, "Erro: Arquivo Invalido!\r\n");
                         return NULL;
                     }
-                    if((index, fopen(".\\cache\\index", "a+"))==NULL){
+                    if((index, fopen("cache\\index", "a+"))==NULL){
                         fprintf(stderr, "Erro: Arquivo Invalido!\r\n");
                         return NULL;
                     }
@@ -206,13 +224,14 @@ char *InitManifest(char content[], char url1[], char tipo[]){
                     strcpy(result, cached);
                 }
                 else{
-                    sprintf(file, ".\\cache\\%s", hexUrl);
+                    sprintf(file, "cache\\%s", hexUrl);
+                    system("mkdir cache");
                     //Abre/cria a index e o arquivo no cache
                     if((output, fopen(file, "w+"))==NULL){
                         fprintf(stderr, "Erro: Arquivo Invalido!\r\n");
                         return NULL;
                     }
-                    if((index, fopen(".\\cache\\index", "a+"))==NULL){
+                    if((index, fopen("cache\\index", "a+"))==NULL){
                         fprintf(stderr, "Erro: Arquivo Invalido!\r\n");
                         return NULL;
                     }
