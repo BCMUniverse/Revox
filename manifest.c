@@ -42,7 +42,7 @@ char *CopyManifst(char content[], int *i){
             result[j++] = content[k++];
         }
     }
-    while(content[k]!='\r' && content[k]!='\n' && content[k]!=' '){
+    while(content[k]=='\r' || content[k]=='\n' || content[k]==' '){
         c = content[k++];
     }
     *i = k;
@@ -95,16 +95,6 @@ char *IsCached(char url[]){
     return cont;
 }
 
-void CopyAManifst(char content[], char *aux, int *i){
-    int k = *i;
-    if(aux!=NULL){
-        limpaVetor(aux, strlen(aux));
-        aux = NULL;
-    }
-    aux = CopyManifst(content, &k);
-    *i = k;
-}
-
 char *InitManifest(char content[], char url1[], char tipo[]){
     char *result, *aux = NULL, *aux2 = NULL, cache[4096], cache2[4096], hexUrl[8192], *cached, file[12288], Time[64];
     FILE *output, *index;
@@ -130,24 +120,44 @@ char *InitManifest(char content[], char url1[], char tipo[]){
     CacheManfst = SearchString(content, "CACHE MANIFEST");
 
     for(i=0; content[i]!='\0';){
-        CopyAManifst(content, aux, &i);
+        if(aux!=NULL){
+            limpaVetor(aux, strlen(aux));
+            aux = NULL;
+        }
+        aux = CopyManifst(content, &i);
         if(i>CacheManfst){
             if(strcmp(aux, manisec[0])==0){
-                CopyAManifst(content, aux, &i);
+                if(aux!=NULL){
+                    limpaVetor(aux, strlen(aux));
+                    aux = NULL;
+                }
+                aux = CopyManifst(content, &i);
                 state = 1;
             }
             else{
                 if(strcmp(aux, manisec[1])==0){
-                    CopyAManifst(content, aux, &i);
+                    if(aux!=NULL){
+                        limpaVetor(aux, strlen(aux));
+                        aux = NULL;
+                    }
+                    aux = CopyManifst(content, &i);
                     state = 2;
                 }
                 else{
                     if(strcmp(aux, manisec[2])==0){
-                        CopyAManifst(content, aux, &i);
+                        if(aux!=NULL){
+                            limpaVetor(aux, strlen(aux));
+                            aux = NULL;
+                        }
+                        aux = CopyManifst(content, &i);
                         state = 3;
                     }
                     else if(strcmp(aux, manisec[3])==0){
-                        CopyAManifst(content, aux, &i);
+                        if(aux!=NULL){
+                            limpaVetor(aux, strlen(aux));
+                            aux = NULL;
+                        }
+                        aux = CopyManifst(content, &i);
                         state = 4;
                     }
                 }
@@ -184,7 +194,11 @@ char *InitManifest(char content[], char url1[], char tipo[]){
                 }
                 break;
             case 2:
-                CopyAManifst(content, aux2, &i);
+                if(aux2!=NULL){
+                    limpaVetor(aux2, strlen(aux2));
+                    aux2 = NULL;
+                }
+                aux2 = CopyManifst(content, &i);
                 strcpy(cache, UrlConstructor(url1, aux));
                 strcpy(cache2, UrlConstructor(url1, aux2));
                 strcpy(hexUrl, HexCreater(cache));
@@ -216,6 +230,14 @@ char *InitManifest(char content[], char url1[], char tipo[]){
                 }
                 break;
             case 3:
+                if(strcmp(aux, setts[0])==0){
+                    defcache = 1;
+                }
+                else{
+                    if(strcmp(aux, setts[1])==0){
+                        defcache = 0;
+                    }
+                }
                 break;
             case 4:
                 break;
