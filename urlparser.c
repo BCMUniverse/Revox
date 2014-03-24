@@ -169,8 +169,12 @@ char *UrlConstructor(char Url[], char path[]){
     }
     if(aux==-1){
         url1 = UrlParser(Url);
-        limpaVetor(result, strlen(result));
-        sprintf(result, "%s%s%s%s%s%s", url1.prtcol, bars[0], bars[1], url1.host, bars[2], path);
+        strcpy(result, url1.prtcol);
+        strcat(result, bars[0]);
+        strcat(result, bars[1]);
+        strcat(result, url1.host);
+        strcat(result, bars[2]);
+        strcat(result, path);
         return result;
     }
     else{

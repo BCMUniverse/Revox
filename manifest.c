@@ -19,7 +19,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include <windows.h>
 #include "bonus.h"
 #include "hex.h"
 #include "strs.h"
@@ -52,12 +51,15 @@ char *CopyManifst(char content[], int *i){
 }
 
 char *IsCached(char url[]){
-    char *cont, *contIndex, *aux, c, path[4096], date[64];
+    char *cont, *contIndex = NULL, *aux, c, path[4096], date[64], *dr = NULL;
     int aux2, i = 0;
     FILE *index, *output;
     long tam;
 
-    if((index = fopen(".\\cache\\index", "r+"))==NULL){
+    dr = (char *)malloc(sizeof(char)*2048);
+    getcwd(dr, 2048);
+    strcat(dr, "\\cache\\index");
+    if((index = fopen(dr, "r+"))==NULL){
         fprintf(stderr, "Erro: Arquivo Invalido!\r\n");
         return NULL;
     }
@@ -92,12 +94,16 @@ char *IsCached(char url[]){
     fscanf(output, "%s", cont);
     fclose(output);
     fclose(index);
+    free(dr);
+    free(contIndex);
+    dr = NULL;
+    contIndex = NULL;
 
     return cont;
 }
 
 char *InitManifest(char content[], char url1[], char tipo[]){
-    char *result, *aux = NULL, *aux2 = NULL, cache[4096], cache2[4096], hexUrl[8192], *cached, file[8500], Time[64], url2[strlen(url1)];
+    char *result = NULL, *aux = NULL, *aux2 = NULL, cache[4096], cache2[4096], hexUrl[8192], *cached = NULL, file[8500], Time[64], *dr = NULL, path[2200];
     FILE *output, *index;
     int i, CacheManfst;
     struct tm *defTime;
@@ -118,7 +124,8 @@ char *InitManifest(char content[], char url1[], char tipo[]){
     **/
     int state = 0;
 
-    strcpy(url2, url1);
+    dr = (char *)malloc(sizeof(char)*2048);
+    getcwd(dr, 2048);
     CacheManfst = SearchString(content, "CACHE MANIFEST");
 
     for(i=0; content[i]!='\0';){
@@ -127,7 +134,6 @@ char *InitManifest(char content[], char url1[], char tipo[]){
             aux = NULL;
         }
         aux = CopyManifst(content, &i);
-        strcpy(url1, url2);
         if(i>CacheManfst+14){
             if(strcmp(aux, "MANIFEST")==0){
                 if(aux!=NULL){
@@ -187,8 +193,11 @@ char *InitManifest(char content[], char url1[], char tipo[]){
                     strcpy(result, cached);
                 }
                 else{
-                    sprintf(file, "cache\\%s", hexUrl);
-                    system("mkdir cache");
+                    strcat(dr, "\\cache");
+                    sprintf(path, "mkdir %s", dr);
+                    system(path);
+                    printf("Pasta criada em: %s\r\n", dr);
+                    sprintf(file, "%s\\%s", dr, hexUrl);
                     //Abre/cria a index e o arquivo no cache
                     if((output, fopen(file, "w+"))==NULL){
                         fprintf(stderr, "Erro: Arquivo Invalido!\r\n");
@@ -224,8 +233,11 @@ char *InitManifest(char content[], char url1[], char tipo[]){
                     strcpy(result, cached);
                 }
                 else{
-                    sprintf(file, "cache\\%s", hexUrl);
-                    system("mkdir cache");
+                    strcat(dr, "\\cache");
+                    sprintf(path, "mkdir %s", dr);
+                    system(path);
+                    printf("Pasta criada em: %s\r\n", dr);
+                    sprintf(file, "%s\\%s", dr, hexUrl);
                     //Abre/cria a index e o arquivo no cache
                     if((output, fopen(file, "w+"))==NULL){
                         fprintf(stderr, "Erro: Arquivo Invalido!\r\n");
@@ -266,6 +278,8 @@ char *InitManifest(char content[], char url1[], char tipo[]){
         }
     }
     strcpy(result, "CACHED");
+    free(dr);
+    dr = NULL;
 
     return result;
 }

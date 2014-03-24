@@ -16,18 +16,19 @@
 	BCM Revox Engine -> Ano: 2014|Tipo: WebEngine
 */
 #include <stdio.h>
+#include "bonus.h"
 
 char *HexCreater(char str[]){
-    char hexReslt[2*strlen(str)], hex[] = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
-    int i, j, hexp, hexp1, hexc, hexc1;
+    int tam = 2*(strlen(str));
+    char hexReslt[tam], hex[] = {"0123456789ABCDEF"};
+    int i, j, hexp = 0, hexp1 = 0;
 
-    for(i=0, j=0; str[i]!='\n' && str[i]!='\0'; i++, j+=2){
-        hexc = str[i]/16;
-        hexc1 = str[i]%16;
-        hexp = hex[hexc];
-        hexp1 = hex[hexc1];
-        hexReslt[j] = hexp;
-        hexReslt[j+1] = hexp1;
+    limpaVetor(hexReslt, tam);
+    for(i=0, j=0; str[i]!='\r' && str[i]!='\n' && str[i]!='\0'; i++){
+        hexp = hex[str[i]/16];
+        hexp1 = hex[str[i]%16];
+        hexReslt[j++] = hexp;
+        hexReslt[j++] = hexp1;
     }
 
     return hexReslt;
@@ -37,7 +38,7 @@ char *HexDecoder(char HexStr[]){
     char strReslt[strlen(HexStr)];
     int i, j, hexp;
 
-    for(i=0, j=0; HexStr[i]!='\n' && HexStr[i]!='\0'; i+=2, j++){
+    for(i=0, j=0; HexStr[i]!='\r' && HexStr[i]!='\n' && HexStr[i]!='\0'; i+=2, j++){
         switch(HexStr[i]){
         case '0':
             HexStr[i] = 0;
