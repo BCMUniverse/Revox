@@ -211,7 +211,8 @@ char *InitManifest(char content[], char url1[], char tipo[]){
                     strftime(Time, 64, "%d/%m/%Y", defTime);
                     //Armazena o cache
                     buffer = UrlConnect(cache, 1, NULL, NULL);
-                    fprintf(output, "Content-Type: %s\r\n%s\r\n", tipo, buffer.content);
+                    fprintf(output, "Content-Type: %s\r\n", tipo);
+                    fprintf(output, "%s\r\n", buffer.content);
                     //Fecha o arquivo
                     fclose(output);
                     if((index, fopen("cache\\index", "a+"))==NULL){
@@ -219,7 +220,9 @@ char *InitManifest(char content[], char url1[], char tipo[]){
                         return NULL;
                     }
                     //Registra o cache na index
-                    fprintf(index, "%s\r\n%s\r\n%s\r\n\r\n", cache, hexUrl, Time);
+                    fprintf(index, "%s\r\n", cache);
+                    fprintf(index, "%s\r\n", hexUrl);
+                    fprintf(index, "%s\r\n\r\n", Time);
                     //Fecha o arquivo
                     fclose(index);
                 }
@@ -253,7 +256,8 @@ char *InitManifest(char content[], char url1[], char tipo[]){
                     strftime(Time, 64, "%d/%m/%Y", defTime);
                     //Armazena o cache
                     buffer = UrlConnect(cache2, 1, NULL, NULL);
-                    fprintf(output, "Content-Type: %s\r\n%s\r\n", tipo, buffer.content);
+                    fprintf(output, "Content-Type: %s\r\n", tipo);
+                    fprintf(output, "%s\r\n", buffer.content);
                     //Fecha o arquivo
                     fclose(output);
                     if((index, fopen("cache\\index", "a+"))==NULL){
@@ -261,7 +265,9 @@ char *InitManifest(char content[], char url1[], char tipo[]){
                         return NULL;
                     }
                     //Registra o cache na index
-                    fprintf(index, "%s\r\n%s\r\n%s\r\n\r\n", cache2, hexUrl, Time);
+                    fprintf(index, "%s\r\n", cache2);
+                    fprintf(index, "%s\r\n", hexUrl);
+                    fprintf(index, "%s\r\n\r\n", Time);
                     //Fecha o arquivo
                     fclose(index);
                 }
