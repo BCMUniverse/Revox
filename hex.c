@@ -16,22 +16,23 @@
 	BCM Revox Engine -> Ano: 2014|Tipo: WebEngine
 */
 #include <stdio.h>
+#include <string.h>
 #include "bonus.h"
+#include "htmlText.h"
 
 char *HexCreater(char str[]){
     int tam = 2*(strlen(str));
-    char hexReslt[tam], hex[] = {"0123456789ABCDEF"};
-    int i, j, hexp = 0, hexp1 = 0;
+    char hexReslt[tam], hex[] = {"0123456789ABCDEF"}, result[tam];
+    int i = 0, j = 0;
 
     limpaVetor(hexReslt, tam);
     for(i=0, j=0; str[i]!='\r' && str[i]!='\n' && str[i]!='\0'; i++){
-        hexp = hex[str[i]/16];
-        hexp1 = hex[str[i]%16];
-        hexReslt[j++] = hexp;
-        hexReslt[j++] = hexp1;
+        hexReslt[j++] = hex[str[i]/16];
+        hexReslt[j++] = hex[str[i]%16];
     }
+    strncpy(result, hexReslt, tam);
 
-    return hexReslt;
+    return result;
 }
 
 char *HexDecoder(char HexStr[]){

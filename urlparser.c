@@ -156,8 +156,9 @@ url UrlParser(char host[]){
 }
 
 char *UrlConstructor(char Url[], char path[]){
-    char result[strlen(Url)+strlen(path)], aux2[128];
-    int i = 0, aux;
+    int tam = strlen(Url)+strlen(path);
+    char result[tam], aux2[128] = {}, url2[strlen(Url)], path2[strlen(path)];
+    int i = 0, aux = 0;
     url url1;
 
     while(i<11){
@@ -168,13 +169,11 @@ char *UrlConstructor(char Url[], char path[]){
         }
     }
     if(aux==-1){
-        url1 = UrlParser(Url);
-        strcpy(result, url1.prtcol);
-        strcat(result, bars[0]);
-        strcat(result, bars[1]);
-        strcat(result, url1.host);
-        strcat(result, bars[2]);
-        strcat(result, path);
+        strcpy(url2, Url);
+        strcpy(path2, path);
+        url1 = UrlParser(url2);
+        sprintf(result, "%s%s%s%s%s%s", url1.prtcol, bars[0], bars[1], url1.host, bars[2], path2);
+        strcpy(path, path2);
         return result;
     }
     else{
