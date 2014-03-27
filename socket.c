@@ -37,7 +37,7 @@ void InitSocket(char *hostname){
     printf("Iniciando Revox...");
     if (WSAStartup(MAKEWORD(2,2),&wsa) != 0){
         printf("Falhou. Codigo de Erro: %d\n",WSAGetLastError());
-        return 1;
+        return;
     }
     printf("Inicializado.\n");
 
@@ -86,7 +86,7 @@ void InitSocket(char *hostname){
     if((he = gethostbyname(hostname)) == NULL){
         //gethostbyname failed
         printf("gethostbyname failed : %d" , WSAGetLastError());
-        return 1;
+        return;
     }
     //Cast the h_addr_list to in_addr , since h_addr_list also has the ip address in long format only
     addr_list = (struct in_addr **) he->h_addr_list;
@@ -99,19 +99,19 @@ void InitSocket(char *hostname){
     //Server
     server.sin_addr.s_addr = inet_addr(ip);
     server.sin_family = AF_INET;
-    server.sin_port = htons( 80 );
+    server.sin_port = htons(80);
 
     //Connect to remote server
     if (connect(sock_id, (struct sockaddr *)&server , sizeof(server)) < 0){
         puts("Erro ao Conectar!");
-        return 1;
+        return;
     }
     puts("Connectado.");
     //Send some data
     message = "GET / HTTP/1.1\r\n\r\n";
     if(send(sock_id, message, strlen(message), 0) < 0){
         puts("Falhou ao enviar");
-        return 1;
+        return;
     }
     puts("Dados enviados");
 

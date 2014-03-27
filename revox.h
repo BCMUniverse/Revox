@@ -45,6 +45,8 @@ extern "C"{
 //Biblioteca UrlParser
 #include "urlparser.h"
 
+//Exibe Message inicial
+void InitMsg();
 //Inicia o Modo Texto
 void InitText(char *host);
 //Ler um arquivo HTML

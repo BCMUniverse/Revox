@@ -20,7 +20,7 @@
 
 #define IDD_DIALOG      101
 #define IDC_STATIC      102
-#define IDOK            103
+#define IDOK1           103
 #define IDCTEXT         104
 #define IDD_DIALOG2     105
 #define IDOK2           106

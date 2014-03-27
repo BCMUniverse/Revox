@@ -38,7 +38,7 @@ int recvtimeout(SOCKET s, int timeout){
 
     ioctlsocket(s, FIONBIO, &mode);
     gettimeofday(&beg, NULL);
-    limpaVetor(temp, BUFKB);
+    limpaVetor(temp);
     while(1){
         gettimeofday(&now, NULL);
         timediff = (now.tv_sec - beg.tv_sec)+1e-6*(now.tv_usec - beg.tv_usec);
@@ -65,7 +65,7 @@ int recvtimeout(SOCKET s, int timeout){
 char *InitHTTP(char *address, int port, char *caminho, char *cookie){
     struct sockaddr_in Server;
     SOCKET sock;
-    char buffer[1024], buf2[512], ip[16], *aux, len[256];
+    char buffer[1024], buf2[512], ip[16], *aux = NULL, len[256];
     int recv_size, i, j;
     WSADATA wsa;
     struct hostent *he;
@@ -77,7 +77,7 @@ char *InitHTTP(char *address, int port, char *caminho, char *cookie){
 	if((sock = socket(AF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET) {
 		printf("Nao pode criar o socket: %d\n" , WSAGetLastError());
 	}
-    printf("Inicializado\nBCM Revox Engine v0.2 - Cliente HTTP\nAcessando %s...\n", address);
+    printf("BCM Revox Engine v0.2 - Cliente HTTP\nAcessando %s...\n", address);
 
     //Estruturas do IPv4
     struct sockaddr_in {
@@ -156,7 +156,7 @@ char *InitHTTP(char *address, int port, char *caminho, char *cookie){
     }
     puts("Dados enviados");
 
-    limpaVetor(server_reply, BUF32KB);
+    limpaVetor(server_reply);
 
     //Receive a reply from the server
     if((recv_size = recv(sock, server_reply, BUF32KB, 0))<INVALID_SOCKET){
@@ -166,7 +166,7 @@ char *InitHTTP(char *address, int port, char *caminho, char *cookie){
 
     for(i=0; server_reply[i]!='\0';){
         if(aux!=NULL){
-            limpaVetor(aux, strlen(aux));
+            limpaVetor(aux);
             aux = NULL;
         }
         aux = CopyManifst(server_reply, &i);
@@ -183,7 +183,7 @@ char *InitHTTP(char *address, int port, char *caminho, char *cookie){
     }
 
     char *conteudo = (char *)malloc(sizeof(char)*BUF32KB);
-    limpaVetor(conteudo, BUF32KB);
+    limpaVetor(conteudo);
     strcpy(conteudo, server_reply);
 
     closesocket(sock);

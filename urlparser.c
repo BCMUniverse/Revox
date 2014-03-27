@@ -41,8 +41,8 @@ url UrlParser(char host[]){
     url addr;
     uports port1 = (uports)0;
 
-    limpaVetor(addr.host, 1025);
-    limpaVetor(addr.url_path, 1025);
+    limpaVetor(addr.host);
+    limpaVetor(addr.url_path);
     for(i=0; i<11; i++){
         strcpy(aux, CreateTag(ports[i], bars[0], bars[1]));
         strcpy(aux2, strstr(host, aux));
@@ -132,7 +132,7 @@ url UrlParser(char host[]){
     RemvSubString(host, addr.host);
     if(strchr(host, ':')!=NULL){
         RemvSubString(host, bars[0]);
-        limpaVetor(aux, 16);
+        limpaVetor(aux);
         for(i=0; host[i]!='/'; i++){
             aux[i] = host[i];
         }
@@ -199,6 +199,7 @@ Type UrlConnect(char host[], int mode, HINSTANCE hInst, HWND hwnd){
             break;
         }
     }
+    printf("Inicializado\r\n");
     switch(up1){
     case HTTP:
         tp1.content = InitHTTP(url1.host, url1.port, url1.url_path, NULL);

@@ -45,7 +45,7 @@ char *InitTypeParser(Type tp1, int mode){
     if(vtyp==NULL){
         for(i=0; tp1.content[i]!='\0';){
             if(aux!=NULL){
-                limpaVetor(aux, strlen(aux));
+                limpaVetor(aux);
                 aux = NULL;
             }
             aux = CopyManifst(tp1.content, &i);

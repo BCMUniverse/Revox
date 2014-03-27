@@ -89,11 +89,14 @@ char *RemovePilha2(pilha2 *p){
     return p->vt[p->topo+1];
 }
 
-void limpaVetor(char *vet, int tam){
-    int i;
-    #pragma omp parallel for schedule(guided)
-    for(i=0; i<tam; i++){
-        vet[i] = '\0';
+void limpaVetor(char *vet){
+    int i, tam = strlen(vet);
+
+    if(tam>0){
+        #pragma omp parallel for schedule(guided)
+        for(i=0; i<tam; i++){
+            vet[i] = '\0';
+        }
     }
 }
 

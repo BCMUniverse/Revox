@@ -105,6 +105,7 @@ char *IsCached(char url[]){
 
 char *InitManifest(char content[], char url1[], char tipo[]){
     char *result = NULL, *aux = NULL, *aux2 = NULL, cache[4096], cache2[4096], hexUrl[8192], *cached = NULL, file[8500], Time[64], *dr = NULL, path[2200];
+    char tipo2[strlen(tipo)];
     FILE *output, *index;
     int i, CacheManfst;
     struct tm *defTime;
@@ -128,32 +129,44 @@ char *InitManifest(char content[], char url1[], char tipo[]){
 
     dr = (char *)malloc(sizeof(char)*2048);
     getcwd(dr, 2048);
+    strcat(dr, "\\cache");
+    sprintf(path, "mkdir %s", dr);
+    system(path);
+    printf("Pasta criada em: %s\r\n", dr);
     CacheManfst = SearchString(content, "CACHE MANIFEST");
-
+    strcpy(tipo2, tipo);
+    //Gerar o tempo atual antes de grava-lo na index
+    currentTime = time(NULL);
+    defTime = localtime(&currentTime);
+    strftime(Time, 64, "%d/%m/%Y", defTime);
+    if((index = fopen("cache\\index", "a+"))==NULL){
+        fprintf(stderr, "Erro: Arquivo Invalido!\r\nEndereco: %s\r\n", file);
+        return NULL;
+    }
     for(i=0; content[i]!='\0';){
         if(aux!=NULL){
-            limpaVetor(aux, strlen(aux));
+            limpaVetor(aux);
             aux = NULL;
         }
         aux = CopyManifst(content, &i);
         if(i>CacheManfst+14){
             if(strcmp(aux, "MANIFEST")==0){
                 if(aux!=NULL){
-                    limpaVetor(aux, strlen(aux));
+                    limpaVetor(aux);
                     aux = NULL;
                 }
                 aux = CopyManifst(content, &i);
             }
             if(strcmp(aux, "")==0){
                 if(aux!=NULL){
-                    limpaVetor(aux, strlen(aux));
+                    limpaVetor(aux);
                     aux = NULL;
                 }
                 aux = CopyManifst(content, &i);
             }
             if(strcmp(aux, manisec[0])==0){
                 if(aux!=NULL){
-                    limpaVetor(aux, strlen(aux));
+                    limpaVetor(aux);
                     aux = NULL;
                 }
                 aux = CopyManifst(content, &i);
@@ -162,7 +175,7 @@ char *InitManifest(char content[], char url1[], char tipo[]){
             else{
                 if(strcmp(aux, manisec[1])==0){
                     if(aux!=NULL){
-                        limpaVetor(aux, strlen(aux));
+                        limpaVetor(aux);
                         aux = NULL;
                     }
                     aux = CopyManifst(content, &i);
@@ -171,7 +184,7 @@ char *InitManifest(char content[], char url1[], char tipo[]){
                 else{
                     if(strcmp(aux, manisec[2])==0){
                         if(aux!=NULL){
-                            limpaVetor(aux, strlen(aux));
+                            limpaVetor(aux);
                             aux = NULL;
                         }
                         aux = CopyManifst(content, &i);
@@ -179,7 +192,7 @@ char *InitManifest(char content[], char url1[], char tipo[]){
                     }
                     else if(strcmp(aux, manisec[3])==0){
                         if(aux!=NULL){
-                            limpaVetor(aux, strlen(aux));
+                            limpaVetor(aux);
                             aux = NULL;
                         }
                         aux = CopyManifst(content, &i);
@@ -195,41 +208,26 @@ char *InitManifest(char content[], char url1[], char tipo[]){
                     strcpy(result, cached);
                 }
                 else{
-                    strcat(dr, "\\cache");
-                    sprintf(path, "mkdir %s", dr);
-                    system(path);
-                    printf("Pasta criada em: %s\r\n", dr);
                     sprintf(file, "%s\\%s", dr, hexUrl);
                     //Abre/cria a index e o arquivo no cache
-                    if((output, fopen(file, "w+"))==NULL){
+                    if((output = fopen(file, "w+"))==NULL){
                         fprintf(stderr, "Erro: Arquivo Invalido!\r\nEndereco: %s\r\n", file);
                         return NULL;
                     }
-                    //Gerar o tempo atual antes de grava-lo na index
-                    currentTime = time(NULL);
-                    defTime = localtime(&currentTime);
-                    strftime(Time, 64, "%d/%m/%Y", defTime);
                     //Armazena o cache
                     buffer = UrlConnect(cache, 1, NULL, NULL);
-                    fprintf(output, "Content-Type: %s\r\n", tipo);
-                    fprintf(output, "%s\r\n", buffer.content);
+                    fprintf(output, "Content-Type: %s\r\n%s\r\n", tipo2, buffer.content);
                     //Fecha o arquivo
                     fclose(output);
-                    if((index, fopen("cache\\index", "a+"))==NULL){
-                        fprintf(stderr, "Erro: Arquivo Invalido!\r\nEndereco: %s\r\n", file);
-                        return NULL;
-                    }
                     //Registra o cache na index
                     fprintf(index, "%s\r\n", cache);
                     fprintf(index, "%s\r\n", hexUrl);
                     fprintf(index, "%s\r\n\r\n", Time);
-                    //Fecha o arquivo
-                    fclose(index);
                 }
                 break;
             case 2:
                 if(aux2!=NULL){
-                    limpaVetor(aux2, strlen(aux2));
+                    limpaVetor(aux2);
                     aux2 = NULL;
                 }
                 aux2 = CopyManifst(content, &i);
@@ -240,36 +238,21 @@ char *InitManifest(char content[], char url1[], char tipo[]){
                     strcpy(result, cached);
                 }
                 else{
-                    strcat(dr, "\\cache");
-                    sprintf(path, "mkdir %s", dr);
-                    system(path);
-                    printf("Pasta criada em: %s\r\n", dr);
                     sprintf(file, "%s\\%s", dr, hexUrl);
                     //Abre/cria a index e o arquivo no cache
-                    if((output, fopen(file, "w+"))==NULL){
+                    if((output = fopen(file, "w+"))==NULL){
                         fprintf(stderr, "Erro: Arquivo Invalido!\r\nEndereco: %s\r\n", file);
                         return NULL;
                     }
-                    //Gerar o tempo atual antes de grava-lo na index
-                    currentTime = time(NULL);
-                    defTime = localtime(&currentTime);
-                    strftime(Time, 64, "%d/%m/%Y", defTime);
                     //Armazena o cache
                     buffer = UrlConnect(cache2, 1, NULL, NULL);
-                    fprintf(output, "Content-Type: %s\r\n", tipo);
-                    fprintf(output, "%s\r\n", buffer.content);
+                    fprintf(output, "Content-Type: %s\r\n%s\r\n", tipo2, buffer.content);
                     //Fecha o arquivo
                     fclose(output);
-                    if((index, fopen("cache\\index", "a+"))==NULL){
-                        fprintf(stderr, "Erro: Arquivo Invalido!\r\nEndereco: %s\r\n", file);
-                        return NULL;
-                    }
                     //Registra o cache na index
                     fprintf(index, "%s\r\n", cache2);
                     fprintf(index, "%s\r\n", hexUrl);
                     fprintf(index, "%s\r\n\r\n", Time);
-                    //Fecha o arquivo
-                    fclose(index);
                 }
                 break;
             case 3:
@@ -289,6 +272,8 @@ char *InitManifest(char content[], char url1[], char tipo[]){
             }
         }
     }
+    //Fecha o arquivo
+    fclose(index);
     strcpy(result, "CACHED");
     free(dr);
     dr = NULL;

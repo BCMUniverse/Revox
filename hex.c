@@ -25,7 +25,7 @@ char *HexCreater(char str[]){
     char hexReslt[tam], hex[] = {"0123456789ABCDEF"}, result[tam];
     int i = 0, j = 0;
 
-    limpaVetor(hexReslt, tam);
+    limpaVetor(hexReslt);
     for(i=0, j=0; str[i]!='\r' && str[i]!='\n' && str[i]!='\0'; i++){
         hexReslt[j++] = hex[str[i]/16];
         hexReslt[j++] = hex[str[i]%16];
