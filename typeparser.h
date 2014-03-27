@@ -28,11 +28,16 @@ typedef enum _type{
     PLAIN
 } type;
 
-/*
-    Converte o conteúdo recebido em um formato legivel
-    Mode igual a 0 -> Interface Gráfica (GUI)
-    Mode igual a 1 -> Interface em Texo (TUI)
-*/
+/**
+*   Procura o tipo de conteúdo de um arquivo.
+**/
+char *TypeBuster(char content[], type typ1);
+
+/**
+*   Converte o conteúdo recebido em um formato legivel
+*   Mode igual a 0 -> Interface Gráfica (GUI)
+*   Mode igual a 1 -> Interface em Texo (TUI)
+**/
 char *InitTypeParser(Type tp1, int mode);
 
 #endif // _TYPEPARSER_H_

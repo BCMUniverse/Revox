@@ -46,6 +46,7 @@ typedef enum _uports{
 char *UrlConstructor(char Url[], char path[]);
 //Analisa URLs
 url UrlParser(char host[]);
+
 /**
     Conecta as urls nos seus protocolos e recebe a resposta
     Mode igual a 0 -> Interface Gráfica (GUI)

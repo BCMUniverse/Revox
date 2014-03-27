@@ -1,44 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Dbg" />
-	<File name="http.c" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="6385" topLine="164" />
-		</Cursor>
-	</File>
-	<File name="wais.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="939" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="ftp.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="869" topLine="14" />
-		</Cursor>
-	</File>
-	<File name="mail.h" open="0" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="867" topLine="5" />
-		</Cursor>
-	</File>
-	<File name="guicon.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1141" topLine="49" />
-		</Cursor>
-	</File>
 	<File name="manifest.c" open="1" top="1" tabpos="11" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="7444" topLine="199" />
-		</Cursor>
-	</File>
-	<File name="ftp.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="2172" topLine="36" />
-		</Cursor>
-	</File>
-	<File name="manifest.h" open="1" top="0" tabpos="12" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="927" topLine="0" />
+			<Cursor1 position="1748" topLine="65" />
 		</Cursor>
 	</File>
 	<File name="htmlText.c" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -46,9 +11,9 @@
 			<Cursor1 position="4397" topLine="82" />
 		</Cursor>
 	</File>
-	<File name="nntp.c" open="0" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="manifest.h" open="1" top="0" tabpos="12" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1009" topLine="94" />
+			<Cursor1 position="975" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="htmlText.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -56,19 +21,19 @@
 			<Cursor1 position="179" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="nntp.h" open="0" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="nntp.c" open="0" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="929" topLine="0" />
+			<Cursor1 position="1009" topLine="94" />
 		</Cursor>
 	</File>
 	<File name="hex.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="849" topLine="15" />
+			<Cursor1 position="1075" topLine="15" />
 		</Cursor>
 	</File>
-	<File name="prospero.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="nntp.h" open="0" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1376" topLine="19" />
+			<Cursor1 position="929" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="hex.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -76,9 +41,9 @@
 			<Cursor1 position="909" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="prospero.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="prospero.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="861" topLine="0" />
+			<Cursor1 position="1376" topLine="19" />
 		</Cursor>
 	</File>
 	<File name="html.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -86,29 +51,29 @@
 			<Cursor1 position="179" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="resource.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="prospero.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="927" topLine="8" />
+			<Cursor1 position="861" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="main.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1002" topLine="12" />
+			<Cursor1 position="2577" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="revox.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="resource.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="179" topLine="0" />
+			<Cursor1 position="940" topLine="8" />
 		</Cursor>
 	</File>
 	<File name="mail.c" open="0" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1062" topLine="8" />
+			<Cursor1 position="2309" topLine="67" />
 		</Cursor>
 	</File>
-	<File name="revox.rc" open="0" top="0" tabpos="12" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="revox.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1546" topLine="18" />
+			<Cursor1 position="1359" topLine="29" />
 		</Cursor>
 	</File>
 	<File name="guicon.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -116,14 +81,24 @@
 			<Cursor1 position="936" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="socket.c" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="revox.rc" open="0" top="0" tabpos="12" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="807" topLine="0" />
+			<Cursor1 position="1099" topLine="9" />
 		</Cursor>
 	</File>
 	<File name="bonus.c" open="0" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="6113" topLine="79" />
+			<Cursor1 position="2882" topLine="88" />
+		</Cursor>
+	</File>
+	<File name="socket.c" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1507" topLine="34" />
+		</Cursor>
+	</File>
+	<File name="bonus.h" open="0" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1964" topLine="37" />
 		</Cursor>
 	</File>
 	<File name="socket.h" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -131,24 +106,19 @@
 			<Cursor1 position="807" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="bonus.h" open="0" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1721" topLine="37" />
-		</Cursor>
-	</File>
-	<File name="socks.c" open="0" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1153" topLine="11" />
-		</Cursor>
-	</File>
 	<File name="html.c" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="179" topLine="0" />
 		</Cursor>
 	</File>
+	<File name="socks.c" open="0" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2540" topLine="69" />
+		</Cursor>
+	</File>
 	<File name="socks.h" open="0" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="877" topLine="0" />
+			<Cursor1 position="1140" topLine="10" />
 		</Cursor>
 	</File>
 	<File name="strs.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -173,22 +143,22 @@
 	</File>
 	<File name="typeparser.c" open="1" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1975" topLine="54" />
+			<Cursor1 position="1349" topLine="27" />
 		</Cursor>
 	</File>
 	<File name="typeparser.h" open="1" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="951" topLine="9" />
+			<Cursor1 position="1091" topLine="13" />
 		</Cursor>
 	</File>
 	<File name="urlparser.c" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="5656" topLine="147" />
+			<Cursor1 position="4679" topLine="177" />
 		</Cursor>
 	</File>
 	<File name="urlparser.h" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1486" topLine="28" />
+			<Cursor1 position="1488" topLine="29" />
 		</Cursor>
 	</File>
 	<File name="usenet.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -209,6 +179,36 @@
 	<File name="wais.c" open="0" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="1508" topLine="19" />
+		</Cursor>
+	</File>
+	<File name="http.c" open="0" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2078" topLine="57" />
+		</Cursor>
+	</File>
+	<File name="wais.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="939" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="ftp.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="869" topLine="14" />
+		</Cursor>
+	</File>
+	<File name="mail.h" open="0" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="867" topLine="5" />
+		</Cursor>
+	</File>
+	<File name="guicon.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1141" topLine="49" />
+		</Cursor>
+	</File>
+	<File name="ftp.c" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2172" topLine="36" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

@@ -29,10 +29,37 @@
 
 char types[][128] = {"text/html", "text/cache-manifest", "text/plain"};
 
+char *TypeBuster(char content[], type typ1){
+    char *aux = NULL, TypFile[VKB], *vtyp;
+    int i, j;
+
+    for(i=0; content[i]!='\0';){
+        if(aux!=NULL){
+            limpaVetor(aux);
+            aux = NULL;
+        }
+        aux = CopyManifst(content, &i);
+        if(SearchString(aux, "Content-Type:")>-1){
+            for(i=i, j=0; content[i]!='\r' && content[i]!='\n'; i++, j++){
+                TypFile[j] = content[i];
+            }
+            break;
+        }
+    }
+    #pragma omp parallel for schedule(guided)
+    for(j=0; j<3; j++){
+        vtyp = strstr(TypFile, types[j]);
+        if(vtyp!=NULL){
+            typ1 = (type)j;
+        }
+    }
+    return TypFile;
+}
+
 char *InitTypeParser(Type tp1, int mode){
-    char *result, *vtyp, *aux, TypFile[VKB];
+    char *result, *vtyp, TypFile[VKB];
     FILE *index;
-    int i, j, tipo;
+    int i, j;
     type typ1;
 
     #pragma omp parallel for schedule(guided)
@@ -43,19 +70,7 @@ char *InitTypeParser(Type tp1, int mode){
         }
     }
     if(vtyp==NULL){
-        for(i=0; tp1.content[i]!='\0';){
-            if(aux!=NULL){
-                limpaVetor(aux);
-                aux = NULL;
-            }
-            aux = CopyManifst(tp1.content, &i);
-            if(SearchString(aux, "Content-Type:")>-1){
-                for(i=i, j=0; tp1.content[i]!='\r' && tp1.content[i]!='\n'; i++, j++){
-                    TypFile[j] = tp1.content[i];
-                }
-                break;
-            }
-        }
+        strcpy(TypFile, TypeBuster(tp1.content, typ1));
     }
     switch(typ1){
     case THTML:
@@ -70,7 +85,7 @@ char *InitTypeParser(Type tp1, int mode){
         }
         break;
     case MANIFEST:
-        result = InitManifest(tp1.content, tp1.url, TypFile);
+        result = InitManifest(tp1.content, tp1.url);
         break;
     case PLAIN:
         break;
