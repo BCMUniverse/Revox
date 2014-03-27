@@ -109,7 +109,7 @@ char *IsCached(char url[]){
 }
 
 char *InitManifest(char content[], char url1[]){
-    char *result = NULL, *aux = NULL, *aux2 = NULL, cache[4096], cache2[4096], hexUrl[8192], *cached = NULL, file[8500], Time[64], *dr = NULL, path[2200];
+    char *result = NULL, *aux = NULL, *aux2 = NULL, *cache = NULL, cache2[4096], hexUrl[8192], *cached = NULL, file[8500], Time[64], *dr = NULL, path[2200];
     char pathIndex[2200], *tb = NULL, url2[strlen(url1)];
     FILE *output, *index;
     int i, j, CacheManfst;
@@ -204,16 +204,20 @@ char *InitManifest(char content[], char url1[]){
                     }
                 }
             }
-            limpaVetor(cache);
+            if(cache!=NULL){
+                limpaVetor(cache);
+                cache = NULL;
+            }
             limpaVetor(cache2);
             limpaVetor(hexUrl);
             strcpy(url1, url2);
             if(buffer.content!=NULL){
                 limpaVetor(buffer.content);
+                buffer.content = NULL;
             }
             switch(state){
             case 0: case 1:
-                sprintf(cache, "%s", UrlConstructor(url1, aux));
+                cache = UrlConstructor(url1, aux);
                 sprintf(hexUrl, "%s", HexCreater(cache));
                 if((cached = IsCached(cache))!=NULL){
                     strcpy(result, cached);
@@ -253,7 +257,7 @@ char *InitManifest(char content[], char url1[]){
                     aux2 = NULL;
                 }
                 aux2 = CopyManifst(content, &i);
-                sprintf(cache, "%s", UrlConstructor(url1, aux));
+                cache = UrlConstructor(url1, aux);
                 sprintf(cache2, "%s", UrlConstructor(url1, aux2));
                 sprintf(hexUrl, "%s", HexCreater(cache2));
                 if((cached = IsCached(cache))!=NULL){
