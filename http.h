@@ -23,6 +23,6 @@
 #define BUFKB 2048
 
 int recvtimeout(SOCKET s, int timeout);
-char *InitHTTP(char *address, int port, char *caminho, char *cookie);
+char *InitHTTP(char address[], int port, char caminho[], char cookie[]);
 
 #endif // HTTP_H_INCLUDED

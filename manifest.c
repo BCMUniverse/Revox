@@ -26,7 +26,7 @@
 #include "urlparser.h"
 
 char manisec[][16] = {"CACHE:", "FALLBACK:", "SETTINGS:", "NETWORK:"};
-char setts[][16] = {"prefer-online", "fast"};
+char setts[][16] = {"fast", "prefer-online"};
 
 char *CopyManifst(char content[], int *i){
     char result[4096], c;
@@ -51,7 +51,7 @@ char *CopyManifst(char content[], int *i){
 }
 
 char *IsCached(char url[]){
-    char *cont, buffer[12352], *aux = NULL, path[4096], date[64], *dr = NULL;
+    char *cont, buffer[12352], *aux = NULL, path[4096], date[64], *dr = NULL, defsetts[32];
     int i = 0;
     FILE *index, *output;
     long tam;
@@ -81,10 +81,19 @@ char *IsCached(char url[]){
                 aux = NULL;
             }
             aux = CopyManifst(buffer, &i);
+            strcpy(defsetts, aux);
+            if(aux!=NULL){
+                limpaVetor(aux);
+                aux = NULL;
+            }
+            aux = CopyManifst(buffer, &i);
             strcpy(date, aux);
         }
     }
     fclose(index);
+    if(strcmp(defsetts, setts[1])==0){
+        return NULL;
+    }
     if((output = fopen(path, "r+"))==NULL){
         fprintf(stderr, "Erro: Arquivo Invalido!\r\nEndereco: %s\r\n", path);
         return NULL;
@@ -101,12 +110,14 @@ char *IsCached(char url[]){
 
 char *InitManifest(char content[], char url1[]){
     char *result = NULL, *aux = NULL, *aux2 = NULL, cache[4096], cache2[4096], hexUrl[8192], *cached = NULL, file[8500], Time[64], *dr = NULL, path[2200];
-    char pathIndex[2200];
+    char pathIndex[2200], *tb = NULL, url2[strlen(url1)];
     FILE *output, *index;
-    int i, CacheManfst;
+    int i, j, CacheManfst;
     struct tm *defTime;
     time_t currentTime;
     Type buffer;
+    buffer.content = NULL;
+    buffer.url = NULL;
     /**
     *   A varíavel defcache define baseado nas prefefências do manifesto, se deve ou não salvar os arquivos indicado no manifesto.
     *   defcache igual a 0 -> fast
@@ -129,6 +140,7 @@ char *InitManifest(char content[], char url1[]){
     sprintf(path, "mkdir %s", dr);
     system(path);
     printf("Pasta criada em: %s\r\n", dr);
+    strcpy(url2, url1);
     CacheManfst = SearchString(content, "CACHE MANIFEST");
     //Gerar o tempo atual antes de grava-lo na index
     currentTime = time(NULL);
@@ -192,10 +204,17 @@ char *InitManifest(char content[], char url1[]){
                     }
                 }
             }
+            limpaVetor(cache);
+            limpaVetor(cache2);
+            limpaVetor(hexUrl);
+            strcpy(url1, url2);
+            if(buffer.content!=NULL){
+                limpaVetor(buffer.content);
+            }
             switch(state){
             case 0: case 1:
-                strcpy(cache, UrlConstructor(url1, aux));
-                strcpy(hexUrl, HexCreater(cache));
+                sprintf(cache, "%s", UrlConstructor(url1, aux));
+                sprintf(hexUrl, "%s", HexCreater(cache));
                 if((cached = IsCached(cache))!=NULL){
                     strcpy(result, cached);
                 }
@@ -207,7 +226,7 @@ char *InitManifest(char content[], char url1[]){
                         return NULL;
                     }
                     //Registra o cache na index
-                    fprintf(index, "%s\r\n%s\r\n%s\r\n\r\n", cache, file, Time);
+                    fprintf(index, "%s\r\n%s\r\n%s\r\n%s\r\n\r\n", cache, file, setts[defcache], Time);
                     //Fecha o arquivo
                     fclose(index);
                     if((output = fopen(file, "w+"))==NULL){
@@ -216,7 +235,14 @@ char *InitManifest(char content[], char url1[]){
                     }
                     //Armazena o cache
                     buffer = UrlConnect(cache, 1, NULL, NULL);
-                    fprintf(output, "Content-Type: %s\r\n%s\r\n", TypeBuster(content, (type)NULL), buffer.content);
+                    for(j=0; buffer.content[j]!='\0'; j++);
+                    if(j==0){
+                        return NULL;
+                    }
+                    if((tb = TypeBuster(buffer.content, THTML))==NULL){
+                        return NULL;
+                    }
+                    fprintf(output, "Content-Type: %s\r\n\r\n%s\r\n", tb, buffer.content);
                     //Fecha o arquivo
                     fclose(output);
                 }
@@ -227,9 +253,9 @@ char *InitManifest(char content[], char url1[]){
                     aux2 = NULL;
                 }
                 aux2 = CopyManifst(content, &i);
-                strcpy(cache, UrlConstructor(url1, aux));
-                strcpy(cache2, UrlConstructor(url1, aux2));
-                strcpy(hexUrl, HexCreater(cache2));
+                sprintf(cache, "%s", UrlConstructor(url1, aux));
+                sprintf(cache2, "%s", UrlConstructor(url1, aux2));
+                sprintf(hexUrl, "%s", HexCreater(cache2));
                 if((cached = IsCached(cache))!=NULL){
                     strcpy(result, cached);
                 }
@@ -241,7 +267,7 @@ char *InitManifest(char content[], char url1[]){
                         return NULL;
                     }
                     //Registra o cache na index
-                    fprintf(index, "%s\r\n%s\r\n%s\r\n\r\n", cache2, file, Time);
+                    fprintf(index, "%s\r\n%s\r\n%s\r\n%s\r\n\r\n", cache2, file, setts[defcache], Time);
                     //Fecha o arquivo
                     fclose(index);
                     if((output = fopen(file, "w+"))==NULL){
@@ -250,18 +276,25 @@ char *InitManifest(char content[], char url1[]){
                     }
                     //Armazena o cache
                     buffer = UrlConnect(cache2, 1, NULL, NULL);
-                    fprintf(output, "Content-Type: %s\r\n%s\r\n", TypeBuster(content, (type)NULL), buffer.content);
+                    for(j=0; buffer.content[j]!='\0'; j++);
+                    if(j==0){
+                        return NULL;
+                    }
+                    if((tb = TypeBuster(buffer.content, THTML))==NULL){
+                        return NULL;
+                    }
+                    fprintf(output, "Content-Type: %s\r\n\r\n%s\r\n", tb, buffer.content);
                     //Fecha o arquivo
                     fclose(output);
                 }
                 break;
             case 3:
                 if(strcmp(aux, setts[0])==0){
-                    defcache = 1;
+                    defcache = 0;
                 }
                 else{
                     if(strcmp(aux, setts[1])==0){
-                        defcache = 0;
+                        defcache = 1;
                     }
                 }
                 break;

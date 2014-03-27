@@ -30,7 +30,7 @@
 char types[][128] = {"text/html", "text/cache-manifest", "text/plain"};
 
 char *TypeBuster(char content[], type typ1){
-    char *aux = NULL, TypFile[VKB], *vtyp;
+    char *aux = NULL, TypFile[VKB], *vtyp = NULL;
     int i, j;
 
     for(i=0; content[i]!='\0';){

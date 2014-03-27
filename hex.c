@@ -21,7 +21,7 @@
 #include "htmlText.h"
 
 char *HexCreater(char str[]){
-    int tam = 2*(strlen(str));
+    int tam = 2*strlen(str);
     char hexReslt[tam], hex[] = {"0123456789ABCDEF"}, result[tam];
     int i = 0, j = 0;
 

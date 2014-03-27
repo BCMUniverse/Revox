@@ -62,7 +62,7 @@ int recvtimeout(SOCKET s, int timeout){
     return total;
 }
 
-char *InitHTTP(char *address, int port, char *caminho, char *cookie){
+char *InitHTTP(char address[], int port, char caminho[], char cookie[]){
     struct sockaddr_in Server;
     SOCKET sock;
     char buffer[1024], buf2[512], ip[16], *aux = NULL, len[256];
