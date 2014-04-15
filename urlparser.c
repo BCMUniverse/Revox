@@ -170,7 +170,11 @@ char *UrlConstructor(char Url[], char path[]){
     }
     if(aux==-1){
         strcpy(url2, Url);
-        strcpy(path2, path);
+        for(i=0; i<strlen(path); i++){
+            if(path[i]!='\0'){
+                path2[i] = path[i];
+            }
+        }
         url1 = UrlParser(url2);
         sprintf(result, "%s%s%s%s%s%s", url1.prtcol, bars[0], bars[1], url1.host, bars[2], path2);
         strcpy(path, path2);

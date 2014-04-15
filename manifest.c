@@ -32,6 +32,7 @@ char *CopyManifst(char content[], int *i){
     char result[4096], c;
     int j = 0, k = *i;
 
+    limpaVetor(result);
     if(content[k]=='#'){
         while(content[k]!='\r' && content[k]!='\n'){
             c = content[k++];
@@ -113,7 +114,6 @@ char *InitManifest(char content[], char url1[]){
     char pathIndex[2200], *tb = NULL, url2[strlen(url1)];
     FILE *output, *index;
     int i, j, CacheManfst;
-    struct tm *defTime;
     time_t currentTime;
     Type buffer;
     buffer.content = NULL;
@@ -140,13 +140,21 @@ char *InitManifest(char content[], char url1[]){
     sprintf(path, "mkdir %s", dr);
     system(path);
     printf("Pasta criada em: %s\r\n", dr);
+    limpaVetor(url2);
     strcpy(url2, url1);
     CacheManfst = SearchString(content, "CACHE MANIFEST");
+
     //Gerar o tempo atual antes de grava-lo na index
     currentTime = time(NULL);
-    defTime = localtime(&currentTime);
-    strftime(Time, 64, "%d/%m/%Y", defTime);
+    strftime(Time, 64, "%d/%m/%Y", localtime(&currentTime));
     sprintf(pathIndex, "%s\\index", dr);
+
+    //Limpa Vetores não utuilizados
+    limpaVetor(cache2);
+    limpaVetor(file);
+    limpaVetor(hexUrl);
+
+    //Analisa o manifesto
     for(i=0; content[i]!='\0';){
         if(aux!=NULL){
             limpaVetor(aux);
@@ -154,14 +162,14 @@ char *InitManifest(char content[], char url1[]){
         }
         aux = CopyManifst(content, &i);
         if(i>CacheManfst+14){
-            if(strcmp(aux, "MANIFEST")==0){
+            if(aux[0]=='#' || strstr(content, "MANIFEST")!=NULL){
                 if(aux!=NULL){
                     limpaVetor(aux);
                     aux = NULL;
                 }
                 aux = CopyManifst(content, &i);
             }
-            if(strcmp(aux, "")==0){
+            if(strcmp(aux, "")==0 || strcmp(aux, "\0")==0){
                 if(aux!=NULL){
                     limpaVetor(aux);
                     aux = NULL;
