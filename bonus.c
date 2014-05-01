@@ -90,7 +90,7 @@ char *RemovePilha2(pilha2 *p){
 }
 
 void limpaVetor(char *vet){
-    int i, tam = sizeof(vet);
+    int i, tam = sizeof vet;
 
     if(tam>0){
         #pragma omp parallel for schedule(guided)
