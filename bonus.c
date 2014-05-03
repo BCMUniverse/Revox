@@ -100,11 +100,6 @@ void limpaVetor(char *vet){
     }
 }
 
-static size_t strnlen(const char *s, size_t max) {
-    register const char *p;
-    for(p = s; *p && max--; ++p);
-    return(p - s);
-}
 int inet_pton4(const char *src, char *dst){
     uint8_t tmp[NS_INADDRSZ], *tp;
 

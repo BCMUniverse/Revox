@@ -42,8 +42,14 @@ typedef enum _uports{
     PROSPERO
 }uports;
 
-//Constroi Urls
-char *UrlConstructor(char Url[], char path[]);
+/**
+*   Constroi Urls
+*
+*   mode igual a 0 -> chamado por outras funções
+*   mode igual a 1 -> chamado pela função InitManifest
+*
+**/
+char *UrlConstructor(char Url[], char path[], int mode);
 //Analisa URLs
 url UrlParser(char host[]);
 

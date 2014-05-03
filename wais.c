@@ -15,15 +15,12 @@
 	BCM Revox Engine v0.2
 	BCM Revox Engine -> Ano: 2014|Tipo: WebEngine
 */
-#include <omp.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <winsock2.h>
 #include "bonus.h"
 #include "socks.h"
-
-#pragma omp
 
 char *InitWAIS(char address[], int port, char path[], int mode, HINSTANCE hInst, HWND hwnd){
     char result[BUF32KB], ip[TKB];

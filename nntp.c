@@ -25,8 +25,6 @@
 #include "guicon.h"
 #include "resource.h"
 
-#pragma omp
-
 char sendr[1025];
 
 BOOL CALLBACK AboutDlgProc2(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam){

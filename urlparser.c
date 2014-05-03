@@ -155,10 +155,10 @@ url UrlParser(char host[]){
     return addr;
 }
 
-char *UrlConstructor(char Url[], char path[]){
-    int tam = (strlen(Url)+strlen(path))+1;
-    char result[tam], aux2[128] = {}, url2[strlen(Url)], path2[strlen(path)];
-    int i = 0, aux = 0;
+char *UrlConstructor(char Url[], char path[], int mode){
+    int tam = (strlen(Url)+strlen(path));
+    char result[tam], aux2[128] = {}, url2[strlen(Url)], path2[strlen(path)], path3[strlen(path)], urlpath[strlen(Url)];
+    int i = 0, aux = 0, ultbarra = 0, ultpto = 0;
     url url1;
 
     while(i<11){
@@ -170,9 +170,24 @@ char *UrlConstructor(char Url[], char path[]){
     }
     if(aux==-1){
         strcpy(url2, Url);
-        //strcpy(path2, path);
+        strcpy(path3, path);
         url1 = UrlParser(url2);
-        sprintf(path2, "%s%s", url1.url_path, path);
+        ultbarra = strrchr(url1.url_path, '/')-url1.url_path;
+        switch(mode){
+        case 0:
+            sprintf(path2, "%s%s", url1.url_path, path3);
+            break;
+        case 1:
+            ultpto = strrchr(url1.url_path, '.')-url1.url_path;
+            if(ultpto>ultbarra){
+                strncpy(urlpath, url1.url_path, ultbarra+1);
+                sprintf(path2, "%s%s", urlpath, path3);
+            }
+            else{
+                sprintf(path2, "%s%s", url1.url_path, path3);
+            }
+            break;
+        }
         sprintf(result, "%s%s%s%s%s%s", url1.prtcol, bars[0], bars[1], url1.host, bars[2], path2);
         return result;
     }
@@ -182,7 +197,7 @@ char *UrlConstructor(char Url[], char path[]){
 }
 
 Type UrlConnect(char host[], int mode, HINSTANCE hInst, HWND hwnd){
-    char msg[2*BUFKB], *cached = NULL, surl[strlen(host)];
+    char msg[2*BUFKB], *cached = NULL, *aux = NULL;
     int i;
     uports up1;
     FILE *input;
@@ -199,16 +214,16 @@ Type UrlConnect(char host[], int mode, HINSTANCE hInst, HWND hwnd){
             break;
         }
     }
-    sprintf(surl, "%s", host);
+    aux = CreateTag(bars[0], bars[1], url1.host);
     printf("Inicializado\r\n");
     switch(up1){
     case HTTP:
         tp1.content = InitHTTP(url1.host, url1.port, url1.url_path, NULL);
-        tp1.url = CreateTag(url1.prtcol, CreateTag(bars[0], bars[1], "\0"), surl);
+        tp1.url = CreateTag(url1.prtcol, aux, url1.url_path);
         break;
     case HTTPS:
         tp1.content = InitHTTP(url1.host, url1.port, url1.url_path, NULL);
-        tp1.url = CreateTag(url1.prtcol, CreateTag(bars[0], bars[1], "\0"), surl);
+        tp1.url = CreateTag(url1.prtcol, aux, url1.url_path);
         break;
     case FTP:
         InitFTP(url1.host);
@@ -217,7 +232,7 @@ Type UrlConnect(char host[], int mode, HINSTANCE hInst, HWND hwnd){
         sprintf(msg, "telnet %s %d", url1.host, url1.port);
         system(msg);
         tp1.content = NULL;
-        tp1.url = CreateTag(url1.prtcol, bars[0], surl);
+        tp1.url = CreateTag(url1.prtcol, bars[0], url1.url_path);
         break;
     case GOPHER:
         tp1.content = NULL;
@@ -237,7 +252,7 @@ Type UrlConnect(char host[], int mode, HINSTANCE hInst, HWND hwnd){
         }
         else{
             tp1.content = InitHTTP(url1.host, url1.port, url1.url_path, NULL);
-            tp1.url = CreateTag(url1.prtcol, CreateTag(bars[0], bars[1], "\0"), surl);
+            tp1.url = CreateTag(url1.prtcol, CreateTag(bars[0], bars[1], url1.host), url1.url_path);
         }
         break;
     case MAILTO:

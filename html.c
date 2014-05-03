@@ -21,8 +21,6 @@
 #include <string.h>
 #include "html.h"
 
-#pragma omp
-
 char elemts[][16] = {"doctype", "--", "[CDATA[", "html", "head", "base", "link", "meta", "noscript", "script", "style", "template", "title", "body", "a", "abbr", "address", "area", "article", "aside", "audio", "b", "p"};
 
 Fhtp *aloca(){

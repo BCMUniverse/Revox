@@ -57,7 +57,6 @@ void InsrtPilha2(pilha2 *p, char novo[]);
 char *RemovePilha2(pilha2 *p);
 
 void limpaVetor(char *vet);
-static size_t strnlen(const char *s, size_t max);
 int inet_pton4(const char *src, char *dst);
 int inet_pton6(const char *src, char *dst);
 int inet_pton(int af, const char *src, char *dst);

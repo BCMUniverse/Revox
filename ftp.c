@@ -277,7 +277,7 @@ void listar()
     sock_dados(); // Abre conexão de dados
     size = 0x20;
     env = (char*)malloc(size);
-    snprintf(env,size,"PORT %s,3,%d\r\nLIST\r\n",ftp_ip,232+p_id);
+    snprintf(env,size,"PORT %s,3,%d\r\nLIST\r\n",ftp_ip,(int)232+p_id);
 
 
 // Envia comando LIST + PORT:

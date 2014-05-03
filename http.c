@@ -25,6 +25,7 @@
 #include <sys/time.h>
 #include "bonus.h"
 #include "http.h"
+#include "manifest.h"
 #include "socks.h"
 
 unsigned long mode = 1;

@@ -15,6 +15,7 @@
 	BCM Revox Engine v0.2
 	BCM Revox Engine -> Ano: 2014|Tipo: WebEngine
 */
+#include <io.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -29,7 +30,7 @@ char manisec[][16] = {"CACHE:", "FALLBACK:", "SETTINGS:", "NETWORK:"};
 char setts[][16] = {"fast", "prefer-online"};
 
 char *CopyManifst(char content[], int *i){
-    char result[4096], c;
+    char result[strlen(content)], c;
     int j = 0, k = *i;
 
     limpaVetor(result);
@@ -225,7 +226,7 @@ char *InitManifest(char content[], char url1[]){
             }
             switch(state){
             case 0: case 1:
-                cache = UrlConstructor(url1, aux);
+                cache = UrlConstructor(url1, aux, 1);
                 sprintf(hexUrl, "%s", HexCreater(cache));
                 if((cached = IsCached(cache))!=NULL){
                     strcpy(result, cached);
@@ -265,8 +266,8 @@ char *InitManifest(char content[], char url1[]){
                     aux2 = NULL;
                 }
                 aux2 = CopyManifst(content, &i);
-                cache = UrlConstructor(url1, aux);
-                sprintf(cache2, "%s", UrlConstructor(url1, aux2));
+                cache = UrlConstructor(url1, aux, 1);
+                sprintf(cache2, "%s", UrlConstructor(url1, aux2, 1));
                 sprintf(hexUrl, "%s", HexCreater(cache2));
                 if((cached = IsCached(cache))!=NULL){
                     strcpy(result, cached);
@@ -317,7 +318,7 @@ char *InitManifest(char content[], char url1[]){
             }
         }
     }
-    strcpy(result, "CACHED");
+    result = "CACHED";
     free(dr);
     dr = NULL;
 

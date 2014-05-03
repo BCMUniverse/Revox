@@ -25,10 +25,8 @@
 #include "htmlText.h"
 #include "typeparser.h"
 
-#pragma omp
-
 char *CreateTag(char *inicio, char *tag, char *fim){
-    char *element = (char *)malloc(sizeof(char)*(32));
+    char *element = (char *)malloc(sizeof(char)*(strlen(inicio)+strlen(tag)+strlen(fim)));
 
     strcpy(element, inicio);
     strcat(element, tag);

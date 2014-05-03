@@ -23,7 +23,9 @@
 #include "bonus.h"
 #include "socks.h"
 
-#pragma omp
-
-char *InitUsenetGUI(){}
-char *InitUsenetText(){}
+char *InitUsenetGUI(){
+    return "";
+}
+char *InitUsenetText(){
+    return "";
+}

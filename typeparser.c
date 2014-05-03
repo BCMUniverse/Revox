@@ -58,8 +58,7 @@ char *TypeBuster(char content[], type typ1){
 
 char *InitTypeParser(Type tp1, int mode){
     char *result, *vtyp, TypFile[VKB];
-    FILE *index;
-    int i, j;
+    int j;
     type typ1;
 
     #pragma omp parallel for schedule(guided)
