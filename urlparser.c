@@ -182,7 +182,7 @@ char *UrlConstructor(char Url[], char path[]){
 }
 
 Type UrlConnect(char host[], int mode, HINSTANCE hInst, HWND hwnd){
-    char msg[2*BUFKB], *cached, *surl;
+    char msg[2*BUFKB], *cached = NULL, surl[strlen(host)];
     int i;
     uports up1;
     FILE *input;
@@ -199,7 +199,7 @@ Type UrlConnect(char host[], int mode, HINSTANCE hInst, HWND hwnd){
             break;
         }
     }
-    sprintf(surl, "%s%s", url1.host, url1.url_path);
+    sprintf(surl, "%s", host);
     printf("Inicializado\r\n");
     switch(up1){
     case HTTP:
