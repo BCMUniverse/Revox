@@ -52,17 +52,6 @@ char *InitTelnet(char *address, int port, char *caminho){
         struct in_addr   sin_addr;     // see struct in_addr, below
         char             sin_zero[8];  // zero this if you want to
     };
-    typedef struct in_addr {
-        union {
-            struct {
-                u_char s_b1,s_b2,s_b3,s_b4;
-            } S_un_b;
-            struct {
-                u_short s_w1,s_w2;
-            } S_un_w;
-            u_long S_addr;
-        } S_un;
-    } IN_ADDR, *PIN_ADDR, FAR *LPIN_ADDR;
     struct sockaddr {
         unsigned short    sa_family;    // address family, AF_xxx
         char              sa_data[14];  // 14 bytes of protocol address

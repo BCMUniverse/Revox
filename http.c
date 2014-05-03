@@ -12,10 +12,9 @@
 	este programa, se não, escreva para a Fundação do Software Livre(FSF) Inc.,
 	51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 
-	BCM Revox Engine v0.1
-	BCM Revox Engine -> Ano: 2013|Tipo: WebEngine
+	BCM Revox Engine v0.2
+	BCM Revox Engine -> Ano: 2013, 2014|Tipo: WebEngine
 */
-#include <omp.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -27,12 +26,13 @@
 #include "http.h"
 #include "manifest.h"
 #include "socks.h"
+#include "strs.h"
 
 unsigned long mode = 1;
 char server_reply[BUF32KB];
 
 int recvtimeout(SOCKET s, int timeout){
-    int tamanho, total = 0, i;
+    int tamanho, total = 0;
     struct timeval beg, now;
     double timediff;
     char temp[BUFKB];
@@ -68,7 +68,6 @@ char *InitHTTP(char address[], int port, char caminho[], char cookie[]){
     SOCKET sock;
     char buffer[1024], buf2[512], ip[16], *aux = NULL, len[256];
     int recv_size, i, j;
-    WSADATA wsa;
     struct hostent *he;
     struct in_addr **addr_list;
 
@@ -87,17 +86,6 @@ char *InitHTTP(char address[], int port, char caminho[], char cookie[]){
         struct in_addr   sin_addr;     // see struct in_addr, below
         char             sin_zero[8];  // zero this if you want to
     };
-    typedef struct in_addr {
-        union {
-            struct {
-                u_char s_b1,s_b2,s_b3,s_b4;
-            } S_un_b;
-            struct {
-                u_short s_w1,s_w2;
-            } S_un_w;
-            u_long S_addr;
-        } S_un;
-    } IN_ADDR, *PIN_ADDR, FAR *LPIN_ADDR;
     struct sockaddr {
         unsigned short    sa_family;    // address family, AF_xxx
         char              sa_data[14];  // 14 bytes of protocol address
@@ -183,9 +171,7 @@ char *InitHTTP(char address[], int port, char caminho[], char cookie[]){
         printf("\nPronto. Tamanho total do pacote: %d bytes\n", total);
     }
 
-    char *conteudo = (char *)malloc(sizeof(char)*BUF32KB);
-    limpaVetor(conteudo);
-    strcpy(conteudo, server_reply);
+    char *conteudo = server_reply;
 
     closesocket(sock);
     WSACleanup();

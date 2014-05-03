@@ -19,7 +19,7 @@
     Baseado no código do site: http://www.news2news.com/vfp/?example=385&ver=vcpp.
     Acessado em 25 de Dezembro de 2013
 */
-#include <omp.h>
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

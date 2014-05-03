@@ -45,6 +45,7 @@
 			</Target>
 		</Build>
 		<Compiler>
+			<Add option="-Wall" />
 			<Add option="-fopenmp" />
 		</Compiler>
 		<Linker>
