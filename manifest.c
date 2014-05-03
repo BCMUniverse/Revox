@@ -161,8 +161,8 @@ char *InitManifest(char content[], char url1[]){
             aux = NULL;
         }
         aux = CopyManifst(content, &i);
-        if(i>CacheManfst+14){
-            if(aux[0]=='#' || strstr(content, "MANIFEST")!=NULL){
+        if(i>CacheManfst+14 && strcmp(aux, "\0")!=0){
+            if(aux[0]=='#' || strstr(aux, "MANIFEST")!=NULL){
                 if(aux!=NULL){
                     limpaVetor(aux);
                     aux = NULL;
@@ -247,7 +247,7 @@ char *InitManifest(char content[], char url1[]){
                     }
                     //Armazena o cache
                     buffer = UrlConnect(cache, 1, NULL, NULL);
-                    for(j=0; buffer.content[j]!='\0'; j++);
+                    for(j=0; buffer.content[j]!='\0'; j++); //pode ser substituido pelo strlen
                     if(j==0){
                         return NULL;
                     }
