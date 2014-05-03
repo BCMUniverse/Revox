@@ -166,7 +166,7 @@ char *InitHTTP(char address[], int port, char caminho[], char cookie[]){
             break;
         }
     }
-    if(recv_size<(atoi(len)-512)){
+    if(recv_size<(atoi(len)-256)){
         int total = recvtimeout(sock, 4);
         printf("\nPronto. Tamanho total do pacote: %d bytes\n", total);
     }

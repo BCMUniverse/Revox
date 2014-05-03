@@ -181,6 +181,7 @@ char *UrlConstructor(char Url[], char path[], int mode){
             ultpto = strrchr(url1.url_path, '.')-url1.url_path;
             if(ultpto>ultbarra){
                 strncpy(urlpath, url1.url_path, ultbarra+1);
+                RemvSubString(urlpath, "/");
                 sprintf(path2, "%s%s", urlpath, path3);
             }
             else{

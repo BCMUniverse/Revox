@@ -15,7 +15,6 @@
 	BCM Revox Engine v0.2
 	BCM Revox Engine -> Ano: 2013, 2014|Tipo: WebEngine
 */
-#include <omp.h>
 #include <stdio.h>
 #include <windef.h>
 #include "revox.h"
@@ -42,7 +41,7 @@ void InitFileText(char *path){
         fprintf(stderr, "Erro: Arquivo Invalido!\n");
         return;
     }
-    for(i=0; i<BUF32KB; i++){
+    for(i=0; content[i]!='\0'; i++){
         fscanf(input, "%c", &content[i]);
     }
     InitHTMLText(content);
