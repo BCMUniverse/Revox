@@ -161,6 +161,14 @@ char *UrlConstructor(char Url[], char path[], int mode){
     int i = 0, aux = 0, ultbarra = 0, ultpto = 0;
     url url1;
 
+    // limpa os vetores
+    memset(result, 0, sizeof(result));
+    memset(url2, 0, sizeof(url2));
+    memset(path2, 0, sizeof(path2));
+    memset(path3, 0, sizeof(path3));
+    memset(urlpath, 0, sizeof(urlpath));
+
+    //procura se o caminho a ser incorporado a url é um endereço externo
     while(i<11){
         sprintf(aux2, "%s%s%s", ports[i++], bars[0], bars[1]);
         aux = SearchString(path, aux2);

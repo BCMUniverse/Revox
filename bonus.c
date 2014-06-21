@@ -90,13 +90,8 @@ char *RemovePilha2(pilha2 *p){
 }
 
 void limpaVetor(char *vet){
-    int i, tam = strlen(vet);
-
-    if(tam>0){
-        for(i=0; i<=tam; i++){
-            vet[i] = '\0';
-        }
-    }
+    int tam = sizeof(vet);
+    memset(vet, 0, tam);
 }
 
 int inet_pton4(const char *src, char *dst){

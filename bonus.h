@@ -56,6 +56,7 @@ void InitPilha2(pilha2 *p);
 void InsrtPilha2(pilha2 *p, char novo[]);
 char *RemovePilha2(pilha2 *p);
 
+//limpa vetores
 void limpaVetor(char *vet);
 int inet_pton4(const char *src, char *dst);
 int inet_pton6(const char *src, char *dst);

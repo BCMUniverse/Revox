@@ -94,3 +94,25 @@ char *InitTypeParser(Type tp1, int mode){
 
     return result;
 }
+
+char *TagHeader(char *content){
+    char header[8196];
+    int i = 0, head = SearchString(content, "\r\n\r\n");
+
+    for(i=0; i<=head; i++){
+        header[i] = content[i];
+    }
+
+    return header;
+}
+
+char *TagBody(char *content){
+    char body[strlen(content)-1024];
+    int i = 0, j = 0, bodyn = SearchString(content, "\r\n\r\n"), tam = strlen(content);
+
+    for(i=bodyn, j=0; i<tam; i++, j++){
+        body[j] = content[i];
+    }
+
+    return body;
+}

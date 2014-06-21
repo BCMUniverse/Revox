@@ -149,7 +149,7 @@ char *InitHTMLText(char *content){
     buffer = (char *)malloc(sizeof(char)*(2*c));
     a = strstr(content, "\r\n\r\n");
     inicio = a - content;
-    buffer = SubString(content, inicio+4, "\0");
+    buffer = SubString(content, inicio+4, strlen(content)+1);
 
     for(i=0; buffer[i]!='\0'; i++){
         if(buffer[i]=='<' && buffer[i+1]=='!'){

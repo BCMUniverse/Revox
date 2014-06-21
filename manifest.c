@@ -33,7 +33,7 @@ char *CopyManifst(char content[], int *i){
     char result[strlen(content)], c;
     int j = 0, k = *i;
 
-    limpaVetor(result);
+    memset(result, 0, sizeof(result));
     if(content[k]=='#'){
         while(content[k]!='\r' && content[k]!='\n'){
             c = content[k++];
@@ -111,10 +111,10 @@ char *IsCached(char url[]){
 }
 
 char *InitManifest(char content[], char url1[]){
-    char *result = NULL, *aux = NULL, *aux2 = NULL, *cache = NULL, cache2[4096], hexUrl[8192], *cached = NULL, file[8500], Time[64], *dr = NULL, path[2200];
-    char pathIndex[2200], *tb = NULL, url2[strlen(url1)];
+    char *result = NULL, *aux = NULL, *aux2 = NULL, *cache = NULL, cache2[4096] = {}, hexUrl[8192] = {}, *cached = NULL, file[8500] = {}, Time[64] = {}, *dr = NULL, path[2200] = {};
+    char pathIndex[2200] = {}, *tb = NULL, url2[strlen(url1)], cont[strlen(content)];
     FILE *output, *index;
-    int i, j, CacheManfst;
+    int i = 0, CacheManfst = 0;
     time_t currentTime;
     Type buffer;
     buffer.content = NULL;
@@ -135,6 +135,8 @@ char *InitManifest(char content[], char url1[]){
     **/
     int state = 0;
 
+    limpaVetor(cont);
+    strcpy(cont, content);
     dr = (char *)malloc(sizeof(char)*2048);
     getcwd(dr, 2048);
     strcat(dr, "\\cache");
@@ -143,7 +145,7 @@ char *InitManifest(char content[], char url1[]){
     printf("Pasta criada em: %s\r\n", dr);
     limpaVetor(url2);
     strcpy(url2, url1);
-    CacheManfst = SearchString(content, "CACHE MANIFEST");
+    CacheManfst = SearchString(cont, "CACHE MANIFEST");
 
     //Gerar o tempo atual antes de grava-lo na index
     currentTime = time(NULL);
@@ -156,33 +158,33 @@ char *InitManifest(char content[], char url1[]){
     limpaVetor(hexUrl);
 
     //Analisa o manifesto
-    for(i=0; content[i]!='\0';){
+    for(i=0; cont[i]!='\0';){
         if(aux!=NULL){
             limpaVetor(aux);
             aux = NULL;
         }
-        aux = CopyManifst(content, &i);
+        aux = CopyManifst(cont, &i);
         if(i>CacheManfst+14 && strcmp(aux, "\0")!=0){
             if(aux[0]=='#' || strstr(aux, "MANIFEST")!=NULL){
                 if(aux!=NULL){
                     limpaVetor(aux);
                     aux = NULL;
                 }
-                aux = CopyManifst(content, &i);
+                aux = CopyManifst(cont, &i);
             }
             if(strcmp(aux, "")==0 || strcmp(aux, "\0")==0){
                 if(aux!=NULL){
                     limpaVetor(aux);
                     aux = NULL;
                 }
-                aux = CopyManifst(content, &i);
+                aux = CopyManifst(cont, &i);
             }
             if(strcmp(aux, manisec[0])==0){
                 if(aux!=NULL){
                     limpaVetor(aux);
                     aux = NULL;
                 }
-                aux = CopyManifst(content, &i);
+                aux = CopyManifst(cont, &i);
                 state = 1;
             }
             else{
@@ -191,7 +193,7 @@ char *InitManifest(char content[], char url1[]){
                         limpaVetor(aux);
                         aux = NULL;
                     }
-                    aux = CopyManifst(content, &i);
+                    aux = CopyManifst(cont, &i);
                     state = 2;
                 }
                 else{
@@ -200,7 +202,7 @@ char *InitManifest(char content[], char url1[]){
                             limpaVetor(aux);
                             aux = NULL;
                         }
-                        aux = CopyManifst(content, &i);
+                        aux = CopyManifst(cont, &i);
                         state = 3;
                     }
                     else if(strcmp(aux, manisec[3])==0){
@@ -208,7 +210,7 @@ char *InitManifest(char content[], char url1[]){
                             limpaVetor(aux);
                             aux = NULL;
                         }
-                        aux = CopyManifst(content, &i);
+                        aux = CopyManifst(cont, &i);
                         state = 4;
                     }
                 }
@@ -218,7 +220,7 @@ char *InitManifest(char content[], char url1[]){
                 cache = NULL;
             }
             limpaVetor(cache2);
-            limpaVetor(hexUrl);
+            memset(hexUrl, 0, sizeof(hexUrl));
             strcpy(url1, url2);
             if(buffer.content!=NULL){
                 limpaVetor(buffer.content);
@@ -227,7 +229,7 @@ char *InitManifest(char content[], char url1[]){
             switch(state){
             case 0: case 1:
                 cache = UrlConstructor(url1, aux, 1);
-                sprintf(hexUrl, "%s", HexCreater(cache));
+                sprintf(hexUrl, "%s\0", HexCreater(cache));
                 if((cached = IsCached(cache))!=NULL){
                     strcpy(result, cached);
                 }
@@ -248,8 +250,7 @@ char *InitManifest(char content[], char url1[]){
                     }
                     //Armazena o cache
                     buffer = UrlConnect(cache, 1, NULL, NULL);
-                    for(j=0; buffer.content[j]!='\0'; j++); //pode ser substituido pelo strlen
-                    if(j==0){
+                    if(strlen(buffer.content)==0){
                         return NULL;
                     }
                     if((tb = TypeBuster(buffer.content, THTML))==NULL){
@@ -258,6 +259,9 @@ char *InitManifest(char content[], char url1[]){
                     fprintf(output, "Content-Type: %s\r\n\r\n%s\r\n", tb, buffer.content);
                     //Fecha o arquivo
                     fclose(output);
+                    //Anula o arquivo impedido modificação e invasão de dados
+                    index = NULL;
+                    output = NULL;
                 }
                 break;
             case 2:
@@ -265,7 +269,7 @@ char *InitManifest(char content[], char url1[]){
                     limpaVetor(aux2);
                     aux2 = NULL;
                 }
-                aux2 = CopyManifst(content, &i);
+                aux2 = CopyManifst(cont, &i);
                 cache = UrlConstructor(url1, aux, 1);
                 sprintf(cache2, "%s", UrlConstructor(url1, aux2, 1));
                 sprintf(hexUrl, "%s", HexCreater(cache2));
@@ -289,8 +293,7 @@ char *InitManifest(char content[], char url1[]){
                     }
                     //Armazena o cache
                     buffer = UrlConnect(cache2, 1, NULL, NULL);
-                    for(j=0; buffer.content[j]!='\0'; j++);
-                    if(j==0){
+                    if(strlen(buffer.content)==0){
                         return NULL;
                     }
                     if((tb = TypeBuster(buffer.content, THTML))==NULL){

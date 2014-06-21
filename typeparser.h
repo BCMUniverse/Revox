@@ -40,4 +40,14 @@ char *TypeBuster(char content[], type typ1);
 **/
 char *InitTypeParser(Type tp1, int mode);
 
+/**
+*   Obtém o Cabeçalho do conteúdo recebido pela rede.
+**/
+char *TagHeader(char *content);
+
+/**
+*   Obtem o corpo do conetúdo recebido pela rede.
+**/
+char *TagBody(char *content);
+
 #endif // _TYPEPARSER_H_
