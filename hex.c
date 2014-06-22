@@ -18,20 +18,21 @@
 #include <stdio.h>
 #include <string.h>
 #include "bonus.h"
-#include "htmlText.h"
 
 char *HexCreater(char str[]){
     int tam = 2*strlen(str);
-    char hexReslt[tam], hex[] = {"0123456789ABCDEF"}, result[tam];
-    int i = 0, j = 0;
+    char hexReslt[2] = {}, result[tam];
+    int i = 0;
 
-    limpaVetor(result);
-    limpaVetor(hexReslt);
-    for(i=0, j=0; str[i]!='\r' && str[i]!='\n' && str[i]!='\0'; i++){
-        hexReslt[j++] = hex[str[i]/16];
-        hexReslt[j++] = hex[str[i]%16];
+    memset(result, 0, sizeof(result));
+    strcpy(hexReslt, "\0\0");
+    for(i=0; str[i]!='\r' && str[i]!='\n' && str[i]!='\0'; i++){
+        sprintf(hexReslt, "%X", str[i]);
+        if(i==0){
+            memset(result, 0, sizeof(result));
+        }
+        strcat(result, hexReslt);
     }
-    strncpy(result, hexReslt, tam);
 
     return result;
 }
