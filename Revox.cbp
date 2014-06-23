@@ -57,6 +57,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="bonus.h" />
+		<Unit filename="downloads.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="downloads.h" />
 		<Unit filename="ftp.c">
 			<Option compilerVar="CC" />
 		</Unit>

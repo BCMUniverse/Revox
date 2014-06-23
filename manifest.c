@@ -25,6 +25,7 @@
 #include "strs.h"
 #include "typeparser.h"
 #include "urlparser.h"
+#include "downloads.h"
 
 char manisec[][16] = {"CACHE:", "FALLBACK:", "SETTINGS:", "NETWORK:"};
 char setts[][16] = {"fast", "prefer-online"};
@@ -235,16 +236,28 @@ char *InitManifest(char content[], char url1[]){
                 }
                 else{
                     sprintf(file, "%s\\%s", dr, hexUrl);
+
+                    sprintf(aux2, "%s\r\n%s\r\n%s\r\n%s\r\n\r\n", cache, file, setts[defcache], Time);
+                    SaveFile(pathIndex, aux2, "a+");
                     //Abre/cria a index e o arquivo no cache
-                    if((index = fopen(pathIndex, "a+"))==NULL){
+                    /*if((index = fopen(pathIndex, "a+"))==NULL){
                         fprintf(stderr, "Erro: Arquivo Invalido!\r\nEndereco: %s\r\n", pathIndex);
                         return NULL;
                     }
                     //Registra o cache na index
                     fprintf(index, "%s\r\n%s\r\n%s\r\n%s\r\n\r\n", cache, file, setts[defcache], Time);
                     //Fecha o arquivo
-                    fclose(index);
-                    if((output = fopen(file, "w+"))==NULL){
+                    fclose(index);*/
+                    buffer = UrlConnect(cache, 1, NULL, NULL);
+                    if(strlen(buffer.content)==0){
+                        return NULL;
+                    }
+                    if((tb = TypeBuster(buffer.content, THTML))==NULL){
+                        return NULL;
+                    }
+                    sprintf(aux2, "Content-Type: %s\r\n\r\n%s\r\n", tb, buffer.content);
+                    SaveFile(file, aux2, "w+");
+                    /*if((output = fopen(file, "w+"))==NULL){
                         fprintf(stderr, "Erro: Arquivo Invalido!\r\nEndereco: %s\r\n", file);
                         return NULL;
                     }
@@ -258,10 +271,10 @@ char *InitManifest(char content[], char url1[]){
                     }
                     fprintf(output, "Content-Type: %s\r\n\r\n%s\r\n", tb, buffer.content);
                     //Fecha o arquivo
-                    fclose(output);
+                    fclose(output);*/
                     //Anula o arquivo impedido modificação e invasão de dados
-                    index = NULL;
-                    output = NULL;
+                    /*index = NULL;
+                    output = NULL;*/
                 }
                 break;
             case 2:

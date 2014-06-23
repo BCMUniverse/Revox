@@ -208,7 +208,7 @@ char *UrlConstructor(char Url[], char path[], int mode){
 Type UrlConnect(char host[], int mode, HINSTANCE hInst, HWND hwnd){
     char msg[2*BUFKB], *cached = NULL, *aux = NULL;
     int i;
-    uports up1;
+    uports up1 = HTTP;
     FILE *input;
     Type tp1;
     url url1 = UrlParser(host);

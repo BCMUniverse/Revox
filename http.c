@@ -70,12 +70,18 @@ char *InitHTTP(char address[], int port, char caminho[], char cookie[]){
     int recv_size, i, j;
     struct hostent *he;
     struct in_addr **addr_list;
+    WSADATA wsa;
 
     //Inicialização
-    InitSock();
+    //InitSock();
+    if (WSAStartup(MAKEWORD(2,2),&wsa) != 0){
+        fprintf(stderr, "Falhou. Codigo de Erro: %d\n", WSAGetLastError());
+        return 0;
+    }
     //Criar o socket IPv4
 	if((sock = socket(AF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET) {
-		printf("Nao pode criar o socket: %d\n" , WSAGetLastError());
+		fprintf(stderr, "Nao pode criar o socket: %d\n", WSAGetLastError());
+		return NULL;
 	}
     printf("BCM Revox Engine v0.2 - Cliente HTTP\nAcessando %s...\n", address);
 
