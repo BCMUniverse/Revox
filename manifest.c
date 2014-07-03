@@ -236,18 +236,23 @@ char *InitManifest(char content[], char url1[]){
                 }
                 else{
                     sprintf(file, "%s\\%s", dr, hexUrl);
-
-                    sprintf(aux2, "%s\r\n%s\r\n%s\r\n%s\r\n\r\n", cache, file, setts[defcache], Time);
-                    SaveFile(pathIndex, aux2, "a+");
                     //Abre/cria a index e o arquivo no cache
-                    /*if((index = fopen(pathIndex, "a+"))==NULL){
-                        fprintf(stderr, "Erro: Arquivo Invalido!\r\nEndereco: %s\r\n", pathIndex);
-                        return NULL;
+                    if(aux2!=NULL){
+                        limpaVetor(aux2);
+                        aux2 = NULL;
                     }
-                    //Registra o cache na index
-                    fprintf(index, "%s\r\n%s\r\n%s\r\n%s\r\n\r\n", cache, file, setts[defcache], Time);
-                    //Fecha o arquivo
-                    fclose(index);*/
+                    aux2 = (char *)malloc(sizeof(char)*((sizeof(cache)+sizeof(file)+sizeof(Time))+31));
+                    limpaVetor(aux2);
+                    strcpy(aux2, cache);
+                    strcat(aux2, "\r\n");
+                    strcat(aux2, file);
+                    strcat(aux2, "\r\n");
+                    strcat(aux2, setts[defcache]);
+                    strcat(aux2, "\r\n");
+                    strcat(aux2, Time);
+                    strcat(aux2, "\r\n\r\n");
+                    SaveFile(pathIndex, aux2, "a+");
+                    //Armazena o cache
                     buffer = UrlConnect(cache, 1, NULL, NULL);
                     if(strlen(buffer.content)==0){
                         return NULL;
@@ -255,6 +260,20 @@ char *InitManifest(char content[], char url1[]){
                     if((tb = TypeBuster(buffer.content, THTML))==NULL){
                         return NULL;
                     }
+                    if(aux2!=NULL){
+                        limpaVetor(aux2);
+                        aux2 = NULL;
+                    }
+                    aux2 = (char *)malloc(sizeof(char)*((sizeof(tb)+BUF32KB)+21));
+                    limpaVetor(aux2);
+                    /*strcpy(aux2, "Content-Type: ");
+                    strcat(aux2, tb);
+                    strcat(aux2, "\r\n\r\n");
+                    char buf[strlen(buffer.content)];
+                    limpaVetor(buf);
+                    strcpy(buf, buffer.content);
+                    strcat(aux2, buf);
+                    strcat(aux2, "\r\n");*/
                     sprintf(aux2, "Content-Type: %s\r\n\r\n%s\r\n", tb, buffer.content);
                     SaveFile(file, aux2, "w+");
                     /*if((output = fopen(file, "w+"))==NULL){
