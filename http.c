@@ -29,7 +29,7 @@
 #include "strs.h"
 
 unsigned long mode = 1;
-char server_reply[BUF32KB];
+//char server_reply[BUF32KB];
 
 int recvtimeout(SOCKET s, int timeout){
     int tamanho, total = 0;

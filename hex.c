@@ -21,12 +21,15 @@
 
 char *HexCreater(char str[]){
     int tam = 2*strlen(str);
-    char hexReslt[2] = {}, result[tam];
+    char hexReslt[2] = {}, result[tam], c;
     int i = 0;
 
     memset(result, 0, sizeof(result));
     strcpy(hexReslt, "\0\0");
     for(i=0; str[i]!='\r' && str[i]!='\n' && str[i]!='\0'; i++){
+        do{
+            scanf("%c", c);
+        }while(c!='\0');
         sprintf(hexReslt, "%X", str[i]);
         if(i==0){
             memset(result, 0, sizeof(result));

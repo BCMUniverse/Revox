@@ -26,9 +26,16 @@
 #include "typeparser.h"
 #include "urlparser.h"
 #include "downloads.h"
+#include "http.h"
 
 char manisec[][16] = {"CACHE:", "FALLBACK:", "SETTINGS:", "NETWORK:"};
 char setts[][16] = {"fast", "prefer-online"};
+/**
+*   A varíavel defcache define baseado nas prefefências do manifesto, se deve ou não salvar os arquivos indicado no manifesto.
+*   defcache igual a 0 -> fast
+*   defcache igual a 1 -> prefer-online
+**/
+int defcache = 0;
 
 char *CopyManifst(char content[], int *i){
     char result[strlen(content)], c;
@@ -111,21 +118,73 @@ char *IsCached(char url[]){
     return cont;
 }
 
+void addCache(char content[], char address[]){
+    char addrx[strlen(address)];
+    strcpy(addrx, address);
+    char *hexUrl = NULL, *cached = NULL, Time[128] = {}, *dr = NULL, path[2536] = {}, pathIndex[2536] = {}, *aux2 = NULL, file[8500] = {};
+    time_t currentTime;
+
+    strcpy(address, addrx);
+    //Obter a index
+    dr = (char *)malloc(sizeof(char)*2048);
+    getcwd(dr, 2048);
+    strcat(dr, "\\cache");
+    sprintf(path, "mkdir %s", dr);
+    system(path);
+    printf("Pasta criada em: %s\r\n", dr);
+
+    //Gerar o tempo atual antes de grava-lo na index
+    currentTime = time(NULL);
+    strftime(Time, 64, "%d/%m/%Y", localtime(&currentTime));
+    sprintf(pathIndex, "%s\\index", dr);
+
+    //memset(hexUrl, 0, sizeof(hexUrl));
+    //sprintf(hexUrl, "%s\0", HexCreater(addrx));
+    hexUrl = HexCreater(addrx);
+    if((cached = IsCached(address))!=NULL){
+        return;
+        //EmBreve!
+    }
+    else{
+        sprintf(file, "%s\\%s", dr, hexUrl);
+        //Abre/cria a index e o arquivo no cache
+        if(aux2!=NULL){
+            limpaVetor(aux2);
+            aux2 = NULL;
+        }
+        aux2 = (char *)malloc(sizeof(char)*((sizeof(address)+sizeof(file)+sizeof(Time))+31));
+        limpaVetor(aux2);
+        strcpy(aux2, address);
+        strcat(aux2, "\r\n");
+        strcat(aux2, file);
+        strcat(aux2, "\r\n");
+        strcat(aux2, setts[defcache]);
+        strcat(aux2, "\r\n");
+        strcat(aux2, Time);
+        strcat(aux2, "\r\n\r\n");
+        SaveFile(pathIndex, aux2, "a+");
+        //Armazena o cache
+        if(aux2!=NULL){
+            limpaVetor(aux2);
+            aux2 = NULL;
+        }
+        aux2 = (char *)malloc(sizeof(char)*(strlen(content)+8));
+        limpaVetor(aux2);
+        strcpy(aux2, content);
+        strcat(aux2, "\r\n");
+        SaveFile(file, aux2, "w+");
+    }
+}
+
 char *InitManifest(char content[], char url1[]){
     char *result = NULL, *aux = NULL, *aux2 = NULL, *cache = NULL, cache2[4096] = {}, hexUrl[8192] = {}, *cached = NULL, file[8500] = {}, Time[64] = {}, *dr = NULL, path[2200] = {};
-    char pathIndex[2200] = {}, *tb = NULL, url2[strlen(url1)], cont[strlen(content)];
+    char pathIndex[2200] = {}, *tb = NULL, url2[strlen(url1)], cont[strlen(content)], *cache3 = NULL, *cont2 = NULL;
     FILE *output, *index;
     int i = 0, CacheManfst = 0;
     time_t currentTime;
     Type buffer;
     buffer.content = NULL;
     buffer.url = NULL;
-    /**
-    *   A varíavel defcache define baseado nas prefefências do manifesto, se deve ou não salvar os arquivos indicado no manifesto.
-    *   defcache igual a 0 -> fast
-    *   defcache igual a 1 -> prefer-online
-    **/
-    int defcache = 0;
     /**
     *   A varíavel state define o estado atual que está sendo utilizados os dados do arquivo recebido
     *   state igual a 0 -> Explicito
@@ -230,7 +289,19 @@ char *InitManifest(char content[], char url1[]){
             switch(state){
             case 0: case 1:
                 cache = UrlConstructor(url1, aux, 1);
-                sprintf(hexUrl, "%s\0", HexCreater(cache));
+                cache3 = (char *)malloc(sizeof(char)*(strlen(cache)+1));
+                limpaVetor(cache3);
+                strcpy(cache3, cache);
+                buffer = UrlConnect(cache, 1, NULL, NULL);
+                if(strlen(buffer.content)==0){
+                    return NULL;
+                }
+                strcpy(cache, cache3);
+                cont2 = (char *)malloc(sizeof(char)*(sizeof(server_reply)));
+                limpaVetor(cont2);
+                strcpy(cont2, server_reply);
+                addCache(cont2, cache);
+                /*sprintf(hexUrl, "%s\0", HexCreater(cache));
                 if((cached = IsCached(cache))!=NULL){
                     strcpy(result, cached);
                 }
@@ -252,6 +323,7 @@ char *InitManifest(char content[], char url1[]){
                     strcat(aux2, Time);
                     strcat(aux2, "\r\n\r\n");
                     SaveFile(pathIndex, aux2, "a+");
+
                     //Armazena o cache
                     buffer = UrlConnect(cache, 1, NULL, NULL);
                     if(strlen(buffer.content)==0){
@@ -266,7 +338,7 @@ char *InitManifest(char content[], char url1[]){
                     }
                     aux2 = (char *)malloc(sizeof(char)*((sizeof(tb)+BUF32KB)+21));
                     limpaVetor(aux2);
-                    /*strcpy(aux2, "Content-Type: ");
+                    //strcpy(aux2, "Content-Type: ");
                     strcat(aux2, tb);
                     strcat(aux2, "\r\n\r\n");
                     char buf[strlen(buffer.content)];
@@ -274,9 +346,9 @@ char *InitManifest(char content[], char url1[]){
                     strcpy(buf, buffer.content);
                     strcat(aux2, buf);
                     strcat(aux2, "\r\n");*/
-                    sprintf(aux2, "Content-Type: %s\r\n\r\n%s\r\n", tb, buffer.content);
+                    /*sprintf(aux2, "Content-Type: %s\r\n\r\n%s\r\n", tb, buffer.content);
                     SaveFile(file, aux2, "w+");
-                    /*if((output = fopen(file, "w+"))==NULL){
+                    //if((output = fopen(file, "w+"))==NULL){
                         fprintf(stderr, "Erro: Arquivo Invalido!\r\nEndereco: %s\r\n", file);
                         return NULL;
                     }
@@ -294,7 +366,7 @@ char *InitManifest(char content[], char url1[]){
                     //Anula o arquivo impedido modificação e invasão de dados
                     /*index = NULL;
                     output = NULL;*/
-                }
+                //}
                 break;
             case 2:
                 if(aux2!=NULL){

@@ -20,6 +20,10 @@
 
 char *IsCached(char url[]);
 char *CopyManifst(char content[], int *i);
+/**
+*   Adiciona arquivos no cache.
+**/
+void addCache(char content[], char address[]);
 char *InitManifest(char content[], char url1[]);
 
 #endif // _MANIFEST_H_
