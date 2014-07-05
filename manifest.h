@@ -18,12 +18,21 @@
 #ifndef _MANIFEST_H_
 #define _MANIFEST_H_
 
+typedef enum _CacheStatus{
+    UNCACHED,
+    IDLE,
+    CHECKING,
+    DOWNLOADING,
+    UPDATEREADY,
+    OBSOLETE
+} status;
+
 char *IsCached(char url[]);
 char *CopyManifst(char content[], int *i);
 /**
 *   Adiciona arquivos no cache.
 **/
-void addCache(char content[], char address[]);
-char *InitManifest(char content[], char url1[]);
+status addCache(char content[], char address[]);
+status InitManifest(char content[], char url1[]);
 
 #endif // _MANIFEST_H_

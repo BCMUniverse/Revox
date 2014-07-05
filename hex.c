@@ -21,20 +21,16 @@
 
 char *HexCreater(char str[]){
     int tam = 2*strlen(str);
-    char hexReslt[2] = {}, result[tam], c;
-    int i = 0;
+    char hex[] = {"0123456789ABCDEF"}, result[tam];
+    int i = 0, j = 0;
 
-    memset(result, 0, sizeof(result));
-    strcpy(hexReslt, "\0\0");
-    for(i=0; str[i]!='\r' && str[i]!='\n' && str[i]!='\0'; i++){
-        do{
-            scanf("%c", c);
-        }while(c!='\0');
-        sprintf(hexReslt, "%X", str[i]);
-        if(i==0){
-            memset(result, 0, sizeof(result));
-        }
-        strcat(result, hexReslt);
+    memset(result, 0, tam);
+    for(i=0, j=0; (str[i]!='\r' && str[i]!='\n' && str[i]!='\0') || j<tam; i++){
+        result[j++] = hex[str[i]/16];
+        result[j++] = hex[str[i]%16];
+    }
+    for(i=tam; i<strlen(result); i++){
+        result[i] = '\0';
     }
 
     return result;

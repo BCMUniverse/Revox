@@ -66,43 +66,21 @@ int recvtimeout(SOCKET s, int timeout){
 char *InitHTTP(char address[], int port, char caminho[], char cookie[]){
     struct sockaddr_in Server;
     SOCKET sock;
-    char buffer[1024], buf2[512], ip[16], *aux = NULL, len[256];
+    char buffer[1024], buf2[512], ip[16], *aux = NULL, len[128];
     int recv_size, i, j;
     struct hostent *he;
     struct in_addr **addr_list;
-    WSADATA wsa;
 
     //Inicialização
-    //InitSock();
-    if (WSAStartup(MAKEWORD(2,2),&wsa) != 0){
-        fprintf(stderr, "Falhou. Codigo de Erro: %d\n", WSAGetLastError());
-        return 0;
-    }
+    InitSock();
+
     //Criar o socket IPv4
 	if((sock = socket(AF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET) {
 		fprintf(stderr, "Nao pode criar o socket: %d\n", WSAGetLastError());
-		return NULL;
+		WSACleanup();
+		exit(EXIT_FAILURE);
 	}
     printf("BCM Revox Engine v0.2 - Cliente HTTP\nAcessando %s...\n", address);
-
-    //Estruturas do IPv4
-    struct sockaddr_in {
-        short            sin_family;   // e.g. AF_INET, AF_INET6
-        unsigned short   sin_port;     // e.g. htons(3490)
-        struct in_addr   sin_addr;     // see struct in_addr, below
-        char             sin_zero[8];  // zero this if you want to
-    };
-    struct sockaddr {
-        unsigned short    sa_family;    // address family, AF_xxx
-        char              sa_data[14];  // 14 bytes of protocol address
-    };
-    struct hostent{
-        char *h_name;         /* Official name of host.  */
-        char **h_aliases;     /* Alias list.  */
-        int h_addrtype;       /* Host address type.  */
-        int h_length;         /* Length of address.  */
-        char **h_addr_list;       /* List of addresses from name server.  */
-    };
 
     if((he = gethostbyname(address)) == NULL){
         //gethostbyname failed
@@ -155,7 +133,7 @@ char *InitHTTP(char address[], int port, char caminho[], char cookie[]){
 
     //Receive a reply from the server
     if((recv_size = recv(sock, server_reply, BUF32KB, 0))<INVALID_SOCKET){
-        puts("recv falhou");
+        puts("Erro: Falha ao receber!");
     }
     printf("Resposta recebida\nBytes recebidos: %d\n", recv_size);
 
