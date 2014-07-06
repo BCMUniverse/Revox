@@ -109,8 +109,9 @@ char *IsCached(char url[]){
 status addCache(char content[], char address[]){
     char addrx[strlen(address)];
     strcpy(addrx, address);
-    char *hexUrl = NULL, *cached = NULL, Time[64] = {}, *dr = NULL, path[2536] = {}, pathIndex[2536] = {}, *aux = NULL, file[8500] = {}, date[64] = {};
-    int i = 0, j = 0;
+    char *hexUrl = NULL, *cached = NULL, Time[64] = {}, *dr = NULL, path[2536] = {}, pathIndex[2536] = {}, *aux = NULL, file[8500] = {}, date[64] = {}, date2[64] = {};
+    char *aux2 = NULL, *aux3 = NULL, ctmp[64] = {};
+    int i = 0, j = 0, k = 0;
     time_t currentTime;
     struct tm tm1;
 
@@ -153,7 +154,27 @@ status addCache(char content[], char address[]){
                 }
                 strptime(date, "%d %m %Y %H:%M:%S", &tm1);
                 limpaVetor(date);
-                strftime(date, 64, "%d/%m/%Y", &tm1);
+                strftime(date, 64, "%d %m %Y", &tm1);
+                Type buf = UrlConnect(address, 1, NULL, NULL);
+                char cont[strlen(server_reply)];
+                limpaVetor(cont);
+                strcpy(cont, buf.content);
+                aux2 = strtok(cont, " \r\n");
+                while(aux2!=NULL){
+                    aux2 = strtok(NULL, " \r\n");
+                    if((aux3 = strstr(aux2, "Last-Modified:"))!=NULL){
+                        int tmp = strlen(aux3);
+                        for(j=15, k = 0; j<tmp || aux3[j]!='\r' && aux3[j]!='\n' && aux3[j]!='\0'; j++, k++){
+                            ctmp[k] = aux3[j];
+                        }
+                        strptime(ctmp, "    %d %m %Y %H:%M:%S    ", &tm1);
+                        limpaVetor(date2);
+                        strftime(date2, 64, "%d %m %Y", &tm1);
+                    }
+                }
+                if(strcmp(date, date2)>0){
+                    SaveFile(file, cont, "w+");
+                }
             }
         }
         return UNCACHED;

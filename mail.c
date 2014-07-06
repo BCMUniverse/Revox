@@ -82,7 +82,7 @@ int SendMail(mail sml){
     char tmp[255];
     int i;
 
-    if (!ValidateEnvelope(sml.host, sml.recp, sml.sender, &sml.ip)){
+    if (!ValidateEnvelope(sml.host, sml.recp, sml.sender, sml.ip)){
         return 0;
     }
     if (sml.sender=="" || sml.recp=="" || sml.body=="" || sml.subj==""){
@@ -147,7 +147,7 @@ char *InitMailGUI(char *host, char *others, int port, HINSTANCE hInst, HWND hwnd
         strcpy(aux, strstr(others, mailc[i]));
         if(aux==NULL){
             for(j=0; j<8; j++){
-                strcpy(aux, strstr(others, toupper(mailc[j])));
+                strcpy(aux, strstr(others, (char *)toupper(mailc[j])));
                 if(aux!=NULL){
                     break;
                 }
