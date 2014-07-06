@@ -16,6 +16,28 @@
     BCM Revox Engine -> Ano: 2014|Tipo: WebEngine
 */
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "bonus.h"
+
+char *openFile(char caminho[]){
+    char *arquivo = NULL, temp[TKB] = {};
+    FILE *file;
+
+    arquivo = (char *)malloc(sizeof(char)*TKB);
+    limpaVetor(arquivo);
+    if((file = fopen(caminho, "r"))==NULL){
+        fprintf(stderr, "Erro: Arquivo Invalido!\r\nEndereco: %s\r\n", caminho);
+        return NULL;
+    }
+    while((fgets(temp, TKB, file))!=NULL){
+        strcat(arquivo, temp);
+        arquivo = (char *)realloc(arquivo, sizeof(char)*TKB);
+    }
+    fclose(file);
+    file = NULL;
+    return arquivo;
+}
 
 void SaveFile(char path[], char content[], char tipo[]){
     FILE *file;

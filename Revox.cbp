@@ -17,15 +17,11 @@
 					<Add option="-Os" />
 					<Add option="-O2" />
 					<Add option="-std=gnu99" />
-					<Add option="-DBUILD_DLL" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
 					<Add option="-lws2_32" />
 					<Add option="-lwsock32" />
-					<Add library="user32" />
-					<Add library="C:\Program Files\CodeBlocks\MinGW\lib\libws2_32.a" />
-					<Add library="C:\Program Files\CodeBlocks\MinGW\lib\libwsock32.a" />
 				</Linker>
 			</Target>
 			<Target title="Dbg">
@@ -115,6 +111,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="socks.h" />
+		<Unit filename="strptime.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="strptime.h" />
 		<Unit filename="strs.c">
 			<Option compilerVar="CC" />
 		</Unit>

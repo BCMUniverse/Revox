@@ -15,16 +15,12 @@
 	BCM Revox Engine v0.2
 	BCM Revox Engine -> Ano: 2014|Tipo: WebEngine
 */
-#ifndef _DOWNLOADS_H_
-#define _DOWNLOADS_H_
 
-/**
-*   Abre o arquivo do local determinado.
-**/
-char *openFile(char caminho[]);
-/**
-*   Salva/Cria o arquivo no local determinado.
-**/
-void SaveFile(char path[], char content[], char tipo[]);
+#ifndef _STRPTIME_H_
+#define _STRPTIME_H_
 
-#endif // _DOWNLOADS_H_
+char * strptime(const char *buf, const char *fmt, struct tm *tm);
+int conv_num(const char **, int *, int, int);
+//int strncasecmp(char *s1, char *s2, size_t n);
+
+#endif // _STRPTIME_H_

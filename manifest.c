@@ -18,12 +18,13 @@
 #include <io.h>
 #include <stdio.h>
 #include <time.h>
-#include "hex.h"
-#include "strs.h"
-#include "manifest.h"
-#include "urlparser.h"
 #include "downloads.h"
+#include "hex.h"
 #include "http.h"
+#include "manifest.h"
+#include "strptime.h"
+#include "strs.h"
+#include "urlparser.h"
 
 char manisec[][16] = {"CACHE:", "FALLBACK:", "SETTINGS:", "NETWORK:"};
 char setts[][16] = {"fast", "prefer-online"};
@@ -58,68 +59,60 @@ char *CopyManifst(char content[], int *i){
 }
 
 char *IsCached(char url[]){
-    char *cont, buffer[12352], *aux = NULL, path[4096], date[64], *dr = NULL, defsetts[32];
+    char *cont = NULL, *aux = NULL, path[4096] = {}, *dr = NULL, defsetts[32] = {}, *cont2 = NULL;
     int i = 0;
-    FILE *index, *output;
-    long tam;
 
     dr = (char *)malloc(sizeof(char)*2048);
     getcwd(dr, 2048);
     strcat(dr, "\\cache\\index");
-    if((index = fopen(dr, "r+"))==NULL){
+    if((cont = openFile(dr))==NULL){
         fprintf(stderr, "Erro: Arquivo Invalido!\r\nEndereco: %s\r\n", dr);
         return NULL;
     }
-    while(fgets(buffer, strlen(buffer), index)!=NULL){
+    for(i=0; cont[i]!='\0';){
         if(aux!=NULL){
             limpaVetor(aux);
             aux = NULL;
         }
-        aux = CopyManifst(buffer, &i);
+        aux = CopyManifst(cont, &i);
         if(strcmp(aux, url)==0){
             if(aux!=NULL){
                 limpaVetor(aux);
                 aux = NULL;
             }
-            aux = CopyManifst(buffer, &i);
+            aux = CopyManifst(cont, &i);
             strcpy(path, aux);
             if(aux!=NULL){
                 limpaVetor(aux);
                 aux = NULL;
             }
-            aux = CopyManifst(buffer, &i);
+            aux = CopyManifst(cont, &i);
             strcpy(defsetts, aux);
             if(aux!=NULL){
                 limpaVetor(aux);
                 aux = NULL;
             }
-            aux = CopyManifst(buffer, &i);
-            strcpy(date, aux);
+            aux = CopyManifst(cont, &i);
+            break;
         }
     }
-    fclose(index);
     if(strcmp(defsetts, setts[1])==0){
         return NULL;
     }
-    if((output = fopen(path, "r+"))==NULL){
-        fprintf(stderr, "Erro: Arquivo Invalido!\r\nEndereco: %s\r\n", path);
-        return NULL;
-    }
-    tam = TamFile(output);
-    cont = (char *)malloc(sizeof(char)*tam);
-    fscanf(output, "%s", cont);
-    fclose(output);
+    cont2 = openFile(path);
     free(dr);
     dr = NULL;
 
-    return cont;
+    return cont2;
 }
 
 status addCache(char content[], char address[]){
     char addrx[strlen(address)];
     strcpy(addrx, address);
-    char *hexUrl = NULL, *cached = NULL, Time[64] = {}, *dr = NULL, path[2536] = {}, pathIndex[2536] = {}, *aux2 = NULL, file[8500] = {};
+    char *hexUrl = NULL, *cached = NULL, Time[64] = {}, *dr = NULL, path[2536] = {}, pathIndex[2536] = {}, *aux = NULL, file[8500] = {}, date[64] = {};
+    int i = 0, j = 0;
     time_t currentTime;
+    struct tm tm1;
 
     strcpy(address, addrx);
     //Obter a index
@@ -135,44 +128,67 @@ status addCache(char content[], char address[]){
     strftime(Time, 64, "%d/%m/%Y", localtime(&currentTime));
     sprintf(pathIndex, "%s\\index", dr);
 
-    //memset(hexUrl, 0, sizeof(hexUrl));
-    //sprintf(hexUrl, "%s\0", HexCreater(addrx));
     hexUrl = HexCreater(addrx);
+    memset(&tm1, 0, sizeof(struct tm));
     if((cached = IsCached(address))!=NULL){
+        for(i=0; cached[i]!='\0';){
+            if(aux!=NULL){
+                limpaVetor(aux);
+                aux = NULL;
+            }
+            aux = CopyManifst(cached, &i);
+            if(strcmp(aux, "Last-Modified:")==0){
+                if(aux!=NULL){
+                    limpaVetor(aux);
+                    aux = NULL;
+                }
+                aux = CopyManifst(cached, &i);
+                for(j=0; j<4; j++){
+                    if(aux!=NULL){
+                        limpaVetor(aux);
+                        aux = NULL;
+                    }
+                    aux = CopyManifst(cached, &i);
+                    strcat(date, aux);
+                }
+                strptime(date, "%d %m %Y %H:%M:%S", &tm1);
+                limpaVetor(date);
+                strftime(date, 64, "%d/%m/%Y", &tm1);
+            }
+        }
         return UNCACHED;
-        //EmBreve!
     }
     else{
         sprintf(file, "%s\\%s", dr, hexUrl);
         //Abre/cria a index e o arquivo no cache
-        if(aux2!=NULL){
-            limpaVetor(aux2);
-            aux2 = NULL;
+        if(aux!=NULL){
+            limpaVetor(aux);
+            aux = NULL;
         }
-        aux2 = (char *)malloc(sizeof(char)*((sizeof(address)+sizeof(file)+sizeof(Time))+31));
-        limpaVetor(aux2);
-        strcpy(aux2, address);
-        strcat(aux2, "\r\n");
-        strcat(aux2, file);
-        strcat(aux2, "\r\n");
-        strcat(aux2, setts[defcache]);
-        strcat(aux2, "\r\n");
-        strcat(aux2, Time);
-        strcat(aux2, "\r\n\r\n");
-        SaveFile(pathIndex, aux2, "a+");
+        aux = (char *)malloc(sizeof(char)*((sizeof(address)+sizeof(file)+sizeof(Time))+31));
+        limpaVetor(aux);
+        strcpy(aux, address);
+        strcat(aux, "\r\n");
+        strcat(aux, file);
+        strcat(aux, "\r\n");
+        strcat(aux, setts[defcache]);
+        strcat(aux, "\r\n");
+        strcat(aux, Time);
+        strcat(aux, "\r\n\r\n");
+        SaveFile(pathIndex, aux, "a+");
         //Armazena o cache
-        if(aux2!=NULL){
-            limpaVetor(aux2);
-            aux2 = NULL;
+        if(aux!=NULL){
+            limpaVetor(aux);
+            aux = NULL;
         }
-        aux2 = (char *)malloc(sizeof(char)*(strlen(content)+8));
-        limpaVetor(aux2);
-        strcpy(aux2, content);
-        strcat(aux2, "\r\n");
-        SaveFile(file, aux2, "w+");
+        aux = (char *)malloc(sizeof(char)*(strlen(content)+8));
+        limpaVetor(aux);
+        strcpy(aux, content);
+        strcat(aux, "\r\n");
+        SaveFile(file, aux, "w+");
     }
     //limpa a memória
-    free(aux2);
+    free(aux);
     free(dr);
     free(cached);
     free(hexUrl);
@@ -203,6 +219,7 @@ status InitManifest(char content[], char url1[]){
     limpaVetor(url2);
     strcpy(url2, url1);
     CacheManfst = SearchString(cont, "CACHE MANIFEST");
+    addCache(cont, url1);
 
     //Limpa Vetores não utuilizados
     limpaVetor(cache2);
