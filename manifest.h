@@ -26,13 +26,36 @@ typedef enum _CacheStatus{
     UPDATEREADY,
     OBSOLETE
 } status;
-
+/**
+*	Verifica se o arquivo está armazenado no cache.
+*
+*	@param url char - endereço do arquivo a ser verificado.
+*	@return char - conteúdo do arquivo armazenado.
+**/
 char *IsCached(char url[]);
+/**
+*	Copia linha por linha pulando as linhas de comentários ou espaços.
+*
+*	@param content char - conteudo a ser dividido em linhas.
+*	@param i int - posição atual da última linha.
+*	@return char - devolve a linha.
+**/
 char *CopyManifst(char content[], int *i);
 /**
 *   Adiciona arquivos no cache.
+*
+*	@param content char - conteúdo do arquivo a ser armazenado.
+*	@param address char - endereço do arquivo a ser armazenado.
+*	@return status - retorna o estado do arquivo.
 **/
 status addCache(char content[], char address[]);
+/**
+*	Inicializa o armazenamento no cache.
+*
+*	@param content char - conteúdo do arquivo manifest.
+*	@param url1 char - enderço do arquivo manifest.
+*	@return status - retorna o estado do manifest.
+**/
 status InitManifest(char content[], char url1[]);
 
 #endif // _MANIFEST_H_

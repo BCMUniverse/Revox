@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Biblioteca Manifest</title>
+	</head>
+	<body>
+		<h1>Funções do manifest.h</h1>
+		<h2>IsCached</h2>
+		<p>char *IsCached(char url[])</p>
+		<p>Verifica se o arquivo está armazenado no cache.</p>
+		<ul>
+			<li>char url[] - endereço do arquivo a ser verificado.</li>
+			<li>return char - conteúdo do arquivo armazenado.</li>
+		</ul>
+		<h2>CopyManifst</h2>
+		<p>char *CopyManifst(char content[], int *i)</p>
+		<p>Copia linha por linha pulando as linhas de comentários ou espaços.</p>
+		<ul>
+			<li>char content[] - conteudo a ser dividido em linhas.</li>
+			<li>int *i - posição atual da última linha.</li>
+			<li>return char - devolve a linha.</li>
+		</ul>
+		<h2>addCache</h2>
+		<p>status addCache(char content[], char address[])</p>
+		<p>Adiciona arquivos no cache.</p>
+		<ul>
+			<li>char content[] - conteúdo do arquivo a ser armazenado.</li>
+			<li>char address[] - endereço do arquivo a ser armazenado.</li>
+			<li>return status - retorna o estado do arquivo.</li>
+		</ul>
+		<h2>InitManifest</h2>
+		<p>status InitManifest(char content[], char url1[])</p>
+		<p>Inicializa o armazenamento no cache.</p>
+		<ul>
+			<li>char content[] - conteúdo do arquivo manifest.</li>
+			<li>char url1[] - enderço do arquivo manifest.</li>
+			<li>return status - retorna o estado do manifest.</li>
+		</ul>
+	</body>
+</html>
