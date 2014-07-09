@@ -23,6 +23,7 @@
 #include "html.h"
 #include "htmlText.h"
 #include "manifest.h"
+#include "plain.h"
 #include "strs.h"
 #include "typeparser.h"
 #include "urlparser.h"

@@ -94,6 +94,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="nntp.h" />
+		<Unit filename="plain.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="plain.h" />
 		<Unit filename="prospero.c">
 			<Option compilerVar="CC" />
 		</Unit>
