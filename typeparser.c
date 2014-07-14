@@ -15,7 +15,6 @@
 	BCM Revox Engine v0.2
 	BCM Revox Engine -> Ano: 2014|Tipo: WebEngine
 */
-#include <omp.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -28,7 +27,7 @@
 #include "typeparser.h"
 #include "urlparser.h"
 
-char types[][128] = {"text/html", "text/cache-manifest", "text/plain"};
+char types[][128] = {"text/html", "text/cache-manifest", "text/plain", "application/x-download", "application/octet-stream"};
 
 char *TypeBuster(char content[], type typ1){
     char *aux = NULL, TypFile[VKB], *vtyp = NULL;
@@ -47,8 +46,7 @@ char *TypeBuster(char content[], type typ1){
             break;
         }
     }
-    #pragma omp parallel for schedule(guided)
-    for(j=0; j<3; j++){
+    for(j=0; j<5; j++){
         vtyp = strstr(TypFile, types[j]);
         if(vtyp!=NULL){
             typ1 = (type)j;
@@ -62,8 +60,7 @@ char *InitTypeParser(Type tp1, int mode){
     int j;
     type typ1;
 
-    #pragma omp parallel for schedule(guided)
-    for(j=0; j<3; j++){
+    for(j=0; j<5; j++){
         vtyp = strstr(tp1.content, types[j]);
         if(vtyp!=NULL){
             typ1 = (type)j;
@@ -88,8 +85,9 @@ char *InitTypeParser(Type tp1, int mode){
         InitManifest(tp1.content, tp1.url);
         break;
     case PLAIN:
+        result = InitPlain(tp1.content, tp1.url);
         break;
-    default:
+    case DOWNLOAD: case OCTETSTREAM: default:
         break;
     }
 

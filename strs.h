@@ -20,5 +20,6 @@
 
 int SearchString(char content[], char subStr[]);
 int streql(char *str1, char *str2);
+char *copiaLinha(char content[], int *i);
 
 #endif // _STRS_H_

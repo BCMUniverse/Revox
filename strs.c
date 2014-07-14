@@ -60,3 +60,19 @@ int streql(char *str1, char *str2){
     }
     return((*str1 == NULL) && (*str2 == NULL));
 }
+
+char *copiaLinha(char content[], int *i){
+    char result[strlen(content)], c;
+    int j = 0, k = *i;
+
+    memset(result, 0, sizeof(result));
+    while(content[k]!='\r' && content[k]!='\n'){
+        result[j++] = content[k++];
+    }
+    while(content[k]=='\r' || content[k]=='\n'){
+        c = content[k++];
+    }
+    *i = k;
+
+    return result;
+}

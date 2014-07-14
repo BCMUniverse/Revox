@@ -164,7 +164,7 @@ status addCache(char content[], char address[]){
                     aux2 = strtok(NULL, " \r\n");
                     if((aux3 = strstr(aux2, "Last-Modified:"))!=NULL){
                         int tmp = strlen(aux3);
-                        for(j=15, k = 0; j<tmp || aux3[j]!='\r' && aux3[j]!='\n' && aux3[j]!='\0'; j++, k++){
+                        for(j=15, k = 0; j<tmp || (aux3[j]!='\r' && aux3[j]!='\n' && aux3[j]!='\0'); j++, k++){
                             ctmp[k] = aux3[j];
                         }
                         strptime(ctmp, "    %d %m %Y %H:%M:%S    ", &tm1);

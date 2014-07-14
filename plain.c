@@ -15,7 +15,23 @@
 	BCM Revox Engine v0.2
 	BCM Revox Engine -> Ano: 2014|Tipo: WebEngine
 */
+#include <string.h>
+#include "bonus.h"
+#include "strs.h"
+#include "typeparser.h"
 
 char *InitPlain(char content[], char url[]){
-    return NULL;
+    char body[strlen(content)+1], *aux = NULL;
+    int i = 0;
+
+    strcpy(body, TagBody(content));
+    while(body[i]!='\0'){
+        if(aux!=NULL){
+            limpaVetor(aux);
+            aux = NULL;
+        }
+        aux = copiaLinha(body, &i);
+    }
+
+    return body;
 }

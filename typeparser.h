@@ -25,7 +25,9 @@ typedef struct _Type{
 typedef enum _type{
     THTML,
     MANIFEST,
-    PLAIN
+    PLAIN,
+    DOWNLOAD,
+    OCTETSTREAM
 } type;
 
 /**

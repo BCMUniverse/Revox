@@ -18,6 +18,8 @@
 #ifndef BONUS_H_
 #define BONUS_H_
 
+#include <stdio.h>
+
 //Buffer de saída de 512KB
 #define BUF32KB 524288
 //Tamanho do Vetor p.v
