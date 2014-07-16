@@ -55,10 +55,11 @@ char *TypeBuster(char content[], type typ1){
     return TypFile;
 }
 
-char *InitTypeParser(Type tp1, int mode){
-    char *result, *vtyp, TypFile[VKB];
+typec InitTypeParser(Type tp1, int mode){
+    char *vtyp = NULL, TypFile[VKB] = {};
     int j;
     type typ1;
+    typec result;
 
     for(j=0; j<5; j++){
         vtyp = strstr(tp1.content, types[j]);
@@ -75,14 +76,14 @@ char *InitTypeParser(Type tp1, int mode){
         case 0:
             break;
         case 1:
-            result = InitHTMLText(tp1.content);
+            InitHTMLText(tp1.content);
             break;
         default:
             fprintf(stderr, "Erro: Valor Invalido!\r\n");
         }
         break;
     case MANIFEST:
-        InitManifest(tp1.content, tp1.url);
+        result.manifst = InitManifest(tp1.content, tp1.url);
         break;
     case PLAIN:
         result = InitPlain(tp1.content, tp1.url);

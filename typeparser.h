@@ -18,9 +18,16 @@
 #ifndef _TYPEPARSER_H_
 #define _TYPEPARSER_H_
 
+#include "manifest.h"
+
 typedef struct _Type{
     char *url, *content;
 } Type;
+
+typedef struct _typec{
+    char *plain;
+    status manifst;
+} typec;
 
 typedef enum _type{
     THTML,
@@ -40,7 +47,7 @@ char *TypeBuster(char content[], type typ1);
 *   Mode igual a 0 -> Interface Gráfica (GUI)
 *   Mode igual a 1 -> Interface em Texo (TUI)
 **/
-char *InitTypeParser(Type tp1, int mode);
+typec InitTypeParser(Type tp1, int mode);
 
 /**
 *   Obtém o Cabeçalho do conteúdo recebido pela rede.

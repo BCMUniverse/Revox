@@ -18,6 +18,8 @@
 #ifndef _PLAIN_H_
 #define _PLAIN_H_
 
-char *InitPlain(char content[], char url[]);
+#include "typeparser.h"
+
+typec InitPlain(char content[], char url[]);
 
 #endif // _PLAIN_H_

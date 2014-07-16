@@ -21,8 +21,8 @@
 #include <string.h>
 
 int SearchString(char content[], char subStr[]){
-    char *aux, auxstr[strlen(subStr)];
-    int i, result;
+    char *aux = NULL, auxstr[strlen(subStr)];
+    int i = 0, result = 0;
 
     strcpy(auxstr, subStr);
     aux = strstr(content, auxstr);
