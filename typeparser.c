@@ -61,6 +61,8 @@ typec InitTypeParser(Type tp1, int mode){
     type typ1;
     typec result;
 
+    result.manifst = UNCACHED;
+    result.plain = NULL;
     for(j=0; j<5; j++){
         vtyp = strstr(tp1.content, types[j]);
         if(vtyp!=NULL){

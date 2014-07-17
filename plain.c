@@ -27,6 +27,8 @@ typec InitPlain(char content[], char url[]){
     int i = 0;
     typec result;
 
+    result.manifst = UNCACHED;
+    result.plain = NULL;
     strcpy(body, TagBody(content));
     while(body[i]!='\0' || i<2048){
         if(aux!=NULL){

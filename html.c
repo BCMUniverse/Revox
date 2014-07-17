@@ -15,7 +15,6 @@
 	BCM Revox Engine v0.2
 	BCM Revox Engine -> Ano: 2014|Tipo: WebEngine
 */
-#include <omp.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

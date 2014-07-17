@@ -20,6 +20,13 @@
 
 #include "typeparser.h"
 
+/**
+*	Inicializa a analise de arquivo texto.
+*
+*	@param content char[] - conteudo do arquivo a ser verificado.
+*	@param url char[] - endereço do arquivo a ser verificado.
+*	@return typec - conteúdo do arquivo analisado.
+**/
 typec InitPlain(char content[], char url[]);
 
 #endif // _PLAIN_H_
