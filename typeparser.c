@@ -18,7 +18,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <tchar.h>
+#include <windows.h>
+#include <commctrl.h>
 #include "bonus.h"
+#include "downloads.h"
 #include "html.h"
 #include "htmlText.h"
 #include "manifest.h"
@@ -56,10 +60,13 @@ char *TypeBuster(char content[], type typ1){
 }
 
 typec InitTypeParser(Type tp1, int mode){
-    char *vtyp = NULL, TypFile[VKB] = {};
-    int j;
+    char *vtyp = NULL, TypFile[VKB] = {}, path[2048] = {}, *content = NULL, szFilePathName[_MAX_PATH] = {""}, *aux = NULL;
+    int i = 0, j = 0, k = 0;
     type typ1;
     typec result;
+    url u1 = UrlParser(tp1.url);
+    TCHAR szFilters[] = _T("Todos os arquivos (*.*)\0*.*\0\0");
+    OPENFILENAME ofn = {0};
 
     result.manifst = UNCACHED;
     result.plain = NULL;
@@ -71,6 +78,13 @@ typec InitTypeParser(Type tp1, int mode){
     }
     if(vtyp==NULL){
         strcpy(TypFile, TypeBuster(tp1.content, typ1));
+    }
+    char path2[strlen(u1.url_path)];
+    if((aux = strrchr(u1.url_path, '/'))!=NULL){
+        k = aux-u1.url_path;
+        for(i=0; u1.url_path[k]!='\0'; i++, k++){
+            path2[i] = u1.url_path[k];
+        }
     }
     switch(typ1){
     case THTML:
@@ -91,6 +105,35 @@ typec InitTypeParser(Type tp1, int mode){
         result = InitPlain(tp1.content, tp1.url);
         break;
     case DOWNLOAD: case OCTETSTREAM: default:
+        switch(mode){
+        case 0:
+            // Preencher a estrutura OPENFILENAME
+            ZeroMemory(&ofn, sizeof(ofn));
+            ofn.lStructSize = sizeof(OPENFILENAME);
+            ofn.hwndOwner = tp1.hwnd;
+            ofn.lpstrFilter = szFilters;
+            ofn.lpstrFile = szFilePathName;  // Isto manterá o nome do arquivo
+            ofn.lpstrDefExt = _T("");
+            ofn.nMaxFile = _MAX_PATH;
+            ofn.lpstrTitle = _T("Salvar Arquivo");
+            ofn.Flags = OFN_OVERWRITEPROMPT;
+            ofn.lpstrFileTitle = path2;
+
+            // Abra o arquivo Salvar caixa de diálogo e escolher o nome do arquivo
+            if(GetSaveFileName(&ofn)){
+                content = TagBody(tp1.content);
+                SaveFile(szFilePathName, content, "w+");
+            }
+            break;
+        case 1:
+            printf("Digite o local onde deseja salvar o arquivo(para salvar exemplo.txt, C:\exemplo_pasta\exemplo.txt): ");
+            fgets(path, 2048, stdin);
+            content = TagBody(tp1.content);
+            SaveFile(path, content, "w+");
+            break;
+        default:
+            fprintf(stderr, "Erro: Valor Invalido!\r\n");
+        }
         break;
     }
 

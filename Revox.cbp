@@ -22,6 +22,8 @@
 					<Add option="-s" />
 					<Add option="-lws2_32" />
 					<Add option="-lwsock32" />
+					<Add option="-lcomctl32" />
+					<Add option="-lcomdlg32" />
 				</Linker>
 			</Target>
 			<Target title="Dbg">
@@ -37,6 +39,8 @@
 				<Linker>
 					<Add option="-lws2_32" />
 					<Add option="-lwsock32" />
+					<Add option="-lcomctl32" />
+					<Add option="-lcomdlg32" />
 				</Linker>
 			</Target>
 		</Build>

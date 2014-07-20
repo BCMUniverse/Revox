@@ -18,10 +18,12 @@
 #ifndef _TYPEPARSER_H_
 #define _TYPEPARSER_H_
 
+#include <windef.h>
 #include "manifest.h"
 
 typedef struct _Type{
     char *url, *content;
+    HWND hwnd;
 } Type;
 
 typedef struct _typec{

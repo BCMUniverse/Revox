@@ -303,6 +303,7 @@ Type UrlConnect(char host[], int mode, HINSTANCE hInst, HWND hwnd){
         tp1.url = CreateTag(url1.prtcol, bars[0], url1.host);
         break;
     }
+    tp1.hwnd = hwnd;
 
     return tp1;
 }
