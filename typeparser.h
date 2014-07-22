@@ -40,24 +40,37 @@ typedef enum _type{
 } type;
 
 /**
-*   Procura o tipo de conteúdo de um arquivo.
+*   Procura o tipo do arquivo, no seu conteúdo.
+*
+*	@param content char - conteúdo do arquivo a ser verificado.
+*	@return type - retorna o tipo de arquivo encontrado.
 **/
-char *TypeBuster(char content[], type typ1);
+type TypeBuster(char content[]);
 
 /**
-*   Converte o conteúdo recebido em um formato legivel
+*   Converte o conteúdo recebido em um formato legível.
 *   Mode igual a 0 -> Interface Gráfica (GUI)
-*   Mode igual a 1 -> Interface em Texo (TUI)
+*   Mode igual a 1 -> Interface em Texto (TUI)
+*
+*	@param tp1 Type - conteúdo do arquivo a ser analisado.
+*	@param mode int - o modo que o arquivo será analisado.
+*	@return typec - retorna o arquivo analisado.
 **/
 typec InitTypeParser(Type tp1, int mode);
 
 /**
 *   Obtém o Cabeçalho do conteúdo recebido pela rede.
+*
+*	@param content char* - todo o conteúdo do arquivo.
+*	@return char* - retorna o cabeçalho do arquivo.
 **/
 char *TagHeader(char *content);
 
 /**
-*   Obtem o corpo do conetúdo recebido pela rede.
+*   Obtém o corpo do conteúdo recebido pela rede.
+*
+*	@param content char* - todo o conteúdo do arquivo.
+*	@return char* - retorna o corpo do arquivo.
 **/
 char *TagBody(char *content);
 

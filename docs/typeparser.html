@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Biblioteca TypeParser</title>
+	</head>
+	<body>
+		<h1>Funções do typeparser.h</h1>
+		<h2>TypeBuster</h2>
+		<p>type TypeBuster(char content[])</p>
+		<p>Procura o tipo do arquivo, no seu conteúdo.</p>
+		<ul>
+			<li>char content[] - conteúdo do arquivo a ser verificado.</li>
+			<li>return type - retorna o tipo de arquivo encontrado.</li>
+		</ul>
+		<h2>InitTypeParser</h2>
+		<p>typec InitTypeParser(Type tp1, int mode)</p>
+		<p>Converte o conteúdo recebido em um formato legível.<br/>Mode igual a 0 -> Interface Gráfica (GUI)<br/>Mode igual a 1 -> Interface em Texto (TUI)</p>
+		<ul>
+			<li>Type tp1 - conteúdo do arquivo a ser analisado.</li>
+			<li>int mode - o modo que o arquivo será analisado.</li>
+			<li>return typec - retorna o arquivo analisado.</li>
+		</ul>
+		<h2>TagHeader</h2>
+		<p>char *TagHeader(char *content)</p>
+		<p>Obtém o Cabeçalho do conteúdo recebido pela rede.</p>
+		<ul>
+			<li>char *content - todo o conteúdo do arquivo.</li>
+			<li>return char* - retorna o cabeçalho do arquivo.</li>
+		</ul>
+		<h2>TagBody</h2>
+		<p>char *TagBody(char *content)</p>
+		<p>Obtém o corpo do conteúdo recebido pela rede.</p>
+		<ul>
+			<li>char *content - todo o conteúdo do arquivo.</li>
+			<li>return char* - retorna o corpo do arquivo.</li>
+		</ul>
+	</body>
+</html>

@@ -33,7 +33,7 @@
 
 char types[][128] = {"text/html", "text/cache-manifest", "text/plain", "application/x-download", "application/octet-stream"};
 
-char *TypeBuster(char content[], type typ1){
+type TypeBuster(char content[]){
     char *aux = NULL, TypFile[VKB], *vtyp = NULL;
     int i, j;
 
@@ -53,14 +53,14 @@ char *TypeBuster(char content[], type typ1){
     for(j=0; j<5; j++){
         vtyp = strstr(TypFile, types[j]);
         if(vtyp!=NULL){
-            typ1 = (type)j;
+            return (type)j;
         }
     }
-    return TypFile;
+    return DOWNLOAD;
 }
 
 typec InitTypeParser(Type tp1, int mode){
-    char *vtyp = NULL, TypFile[VKB] = {}, path[2048] = {}, *content = NULL, szFilePathName[_MAX_PATH] = {""}, *aux = NULL;
+    char *vtyp = NULL, path[2048] = {}, *content = NULL, szFilePathName[_MAX_PATH] = {""}, *aux = NULL;
     int i = 0, j = 0, k = 0;
     type typ1;
     typec result;
@@ -77,7 +77,7 @@ typec InitTypeParser(Type tp1, int mode){
         }
     }
     if(vtyp==NULL){
-        strcpy(TypFile, TypeBuster(tp1.content, typ1));
+        typ1 = TypeBuster(tp1.content);
     }
     char path2[strlen(u1.url_path)];
     if((aux = strrchr(u1.url_path, '/'))!=NULL){
@@ -88,15 +88,8 @@ typec InitTypeParser(Type tp1, int mode){
     }
     switch(typ1){
     case THTML:
-        switch(mode){
-        case 0:
-            break;
-        case 1:
-            InitHTMLText(tp1.content);
-            break;
-        default:
-            fprintf(stderr, "Erro: Valor Invalido!\r\n");
-        }
+        //a função inithtmltext será substituida em breve!
+        InitHTMLText(tp1.content);
         break;
     case MANIFEST:
         result.manifst = InitManifest(tp1.content, tp1.url);
