@@ -32,6 +32,8 @@
 extern "C"{
 #endif
 
+#define BUFKB 2048
+
 #include "bonus.h"
 //Biblioteca HTML e HTMLText
 #include "html.h"

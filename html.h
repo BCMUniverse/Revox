@@ -18,7 +18,7 @@
 #ifndef _HTML_H_
 #define _HTML_H_
 
-#include "http.h"
+#include "revox.h"
 
 extern char elemts[][16];
 
@@ -53,33 +53,48 @@ typedef enum _Elemts{
     UNKNOWN
 } Elemts;
 
-//Nesta etrutura é um token onde se obten os atributos, id e class do elemento, que será usado para cria o layout da página
-typedef struct _htp{
-    char stag[16], cont[5*BUFKB], etag[16], id[1024], ClassName[1024], style[4096], attrs[4096];
-    struct _htp *ant, *prox;
-    Elemts TagID;
-} htp;
+typedef struct _elemntHtml{
+    char *id, *className, *attrs, *innerHtml;
+    Elemts tagName;
+    int quantFilhos;
+    struct _elemntHtml *ant, *prox;
+} elemntHtml;
 
-typedef struct _Fhtp{
-    htp *start, *end1;
+typedef struct _listaHtml{
+    elemntHtml *inicio, *fim;
     int tam;
-} Fhtp;
+} listaHtml;
 
-//Cria um token
-Fhtp *aloca();
-/*
-    Insere os dados no token numa lista ligada
-    Mode igual a 0 -> Cria o Token numa lista vazia
-    Mode igual a 1 -> Cria o Token numa lista que tenha conteúdo
-    Mode igual a 2 -> Cria o Token antes de um elemento numa lista
-*/
-void CreateToken(Fhtp *f, char stag[], char etag[], char cont[], char ClassName[], char id[], char style[], char attrs[], Elemts tagid, int mode, int pos);
-void CreateTokenEmpty(Fhtp *f, char stag[], char etag[], char cont[], char ClassName[], char id[], char style[], char attrs[], Elemts tagid);
-void CreateTokenNormal(Fhtp *f, char stag[], char etag[], char cont[], char ClassName[], char id[], char style[], char attrs[], Elemts tagid);
-void CreateTokenInCurse(Fhtp *f, char stag[], char etag[], char cont[], char ClassName[], char id[], char style[], char attrs[], Elemts tagid, int pos);
-//Remove Token
-void RemvToken(Fhtp *f, int pos);
-//Destroi o Token
-void Delete(Fhtp *f);
+typedef struct _pilhaHtml{
+    Elemts tagName[BUFKB];
+    int filhos[BUFKB], topo;
+} pilhaHtml;
+
+//Aloca a lista html
+void alocaListaHtml(listaHtml *lista);
+
+// cria a pilha
+pilhaHtml *criaPilhaHtml();
+
+//insere o elemento na pilha
+int insereElementoNaPilhaHtml(pilhaHtml *pilha, Elemts tagName);
+
+// Insere os dados em um elemento e o insere na lista
+int insereElementoNaListaHtml(listaHtml *lista, char id[], char className[], char attrs[], char innerHtml[], Elemts tagName, pilhaHtml *pilha);
+
+//verifica se a pilha está vazia
+int pilhaHtmlVazia(pilhaHtml *pilha);
+
+// remove o elemento da pilha
+void removeElementoDaPilhaHtml(pilhaHtml *pilha, listaHtml *lista);
+
+//remove o elemento da lista
+int removeElementoDaListaHtml(listaHtml *lista, int pos);
+
+//exclue a pilha
+void excluirPilhaHtml(pilhaHtml *pilha);
+
+//exclue a lista
+void excluirListaHtml(listaHtml *lista);
 
 #endif // _HTML_H_

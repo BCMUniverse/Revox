@@ -27,6 +27,7 @@
 #include "manifest.h"
 #include "socks.h"
 #include "strs.h"
+#include "revox.h"
 
 unsigned long mode = 1;
 //char server_reply[BUF32KB];

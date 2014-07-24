@@ -21,8 +21,6 @@
 #include <winsock2.h>
 #include "bonus.h"
 
-#define BUFKB 2048
-
 char server_reply[BUF32KB];
 
 int recvtimeout(SOCKET s, int timeout);

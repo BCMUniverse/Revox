@@ -128,7 +128,7 @@ char *InitHTMLText(char *content){
     phtml cont;
     htr htr1;
     Elemts elts;
-    Fhtp *fhtp1 = aloca();
+    //Fhtp *fhtp1;
     pilha2 p2;
 
     conthtml = (char *)malloc(sizeof(char)*(strlen(content)));
@@ -184,7 +184,7 @@ char *InitHTMLText(char *content){
                     BufTag[k] = buffer[i];
                 }
                 BufTag[k++] = '>';
-                CreateToken(fhtp1, BufTag, "\0", "\0", "\0", "\0", "\0", "\0", elts, mode, 0);
+                //CreateToken(fhtp1, BufTag, "\0", "\0", "\0", "\0", "\0", "\0", elts, mode, 0);
                 mode = 1;
                 break;
             case COMMENTS:
@@ -192,7 +192,7 @@ char *InitHTMLText(char *content){
                     BufTag[k] = buffer[i];
                 }
                 BufTag[k++] = '>';
-                CreateToken(fhtp1, BufTag, "\0", "\0", "\0", "\0", "\0", "\0", elts, mode, 0);
+                //CreateToken(fhtp1, BufTag, "\0", "\0", "\0", "\0", "\0", "\0", elts, mode, 0);
                 mode = 1;
                 break;
             case CDATA:

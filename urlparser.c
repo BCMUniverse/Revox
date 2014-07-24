@@ -26,6 +26,7 @@
 #include "manifest.h"
 #include "nntp.h"
 #include "prospero.h"
+#include "revox.h"
 #include "strs.h"
 #include "typeparser.h"
 #include "urlparser.h"

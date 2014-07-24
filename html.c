@@ -22,153 +22,143 @@
 
 char elemts[][16] = {"doctype", "--", "[CDATA[", "html", "head", "base", "link", "meta", "noscript", "script", "style", "template", "title", "body", "a", "abbr", "address", "area", "article", "aside", "audio", "b", "p"};
 
-Fhtp *aloca(){
-    Fhtp *f = malloc(sizeof(Fhtp));
-    f->start = NULL;
-    f->end1 = NULL;
-    f->tam = 0;
-    return f;
+void alocaListaHtml(listaHtml *lista){
+    lista->inicio = NULL;
+    lista->fim = NULL;
+    lista->tam = 0;
 }
 
-void CreateToken(Fhtp *f, char stag[], char etag[], char cont[], char ClassName[], char id[], char style[], char attrs[], Elemts tagid, int mode, int pos){
-    switch(mode){
-    case 0:
-        CreateTokenEmpty(f, stag, etag, cont, ClassName, id, style, attrs, tagid);
-        break;
-    case 1:
-        CreateTokenNormal(f, stag, etag, cont, ClassName, id, style, attrs, tagid);
-        break;
-    case 2:
-        CreateTokenInCurse(f, stag, etag, cont, ClassName, id, style, attrs, tagid, pos);
-        break;
-    default:
-        fprintf(stderr, "Erro: Modo inexistente!\r\n");
-    }
+pilhaHtml *criaPilhaHtml(){
+    pilhaHtml *p = (pilhaHtml *)malloc(sizeof(pilhaHtml));
+    p->topo = -1;
+    memset(p->tagName, UNKNOWN, sizeof(p->tagName));
+    memset(p->filhos, 0, sizeof(p->filhos));
+
+    return p;
 }
 
-void CreateTokenEmpty(Fhtp *f, char stag[], char etag[], char cont[], char ClassName[], char id[], char style[], char attrs[], Elemts tagid){
-    htp *f2;
+int insereElementoNaPilhaHtml(pilhaHtml *pilha, Elemts tagName){
+    int i = 0;
 
-    if((f2 = malloc(sizeof(htp)) == NULL)){
-        return;
-    }
-    //Copia os dados
-    strcpy(f2->stag, stag);
-    strcpy(f2->etag, etag);
-    strcpy(f2->cont, cont);
-    strcpy(f2->ClassName, ClassName);
-    strcpy(f2->id, id);
-    strcpy(f2->style, style);
-    strcpy(f2->attrs, attrs);
-    f2->TagID = tagid;
-    //Atualiza a Lista
-    f2->ant = f->start;
-    f2->prox = f->end1;
-    f->start = f2;
-    f->end1 = f2;
-    f->tam++;
-}
-
-void CreateTokenNormal(Fhtp *f, char stag[], char etag[], char cont[], char ClassName[], char id[], char style[], char attrs[], Elemts tagid){
-    htp *f2;
-
-    if((f2 = malloc(sizeof(htp)) == NULL)){
-        return;
-    }
-    //Copia os dados
-    strcpy(f2->stag, stag);
-    strcpy(f2->etag, etag);
-    strcpy(f2->cont, cont);
-    strcpy(f2->ClassName, ClassName);
-    strcpy(f2->id, id);
-    strcpy(f2->style, style);
-    strcpy(f2->attrs, attrs);
-    f2->TagID = tagid;
-    //Atualiza a Lista
-    f2->ant = f->end1;
-    f2->prox = NULL;
-    f->end1->prox = f2;
-    f->end1 = f2;
-    f->tam++;
-}
-
-void CreateTokenInCurse(Fhtp *f, char stag[], char etag[], char cont[], char ClassName[], char id[], char style[], char attrs[], Elemts tagid, int pos){
-    htp *f2, *atual;
-    int i;
-
-    if((f2 = malloc(sizeof(htp)) == NULL)){
-        return;
-    }
-    //Copia os dados
-    strcpy(f2->stag, stag);
-    strcpy(f2->etag, etag);
-    strcpy(f2->cont, cont);
-    strcpy(f2->ClassName, ClassName);
-    strcpy(f2->id, id);
-    strcpy(f2->style, style);
-    strcpy(f2->attrs, attrs);
-    f2->TagID = tagid;
-    //Atualiza a Lista
-    atual = f->start;
-    for(i=1; i<pos; i++){
-        atual = atual->prox;
-    }
-    f2->ant = atual->ant;
-    f2->prox = atual;
-    if(atual->ant == NULL){
-        f->start = f2;
+    if(pilha->topo == (sizeof(pilha->filhos)-1)){
+        return -1;
     }
     else{
-        atual->ant->prox = f2;
+        pilha->topo++;
+        pilha->tagName[pilha->topo] = tagName;
+        while(i<pilha->topo){
+            pilha->filhos[i]++;
+        }
     }
-    atual->ant = f2;
-    f->tam++;
+
+    return 0;
 }
 
-void RemvToken(Fhtp *f, int pos){
-    int i;
-    htp *remvElm, *atual;
+int insereElementoNaListaHtml(listaHtml *lista, char id[], char className[], char attrs[], char innerHtml[], Elemts tagName, pilhaHtml *pilha){
+    elemntHtml *elemento;
 
-    if(f->tam == 0){
-        return;
+    if((elemento = (elemntHtml *)malloc(sizeof(elemntHtml)))==NULL){
+        return -1;
     }
-    if(pos == 1){
-        remvElm = f->start;
-        f->start = f->start->prox;
-        if(f->start == NULL){
-            f->end1 = NULL;
+    // Insere os dados no elemento
+    strcpy(elemento->attrs, attrs);
+    strcpy(elemento->className, className);
+    strcpy(elemento->id, id);
+    strcpy(elemento->innerHtml, innerHtml);
+    elemento->tagName = tagName;
+
+    if(lista->inicio==NULL){
+        elemento->ant = lista->inicio;
+        elemento->prox = lista->fim;
+        lista->inicio = elemento;
+        lista->fim = elemento;
+    }
+    else{
+        elemento->ant = lista->fim;
+        elemento->prox = NULL;
+        lista->fim->prox = elemento;
+        lista->fim = elemento;
+    }
+    lista->tam++;
+
+    if(insereElementoNaPilhaHtml(pilha, tagName)==-1){
+        return -1;
+    }
+
+    return 0;
+}
+
+int pilhaHtmlVazia(pilhaHtml *pilha){
+    if(pilha->topo == -1){
+        return 1;
+    }
+    return 0;
+}
+
+void removeElementoDaPilhaHtml(pilhaHtml *pilha, listaHtml *lista){
+    elemntHtml *inCurso = lista->fim;
+    int i = 0;
+
+    if(pilhaHtmlVazia(pilha)){
+        fprintf(stderr, "Erro: Pilha Vazia!");
+        exit(1);
+    }
+    for(i = pilha->filhos[pilha->topo]; inCurso!=NULL || i!=0; i--){
+        inCurso = inCurso->ant;
+    }
+    inCurso->quantFilhos = pilha->filhos[pilha->topo];
+    pilha->topo--;
+}
+
+int removeElementoDaListaHtml(listaHtml *lista, int pos){
+    int i = 0;
+    elemntHtml *elemento, *inCurse;
+
+    if(lista->tam == 0){
+        return -1;
+    }
+    if(pos == 1){ //remove o primeiro elemento
+        elemento = lista->inicio;
+        lista->inicio = lista->inicio->prox;
+        if(lista->inicio == NULL){
+            lista->fim = NULL;
         }
         else{
-            f->start->ant = NULL;
+            lista->inicio->ant = NULL;
         }
     }
-    else if(pos == f->tam){
-        remvElm = f->end1;
-        f->end1->ant->prox = NULL;
-        f->end1 = f->end1->ant;
+    else if(pos == lista->tam){ //remove o último elemento
+        elemento = lista->fim;
+        lista->fim->ant->prox = NULL;
+        lista->fim = lista->fim->ant;
     }
     else{
-        atual = f->start;
-        for(i=1; i<pos; i++){
-            atual = atual->prox;
+        inCurse = lista->inicio;
+        for(i = 1; i<pos; ++i){
+            inCurse = inCurse->prox;
         }
-        remvElm = atual;
-        atual->ant->prox = atual->prox;
-        atual->prox->ant = atual->ant;
+        elemento = inCurse;
+        inCurse->ant->prox = inCurse->prox;
+        inCurse->prox->ant = inCurse->ant;
     }
-    free(remvElm->attrs);
-    free(remvElm->ClassName);
-    free(remvElm->cont);
-    free(remvElm->etag);
-    free(remvElm->id);
-    free(remvElm->stag);
-    free(remvElm->style);
-    free(remvElm);
-    f->tam--;
+    free(elemento->attrs);
+    free(elemento->className);
+    free(elemento->id);
+    free(elemento->innerHtml);
+    elemento->quantFilhos = 0;
+    elemento->tagName = UNKNOWN;
+    free(elemento);
+    lista->tam--;
+
+    return 0;
 }
 
-void Delete(Fhtp *f){
-    while(f->tam>0){
-        RemvToken(f, 1);
+void excluirPilhaHtml(pilhaHtml *pilha){
+    free(pilha);
+}
+
+void excluirListaHtml(listaHtml *lista){
+    while(lista->tam > 0){
+        removeElementoDaListaHtml(lista, 1);
     }
 }
