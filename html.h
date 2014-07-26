@@ -105,6 +105,9 @@ void excluirPilhaHtml(pilhaHtml *pilha);
 //exclue a lista
 void excluirListaHtml(listaHtml *lista);
 
+//copia elementos html de uma string.
+char *copiaTag(char content[], int *i);
+
 //Analisador HTML
 PARSER htmlParser(char content[], char url[]);
 

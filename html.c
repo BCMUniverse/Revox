@@ -84,8 +84,10 @@ int insereElementoNaListaHtml(listaHtml *lista, char id[], char className[], cha
     }
     lista->tam++;
 
-    if(insereElementoNaPilhaHtml(pilha, tagName)==-1){
-        return -1;
+    if(tagName!=DOCTYPE && tagName!=COMMENTS){
+        if(insereElementoNaPilhaHtml(pilha, tagName)==-1){
+            return -1;
+        }
     }
 
     return 0;
@@ -166,6 +168,25 @@ void excluirListaHtml(listaHtml *lista){
     }
 }
 
+char *copiaTag(char content[], int *i){
+    char result[strlen(content)], c;
+    int j = 0, k = *i;
+
+    memset(result, 0, sizeof(result));
+    while(content[k]!='>' && content[k]!=' ' && content[k]!='   '){
+        result[j++] = content[k++];
+    }
+    while(content[k]==' ' || content[k]=='  '){
+        c = content[k++];
+    }
+    if(content[k]=='>'){
+        result[j] = content[k];
+    }
+    *i = k;
+
+    return result;
+}
+
 PARSER htmlParser(char content[], char url[]){
     char *body = NULL, *aux = NULL, *aux2 = NULL, *elem = NULL, *id = NULL, *className = NULL, *attrs = NULL, *cont = NULL;
     Elemts tagName = UNKNOWN;
@@ -181,8 +202,9 @@ PARSER htmlParser(char content[], char url[]){
             limpaVetor(aux);
             aux = NULL;
         }
-        aux = copiaLinha(body, &i);
+        aux = copiaTag(body, &i);
         if(aux[j]=='<' && aux[j+1]=='!'){
+            /* desnecessário, por enquanto
             if(elem!=NULL){
                 limpaVetor(elem);
                 elem = NULL;
@@ -192,9 +214,13 @@ PARSER htmlParser(char content[], char url[]){
                 elem[j] = aux[j];
                 j++;
             }
-            elem[j] = aux[j];
+            elem[j] = aux[j];*/
             j = 2;
-            aux2 = copiaString(elem, &j, ' ', '>');
+            if(aux2!=NULL){
+                limpaVetor(aux2);
+                aux2 = NULL;
+            }
+            aux2 = copiaString(aux, &j, ' ', '>');
             for(k=0; k<3; k++){
                 if(strcmp(aux2, elemts[k])==0){
                     tagName = (Elemts)(k+200);
@@ -220,16 +246,16 @@ PARSER htmlParser(char content[], char url[]){
                     limpaVetor(attrs);
                     attrs = NULL;
                 }
-                attrs = copiaString(elem, &j, '>', '\0');
+                attrs = copiaString(aux, &j, '>', '\0');
                 insereElementoNaListaHtml(&lista, "\0", "\0", attrs, "\0", tagName, &p);
                 break;
             case COMMENTS:
-                if(attrs!=NULL){
-                    limpaVetor(attrs);
-                    attrs = NULL;
+                if(cont!=NULL){
+                    limpaVetor(cont);
+                    cont = NULL;
                 }
-                attrs = copiaString(elem, &j, '>', '\0');
-                insereElementoNaListaHtml(&lista, "\0", "\0", attrs, "\0", tagName, &p);
+                cont = copiaString(aux, &j, '>', '\0');
+                insereElementoNaListaHtml(&lista, "\0", "\0", "\0", cont, tagName, &p);
                 break;
             case CDATA:
                 //Mais em Breve!
@@ -239,7 +265,43 @@ PARSER htmlParser(char content[], char url[]){
                 fprintf(stderr, "Erro: Elemento Invalido!\r\n");
             }
         }
-        else if(aux[j]=='<' && aux[j+1]=='/'){}
+        else if(aux[j]=='<' && aux[j+1]=='/'){
+            j = 2;
+            if(aux2!=NULL){
+                limpaVetor(aux2);
+                aux2 = NULL;
+            }
+            aux2 = copiaString(aux, &j, ' ', '>');
+            for(k=3; k<25; k++){
+                if(strcmp(aux2, elemts[k])==0){
+                    tagName = (Elemts)(k-3);
+                    break;
+                }
+            }
+            if(tagName==UNKNOWN){
+                for(k=0; aux2[k]!='\0'; k++){
+                    if(aux2[k]>96 && aux2[k]<123){
+                        aux2[k] -= 32;
+                    }
+                }
+                for(k=3; k<25; k++){
+                    if(strcmp(aux2, elemts[k])==0){
+                        tagName = (Elemts)(k-3);
+                        break;
+                    }
+                }
+            }
+            switch(tagName){
+            case HTML:
+                removeElementoDaPilhaHtml(&p, &lista);
+                break;
+            case HEAD:
+                removeElementoDaPilhaHtml(&p, &lista);
+                break;
+            default:
+                fprintf(stderr, "Erro: Elemento Invalido!\r\n");
+            }
+        }
         else{}
         j = 0;
     }
