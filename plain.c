@@ -19,6 +19,7 @@
 #include <string.h>
 #include "bonus.h"
 #include "manifest.h"
+#include "html.h"
 #include "strs.h"
 #include "typeparser.h"
 
@@ -38,6 +39,7 @@ typec InitPlain(char content[], char url[]){
         aux = copiaLinha(body, &i);
         //HTML
         if(SearchString(aux, "doctype")>-1){
+            result.parser = htmlParser(content, url);
             return result;
         }
         //Manifest

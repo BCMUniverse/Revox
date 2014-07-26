@@ -20,6 +20,7 @@
     Acessado em 25 de Dezembro de 2013
 */
 #include <omp.h>
+#include <ctype.h>
 #include <conio.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -32,7 +33,7 @@
 #include "resource.h"
 
 typedef struct _mail{
-    char host[STKB], ip[STKB], sender[STKB], recp[64][STKB], subj[STKB], body[STKB];
+    char *host, *ip, *sender, *recp, *subj, *body;
     int port, vezs;
     SOCKET mSock;
 }mail;
@@ -127,18 +128,17 @@ int SendMail(mail sml){
 
 char *InitMailGUI(char *host, char *others, int port, HINSTANCE hInst, HWND hwnd){
     mail m1;
-    int i, j, k, l;
-    char aux[16], remt[1025];
+    int i = 0, j = 0, k = 0;
+    char aux[16];
     hmail hm;
     HeadMail headm;
 
-    for(j=0; j<64; j++){
-        for(i=0; host[i]!='\0' || host[i]!=';'; i++){
-            m1.recp[j][i] = host[i];
-        }
+    m1.recp = (char *)malloc(strlen(host)+1);
+    for(i=0; host[i]!='\0' || host[i]!=';'; i++){
         if(host[i]=='\0'){
             break;
         }
+        m1.recp[i] = host[i];
     }
     m1.vezs = j;
     RemvSubString(others, "?");
@@ -147,7 +147,7 @@ char *InitMailGUI(char *host, char *others, int port, HINSTANCE hInst, HWND hwnd
         strcpy(aux, strstr(others, mailc[i]));
         if(aux==NULL){
             for(j=0; j<8; j++){
-                strcpy(aux, strstr(others, (char *)toupper(mailc[j])));
+                strcpy(aux, strstr(others, (char *)toupper((int)mailc[j])));
                 if(aux!=NULL){
                     break;
                 }
@@ -158,7 +158,7 @@ char *InitMailGUI(char *host, char *others, int port, HINSTANCE hInst, HWND hwnd
         }
         else{
             RemvSubString(others, aux);
-            for(j=1, l=m1.vezs; others[j]!='&' || others[j]!='\0'; j++){
+            for(j=1; others[j]!='&' || others[j]!='\0'; j++){
                 switch(headm){
                 case SUBJECT:
                     m1.subj[j] = others[j];
@@ -168,23 +168,20 @@ char *InitMailGUI(char *host, char *others, int port, HINSTANCE hInst, HWND hwnd
                     break;
                 case CC:
                     for(k=j; others[k]!='\0' || others[k]!=';' || others[k]!='&'; k++){
-                        m1.recp[l][k] = others[k];
+                        m1.recp[k] = others[k];
                     }
-                    l++;
                     j = k;
                     break;
                 case BCC:
                     for(k=j; others[k]!='\0' || others[k]!=';' || others[k]!='&'; k++){
-                        m1.recp[l][k] = others[k];
+                        m1.recp[k] = others[k];
                     }
-                    l++;
                     j = k;
                     break;
                 default:
                     fprintf(stderr, "Erro: Valor Inexistente!\r\n");
                 }
             }
-            m1.vezs = l;
         }
     }
     DialogBox(hInst, MAKEINTRESOURCE(IDD_DIALOG), hwnd, AboutDlgProc);
@@ -249,18 +246,16 @@ char *InitMailGUI(char *host, char *others, int port, HINSTANCE hInst, HWND hwnd
 
 char *InitMailText(char *host, char *others, int port){
     mail m1;
-    int i, j, k, l;
+    int i = 0, j = 0, k = 0;
     char aux[16];
     hmail hm;
     HeadMail headm;
 
-    for(j=0; j<64; j++){
-        for(i=0; host[i]!='\0' || host[i]!=';'; i++){
-            m1.recp[j][i] = host[i];
-        }
+    for(i=0; host[i]!='\0' || host[i]!=';'; i++){
         if(host[i]=='\0'){
             break;
         }
+        m1.recp[i] = host[i];
     }
     m1.vezs = j;
     RemvSubString(others, "?");
@@ -269,7 +264,7 @@ char *InitMailText(char *host, char *others, int port){
         strcpy(aux, strstr(others, mailc[i]));
         if(aux==NULL){
             for(j=0; j<8; j++){
-                strcpy(aux, strstr(others, toupper(mailc[j])));
+                strcpy(aux, strstr(others, (char *)toupper((int)mailc[j])));
                 if(aux!=NULL){
                     break;
                 }
@@ -280,7 +275,7 @@ char *InitMailText(char *host, char *others, int port){
         }
         else{
             RemvSubString(others, aux);
-            for(j=1, l=m1.vezs; others[j]!='&' || others[j]!='\0'; j++){
+            for(j=1; others[j]!='&' || others[j]!='\0'; j++){
                 switch(headm){
                 case SUBJECT:
                     m1.subj[j] = others[j];
@@ -290,23 +285,20 @@ char *InitMailText(char *host, char *others, int port){
                     break;
                 case CC:
                     for(k=j; others[k]!='\0' || others[k]!=';' || others[k]!='&'; k++){
-                        m1.recp[l][k] = others[k];
+                        m1.recp[k] = others[k];
                     }
-                    l++;
                     j = k;
                     break;
                 case BCC:
                     for(k=j; others[k]!='\0' || others[k]!=';' || others[k]!='&'; k++){
-                        m1.recp[l][k] = others[k];
+                        m1.recp[k] = others[k];
                     }
-                    l++;
                     j = k;
                     break;
                 default:
                     fprintf(stderr, "Erro: Valor Inexistente!\r\n");
                 }
             }
-            m1.vezs = l;
         }
     }
     printf("Digite o remetente: ");

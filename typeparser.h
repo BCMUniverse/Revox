@@ -20,6 +20,7 @@
 
 #include <windef.h>
 #include "manifest.h"
+#include "parser.h"
 
 typedef struct _Type{
     char *url, *content;
@@ -29,6 +30,7 @@ typedef struct _Type{
 typedef struct _typec{
     char *plain;
     status manifst;
+    struct _parser parser;
 } typec;
 
 typedef enum _type{

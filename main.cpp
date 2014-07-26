@@ -17,8 +17,8 @@
 */
 #include <stdio.h>
 #include <windef.h>
-#include "revox.h"
 #include "bonus.h"
+#include "revox.h"
 
 void InitMsg(){
     printf("Inicializando Revox...\r\n");

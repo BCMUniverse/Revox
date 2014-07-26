@@ -15,12 +15,17 @@
 	BCM Revox Engine v0.2
 	BCM Revox Engine -> Ano: 2014|Tipo: WebEngine
 */
-#ifndef _STRS_H_
-#define _STRS_H_
+#ifndef _PARSER_H_
+#define _PARSER_H_
 
-int SearchString(char content[], char subStr[]);
-int streql(char *str1, char *str2);
-char *copiaLinha(char content[], int *i);
-char *copiaString(char content[], int *i, char fim1, char fim2);
+#pragma once
 
-#endif // _STRS_H_
+typedef struct _parser PARSER;
+
+#include "html.h"
+
+struct _parser{
+    struct _listaHtml *lista;
+};
+
+#endif // _PARSER_H_

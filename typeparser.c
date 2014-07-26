@@ -24,7 +24,6 @@
 #include "bonus.h"
 #include "downloads.h"
 #include "html.h"
-#include "htmlText.h"
 #include "manifest.h"
 #include "plain.h"
 #include "strs.h"
@@ -88,8 +87,7 @@ typec InitTypeParser(Type tp1, int mode){
     }
     switch(typ1){
     case THTML:
-        //a função inithtmltext será substituida em breve!
-        InitHTMLText(tp1.content);
+        result.parser = htmlParser(tp1.content, tp1.url);
         break;
     case MANIFEST:
         result.manifst = InitManifest(tp1.content, tp1.url);

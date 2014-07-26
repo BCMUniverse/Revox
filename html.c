@@ -19,8 +19,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include "html.h"
+#include "parser.h"
+#include "strs.h"
+#include "typeparser.h"
 
-char elemts[][16] = {"doctype", "--", "[CDATA[", "html", "head", "base", "link", "meta", "noscript", "script", "style", "template", "title", "body", "a", "abbr", "address", "area", "article", "aside", "audio", "b", "p"};
+char elemts[][16] = {"DOCTYPE", "--", "[CDATA[", "html", "head", "base", "link", "meta", "noscript", "script", "style", "template", "title", "body", "a", "abbr", "address", "area", "article", "aside", "audio", "b", "p"};
 
 void alocaListaHtml(listaHtml *lista){
     lista->inicio = NULL;
@@ -161,4 +164,87 @@ void excluirListaHtml(listaHtml *lista){
     while(lista->tam > 0){
         removeElementoDaListaHtml(lista, 1);
     }
+}
+
+PARSER htmlParser(char content[], char url[]){
+    char *body = NULL, *aux = NULL, *aux2 = NULL, *elem = NULL, *id = NULL, *className = NULL, *attrs = NULL, *cont = NULL;
+    Elemts tagName = UNKNOWN;
+    int i = 0, j = 0, k = 0;
+    listaHtml lista;
+    PARSER result;
+    pilhaHtml *p = criaPilhaHtml();
+
+    alocaListaHtml(&lista);
+    body = TagBody(content);
+    while(body[i]!='\0'){
+        if(aux!=NULL){
+            limpaVetor(aux);
+            aux = NULL;
+        }
+        aux = copiaLinha(body, &i);
+        if(aux[j]=='<' && aux[j+1]=='!'){
+            if(elem!=NULL){
+                limpaVetor(elem);
+                elem = NULL;
+            }
+            elem = (char *)malloc(strlen(aux)+1);
+            while(aux[j]!='>'){
+                elem[j] = aux[j];
+                j++;
+            }
+            elem[j] = aux[j];
+            j = 2;
+            aux2 = copiaString(elem, &j, ' ', '>');
+            for(k=0; k<3; k++){
+                if(strcmp(aux2, elemts[k])==0){
+                    tagName = (Elemts)(k+200);
+                    break;
+                }
+            }
+            if(tagName==UNKNOWN){
+                for(k=0; aux2[k]!='\0'; k++){
+                    if(aux2[k]>96 && aux2[k]<123){
+                        aux2[k] -= 32;
+                    }
+                }
+                for(k=0; k<3; k++){
+                    if(strcmp(aux2, elemts[k])==0){
+                        tagName = (Elemts)(k+200);
+                        break;
+                    }
+                }
+            }
+            switch(tagName){
+            case DOCTYPE:
+                if(attrs!=NULL){
+                    limpaVetor(attrs);
+                    attrs = NULL;
+                }
+                attrs = copiaString(elem, &j, '>', '\0');
+                insereElementoNaListaHtml(&lista, "\0", "\0", attrs, "\0", tagName, &p);
+                break;
+            case COMMENTS:
+                if(attrs!=NULL){
+                    limpaVetor(attrs);
+                    attrs = NULL;
+                }
+                attrs = copiaString(elem, &j, '>', '\0');
+                insereElementoNaListaHtml(&lista, "\0", "\0", attrs, "\0", tagName, &p);
+                break;
+            case CDATA:
+                //Mais em Breve!
+                insereElementoNaListaHtml(&lista, "\0", "\0", "\0", "\0", tagName, &p);
+                break;
+            default:
+                fprintf(stderr, "Erro: Elemento Invalido!\r\n");
+            }
+        }
+        else if(aux[j]=='<' && aux[j+1]=='/'){}
+        else{}
+        j = 0;
+    }
+
+    result.lista = &lista;
+
+    return result;
 }

@@ -76,3 +76,19 @@ char *copiaLinha(char content[], int *i){
 
     return result;
 }
+
+char *copiaString(char content[], int *i, char fim1, char fim2){
+    char result[strlen(content)], c;
+    int j = 0, k = *i;
+
+    memset(result, 0, sizeof(result));
+    while(content[k]!=fim1 && content[k]!=fim2){
+        result[j++] = content[k++];
+    }
+    while(content[k]==fim1 || content[k]==fim2){
+        c = content[k++];
+    }
+    *i = k;
+
+    return result;
+}

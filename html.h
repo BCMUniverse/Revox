@@ -18,6 +18,9 @@
 #ifndef _HTML_H_
 #define _HTML_H_
 
+#pragma once
+
+#include "parser.h"
 #include "revox.h"
 
 extern char elemts[][16];
@@ -53,22 +56,27 @@ typedef enum _Elemts{
     UNKNOWN
 } Elemts;
 
-typedef struct _elemntHtml{
+struct _elemntHtml{
     char *id, *className, *attrs, *innerHtml;
     Elemts tagName;
     int quantFilhos;
     struct _elemntHtml *ant, *prox;
-} elemntHtml;
+};
 
-typedef struct _listaHtml{
+typedef struct _elemntHtml elemntHtml;
+
+struct _listaHtml{
     elemntHtml *inicio, *fim;
     int tam;
-} listaHtml;
+};
 
-typedef struct _pilhaHtml{
+struct _pilhaHtml{
     Elemts tagName[BUFKB];
     int filhos[BUFKB], topo;
-} pilhaHtml;
+};
+
+typedef struct _listaHtml listaHtml;
+typedef struct _pilhaHtml pilhaHtml;
 
 //Aloca a lista html
 void alocaListaHtml(listaHtml *lista);
@@ -96,5 +104,8 @@ void excluirPilhaHtml(pilhaHtml *pilha);
 
 //exclue a lista
 void excluirListaHtml(listaHtml *lista);
+
+//Analisador HTML
+PARSER htmlParser(char content[], char url[]);
 
 #endif // _HTML_H_

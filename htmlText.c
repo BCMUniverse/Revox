@@ -129,7 +129,7 @@ char *InitHTMLText(char *content){
     htr htr1;
     Elemts elts;
     //Fhtp *fhtp1;
-    pilha2 p2;
+    //pilha2 p2;
 
     conthtml = (char *)malloc(sizeof(char)*(strlen(content)));
     head = (char *)malloc(sizeof(char)*(strlen(content)));
@@ -152,56 +152,6 @@ char *InitHTMLText(char *content){
     buffer = SubString(content, inicio+4, strlen(content)+1);
 
     for(i=0; buffer[i]!='\0'; i++){
-        if(buffer[i]=='<' && buffer[i+1]=='!'){
-            for(j=0; j<3; j++){
-                strcpy(aux, elemts[j]);
-                intag = strstr(buffer, aux);
-                if(intag==NULL){
-                    intag = strstr(buffer, strupr(aux));
-                    if(intag==NULL){
-                        for(k=(i+1); buffer[k]!='>' || buffer[k]!=' '; k++){
-                            if(buffer[k]>64 && buffer[k]<91){
-                                buffer[k] += 32;
-                            }
-                        }
-                        intag = strstr(buffer, strlwr(aux));
-                        if(intag!=NULL){
-                            break;
-                        }
-                    }
-                    else{
-                        break;
-                    }
-                }
-                else{
-                    break;
-                }
-            }
-            elts = (Elemts)(j+200);
-            switch(elts){
-            case DOCTYPE:
-                for(i=i, k=0; buffer[i]!='>';i++, k++){
-                    BufTag[k] = buffer[i];
-                }
-                BufTag[k++] = '>';
-                //CreateToken(fhtp1, BufTag, "\0", "\0", "\0", "\0", "\0", "\0", elts, mode, 0);
-                mode = 1;
-                break;
-            case COMMENTS:
-                for(i=i, k=0; buffer[i]!='>';i++, k++){
-                    BufTag[k] = buffer[i];
-                }
-                BufTag[k++] = '>';
-                //CreateToken(fhtp1, BufTag, "\0", "\0", "\0", "\0", "\0", "\0", elts, mode, 0);
-                mode = 1;
-                break;
-            case CDATA:
-                //Em Breve
-                break;
-            default:
-                fprintf(stderr, "Erro: Valor Invalido!\r\n");
-            }
-        }
         if(buffer[i]=='<' && buffer[i+1]!='!'){
             for(j=3; j<25; j++){
                 strcpy(aux, elemts[j]);
