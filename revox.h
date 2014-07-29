@@ -35,8 +35,6 @@ extern "C"{
 #define BUFKB 2048
 
 #include "bonus.h"
-//Biblioteca HTMLText
-#include "htmlText.h"
 //Biblioteca HTTP
 #include "http.h"
 //Biblioteca Socket

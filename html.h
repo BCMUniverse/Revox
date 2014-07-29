@@ -25,14 +25,10 @@
 
 extern char elemts[][16];
 
-typedef struct _htr{
-    char title[4096], *content, *favicon;
-} htr;
-
 typedef enum _Elemts{
     DOCTYPE = 200,
-    COMMENTS = 201,
-    CDATA = 202,
+    COMMENTS,
+    CDATA,
     HTML = 0,
     HEAD,
     BASE,

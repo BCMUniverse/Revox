@@ -44,7 +44,7 @@ void InitFileText(char *path){
     for(i=0; content[i]!='\0'; i++){
         fscanf(input, "%c", &content[i]);
     }
-    InitHTMLText(content);
+    htmlParser(content, path);
     fclose(input);
 }
 

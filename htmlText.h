@@ -18,14 +18,7 @@
 #ifndef _HTMLTEXT_H_
 #define _HTMLTEXT_H_
 
-#include "bonus.h"
-
 #define KB 1024
-
-//HTML Analisado
-typedef struct _phtml{
-    char title[2049], content[BUF32KB];
-}phtml;
 
 //Cria Elementos para compara-los
 char *CreateTag(char *inicio, char *tag, char *fim);
@@ -35,7 +28,5 @@ char *SubString(char *str, int inicio, int fim);
 char *SubString2(char *str, char *inicio, char *fim);
 //Remove a substring de uma string
 void RemvSubString(char *str, char *substr);
-//Analisa documento HTML e converte em Texto
-char *InitHTMLText(char *content);
 
 #endif // _HTMLTEXT_H_

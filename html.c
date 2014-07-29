@@ -173,10 +173,10 @@ char *copiaTag(char content[], int *i){
     int j = 0, k = *i;
 
     memset(result, 0, sizeof(result));
-    while(content[k]!='>' && content[k]!=' ' && content[k]!='   '){
+    while(content[k]!='>' && content[k]!=' ' && content[k]!='\t'){
         result[j++] = content[k++];
     }
-    while(content[k]==' ' || content[k]=='  '){
+    while(content[k]==' ' || content[k]=='\t'){
         c = content[k++];
     }
     if(content[k]=='>'){
@@ -188,7 +188,7 @@ char *copiaTag(char content[], int *i){
 }
 
 PARSER htmlParser(char content[], char url[]){
-    char *body = NULL, *aux = NULL, *aux2 = NULL, *elem = NULL, *id = NULL, *className = NULL, *attrs = NULL, *cont = NULL;
+    char *body = NULL, *aux = NULL, *aux2 = NULL, *id = NULL, *className = NULL, *attrs = NULL, *cont = NULL;
     Elemts tagName = UNKNOWN;
     int i = 0, j = 0, k = 0;
     listaHtml lista;
@@ -247,7 +247,7 @@ PARSER htmlParser(char content[], char url[]){
                     attrs = NULL;
                 }
                 attrs = copiaString(aux, &j, '>', '\0');
-                insereElementoNaListaHtml(&lista, "\0", "\0", attrs, "\0", tagName, &p);
+                insereElementoNaListaHtml(&lista, "\0", "\0", attrs, "\0", tagName, p);
                 break;
             case COMMENTS:
                 if(cont!=NULL){
@@ -255,11 +255,11 @@ PARSER htmlParser(char content[], char url[]){
                     cont = NULL;
                 }
                 cont = copiaString(aux, &j, '>', '\0');
-                insereElementoNaListaHtml(&lista, "\0", "\0", "\0", cont, tagName, &p);
+                insereElementoNaListaHtml(&lista, "\0", "\0", "\0", cont, tagName, p);
                 break;
             case CDATA:
                 //Mais em Breve!
-                insereElementoNaListaHtml(&lista, "\0", "\0", "\0", "\0", tagName, &p);
+                insereElementoNaListaHtml(&lista, "\0", "\0", "\0", "\0", tagName, p);
                 break;
             default:
                 fprintf(stderr, "Erro: Elemento Invalido!\r\n");
@@ -272,7 +272,7 @@ PARSER htmlParser(char content[], char url[]){
                 aux2 = NULL;
             }
             aux2 = copiaString(aux, &j, ' ', '>');
-            for(k=3; k<25; k++){
+            for(k=3; k<24; k++){
                 if(strcmp(aux2, elemts[k])==0){
                     tagName = (Elemts)(k-3);
                     break;
@@ -284,7 +284,7 @@ PARSER htmlParser(char content[], char url[]){
                         aux2[k] -= 32;
                     }
                 }
-                for(k=3; k<25; k++){
+                for(k=3; k<24; k++){
                     if(strcmp(aux2, elemts[k])==0){
                         tagName = (Elemts)(k-3);
                         break;
@@ -293,16 +293,80 @@ PARSER htmlParser(char content[], char url[]){
             }
             switch(tagName){
             case HTML:
-                removeElementoDaPilhaHtml(&p, &lista);
+                removeElementoDaPilhaHtml(p, &lista);
                 break;
             case HEAD:
-                removeElementoDaPilhaHtml(&p, &lista);
+                removeElementoDaPilhaHtml(p, &lista);
                 break;
             default:
                 fprintf(stderr, "Erro: Elemento Invalido!\r\n");
             }
         }
-        else{}
+        else{
+            j = 1;
+            if(aux2!=NULL){
+                limpaVetor(aux2);
+                aux2 = NULL;
+            }
+            aux2 = copiaString(aux, &j, ' ', '>');
+            for(k=3; k<24; k++){
+                if(strcmp(aux2, elemts[k])==0){
+                    tagName = (Elemts)(k-3);
+                    break;
+                }
+            }
+            if(tagName==UNKNOWN){
+                for(k=0; aux2[k]!='\0'; k++){
+                    if(aux2[k]>96 && aux2[k]<123){
+                        aux2[k] -= 32;
+                    }
+                }
+                for(k=3; k<24; k++){
+                    if(strcmp(aux2, elemts[k])==0){
+                        tagName = (Elemts)(k-3);
+                        break;
+                    }
+                }
+            }
+
+            //preparando para inserir elemento na lista e na pilha
+            if(attrs!=NULL){
+                limpaVetor(attrs);
+                attrs = NULL;
+            }
+            attrs = copiaString(aux, &j, '>', '\0');
+            if(id!=NULL){
+                limpaVetor(id);
+                id = NULL;
+            }
+            if((k = SearchString(attrs, "id="))!=-1){
+                k++;
+                id = copiaString(attrs, &k, '\"', '\'');
+            }
+            if(className!=NULL){
+                limpaVetor(className);
+                className = NULL;
+            }
+            if((k = SearchString(attrs, "class="))!=-1){
+                k++;
+                className = copiaString(attrs, &k, '\"', '\'');
+            }
+            if(cont!=NULL){
+                limpaVetor(cont);
+                cont = NULL;
+            }
+            cont = (char *)malloc(sizeof(char)*2048);
+            for(k = 0; body[i]!='<'; k++){
+                if(k==(sizeof(cont)-1)){
+                    cont = realloc(cont, sizeof(char)*2048);
+                }
+                cont[k] = body[i++];
+            }
+
+            //insere os elemento na lista e na pilha
+            insereElementoNaPilhaHtml(p, tagName);
+            insereElementoNaListaHtml(&lista, id, className, attrs, cont, tagName, p);
+        }
         j = 0;
     }
 
