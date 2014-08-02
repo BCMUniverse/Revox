@@ -30,6 +30,7 @@ typec InitPlain(char content[], char url[]){
 
     result.manifst = UNCACHED;
     result.plain = NULL;
+    result.lista = NULL;
     strcpy(body, TagBody(content));
     while(body[i]!='\0' || i<2048){
         if(aux!=NULL){
@@ -39,7 +40,7 @@ typec InitPlain(char content[], char url[]){
         aux = copiaLinha(body, &i);
         //HTML
         if(SearchString(aux, "doctype")>-1){
-            result.parser = htmlParser(content, url);
+            result.lista = htmlParser(content, url);
             return result;
         }
         //Manifest

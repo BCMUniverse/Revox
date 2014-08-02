@@ -1,10 +1,10 @@
 ﻿-- BCM Revox Engine v0.2 --
 //ChangeLog
 	v0.2 - Alpha 2
-		* Analisador HTML Texto atualizado
-		+ Adicionado Analisador HTML com Interface Gráfica
+		* Analisador HTML atualizado e simplificado.
 		+ Adicionado Analisador JavaScript
 		+ Adicionado Analisador CSS
+		+ Adicionado renderizador que alterna entre texto e interface gráfica
 		+ Adicionado os seguintes protocolos: HTTPS, File, MailTo, NNTP, WAIS e Prospero.
 		- Analisador HTML - Gumbo removido
 	v0.1 - Alpha 1

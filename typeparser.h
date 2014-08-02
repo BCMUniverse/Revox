@@ -18,9 +18,11 @@
 #ifndef _TYPEPARSER_H_
 #define _TYPEPARSER_H_
 
+#pragma once
+
 #include <windef.h>
 #include "manifest.h"
-#include "parser.h"
+#include "html.h"
 
 typedef struct _Type{
     char *url, *content;
@@ -30,7 +32,7 @@ typedef struct _Type{
 typedef struct _typec{
     char *plain;
     status manifst;
-    struct _parser parser;
+    struct _listaHtml *lista;
 } typec;
 
 typedef enum _type{

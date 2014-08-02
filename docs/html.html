@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+	<head>
+		<meta charset="UTF-8"/>
+		<title>Biblioteca HTML</title>
+	</head>
+	<body>
+		<h1>Funções do html.h</h1>
+		<h2>alocaListaHtml</h2>
+		<p>void alocaListaHtml(listaHtml *lista)</p>
+		<p>Aloca a lista.</p>
+		<ul>
+			<li>listaHtml *lista - lista a ser alocada.</li>
+		</ul>
+		<h2>criaPilhaHtml</h2>
+		<p>pilhaHtml *criaPilhaHtml()</p>
+		<p>Cria a pilha.</p>
+		<ul>
+			<li>return pilhaHtml* - retorna a pilha criada.</li>
+		</ul>
+		<h2>insereElementoNaPilhaHtml</h2>
+		<p>int insereElementoNaPilhaHtml(pilhaHtml *pilha, Elemts tagName)</p>
+		<p>Insere o elemento na pilha.</p>
+		<ul>
+			<li>pilhaHtml *pilha - pilha onde o elemento será inserido.</li>
+			<li>Elemts tagName - elemento que será adicionado.</li>
+			<li>return int - retorna -1 se a pilha estiver cheia, senão retorna 0.</li>
+		</ul>
+		<h2>insereElementoNaListaHtml</h2>
+		<p>int insereElementoNaListaHtml(listaHtml *lista, char id[], char className[], char attrs[], char innerHtml[], Elemts tagName, pilhaHtml *pilha)</p>
+		<p>Insere os dados em um elemento e o insere na lista.</p>
+		<ul>
+			<li>listaHtml *lista - lista onde o elemento será inserido.</li>
+			<li>char id[] - adiciona o atributo id do elemento.</li>
+			<li>char className[] - adiciona o atributo class do elemento.</li>
+			<li>char attrs[] - adiciona o todos os atributos específicos do elemento.</li>
+			<li>char innerHtml[] - adiciona o conteúdo puro do elemento.</li>
+			<li>Elemts tagName - identifica o elemento que será adicionado.</li>
+			<li>pilhaHtml *pilha - pilha onde o elemento será adicionado.</li>
+			<li>return int - retorna -1 se houver um erro na função, senão retorna 0.</li>
+		</ul>
+		<h2>pilhaHtmlVazia</h2>
+		<p>int pilhaHtmlVazia(pilhaHtml *pilha)</p>
+		<p>Verifica se a pilha está vazia.</p>
+		<ul>
+			<li>pilhaHtml *pilha - pilha a ser verificada.</li>
+			<li>return int - retorna 1 se a pilha estiver vazia, senão retorna 0.</li>
+		</ul>
+		<h2>removeElementoDaPilhaHtml</h2>
+		<p>void removeElementoDaPilhaHtml(pilhaHtml *pilha, listaHtml *lista)</p>
+		<p>Remove o elemento da pilha.</p>
+		<ul>
+			<li>pilhaHtml *pilha - pilha onde está o elemento a ser removido.</li>
+			<li>listaHtml *lista - lista onde está o elemento a ser removido da pilha.</li>
+		</ul>
+		<h2>removeElementoDaListaHtml</h2>
+		<p>int removeElementoDaListaHtml(listaHtml *lista, int pos)</p>
+		<p>Remove o elemento da lista.</p>
+		<ul>
+			<li>listaHtml *lista - lista onde está o elemento a ser removido.</li>
+			<li>int pos - posição do elemento na lista.</li>
+			<li>return int - retorna -1 se houver algum problema, senão retorna 0.</li>
+		</ul>
+		<h2>excluirPilhaHtml</h2>
+		<p>void excluirPilhaHtml(pilhaHtml *pilha)</p>
+		<p>Exclui a pilha.</p>
+		<ul>
+			<li>pilhaHtml *pilha - pilha que será excluída.</li>
+		</ul>
+		<h2>excluirListaHtml</h2>
+		<p>void excluirListaHtml(listaHtml *lista)</p>
+		<p>Exclui a lista.</p>
+		<ul>
+			<li>listaHtml *lista - lista que será excluída.</li>
+		</ul>
+		<h2>copiaTag</h2>
+		<p>char *copiaTag(char content[], int *i)</p>
+		<p>Copia elemento do tipo html de uma string.</p>
+		<ul>
+			<li>char content[] - conteúdo da string.</li>
+			<li>int *i - posição inicial da string a ser copiada.</li>
+			<li>return char* - retorna o elemento copiado.</li>
+		</ul>
+		<h2>htmlParser</h2>
+		<p>listaHtml *htmlParser(char content[], char url[])</p>
+		<p>Analisador HTML.</p>
+		<ul>
+			<li>char content[] - conteúdo html em formato de uma string.</li>
+			<li>char url[] - endereço deste conteúdo.</li>
+			<li>return listaHtml* - retorna a lista criada.</li>
+		</ul>
+	</body>
+</html>

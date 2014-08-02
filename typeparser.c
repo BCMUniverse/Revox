@@ -87,7 +87,7 @@ typec InitTypeParser(Type tp1, int mode){
     }
     switch(typ1){
     case THTML:
-        result.parser = htmlParser(tp1.content, tp1.url);
+        result.lista = htmlParser(tp1.content, tp1.url);
         break;
     case MANIFEST:
         result.manifst = InitManifest(tp1.content, tp1.url);

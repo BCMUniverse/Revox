@@ -19,11 +19,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include "html.h"
-#include "parser.h"
 #include "strs.h"
 #include "typeparser.h"
 
-char elemts[][16] = {"DOCTYPE", "--", "[CDATA[", "html", "head", "base", "link", "meta", "noscript", "script", "style", "template", "title", "body", "a", "abbr", "address", "area", "article", "aside", "audio", "b", "p"};
+char elemts[][16] = {"doctype", "--", "[CDATA[", "html", "head", "base", "link", "meta", "noscript", "script", "style", "template", "title", "body", "a", "abbr", "address", "area", "article", "aside", "audio", "b", "p"};
 
 void alocaListaHtml(listaHtml *lista){
     lista->inicio = NULL;
@@ -50,7 +49,7 @@ int insereElementoNaPilhaHtml(pilhaHtml *pilha, Elemts tagName){
         pilha->topo++;
         pilha->tagName[pilha->topo] = tagName;
         while(i<pilha->topo){
-            pilha->filhos[i]++;
+            pilha->filhos[i++]++;
         }
     }
 
@@ -187,12 +186,11 @@ char *copiaTag(char content[], int *i){
     return result;
 }
 
-PARSER htmlParser(char content[], char url[]){
+listaHtml *htmlParser(char content[], char url[]){
     char *body = NULL, *aux = NULL, *aux2 = NULL, *id = NULL, *className = NULL, *attrs = NULL, *cont = NULL;
     Elemts tagName = UNKNOWN;
     int i = 0, j = 0, k = 0;
     listaHtml lista;
-    PARSER result;
     pilhaHtml *p = criaPilhaHtml();
 
     alocaListaHtml(&lista);
@@ -229,8 +227,8 @@ PARSER htmlParser(char content[], char url[]){
             }
             if(tagName==UNKNOWN){
                 for(k=0; aux2[k]!='\0'; k++){
-                    if(aux2[k]>96 && aux2[k]<123){
-                        aux2[k] -= 32;
+                    if(aux2[k]>64 && aux2[k]<91){
+                        aux2[k] += 32;
                     }
                 }
                 for(k=0; k<3; k++){
@@ -272,7 +270,7 @@ PARSER htmlParser(char content[], char url[]){
                 aux2 = NULL;
             }
             aux2 = copiaString(aux, &j, ' ', '>');
-            for(k=3; k<24; k++){
+            for(k=3; k<23; k++){
                 if(strcmp(aux2, elemts[k])==0){
                     tagName = (Elemts)(k-3);
                     break;
@@ -280,11 +278,11 @@ PARSER htmlParser(char content[], char url[]){
             }
             if(tagName==UNKNOWN){
                 for(k=0; aux2[k]!='\0'; k++){
-                    if(aux2[k]>96 && aux2[k]<123){
-                        aux2[k] -= 32;
+                    if(aux2[k]>64 && aux2[k]<91){
+                        aux2[k] += 32;
                     }
                 }
-                for(k=3; k<24; k++){
+                for(k=3; k<23; k++){
                     if(strcmp(aux2, elemts[k])==0){
                         tagName = (Elemts)(k-3);
                         break;
@@ -309,7 +307,7 @@ PARSER htmlParser(char content[], char url[]){
                 aux2 = NULL;
             }
             aux2 = copiaString(aux, &j, ' ', '>');
-            for(k=3; k<24; k++){
+            for(k=3; k<23; k++){
                 if(strcmp(aux2, elemts[k])==0){
                     tagName = (Elemts)(k-3);
                     break;
@@ -317,11 +315,11 @@ PARSER htmlParser(char content[], char url[]){
             }
             if(tagName==UNKNOWN){
                 for(k=0; aux2[k]!='\0'; k++){
-                    if(aux2[k]>96 && aux2[k]<123){
-                        aux2[k] -= 32;
+                    if(aux2[k]>64 && aux2[k]<91){
+                        aux2[k] += 32;
                     }
                 }
-                for(k=3; k<24; k++){
+                for(k=3; k<23; k++){
                     if(strcmp(aux2, elemts[k])==0){
                         tagName = (Elemts)(k-3);
                         break;
@@ -370,7 +368,5 @@ PARSER htmlParser(char content[], char url[]){
         j = 0;
     }
 
-    result.lista = &lista;
-
-    return result;
+    return &lista;
 }

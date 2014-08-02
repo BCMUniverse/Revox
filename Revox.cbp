@@ -98,7 +98,6 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="nntp.h" />
-		<Unit filename="parser.h" />
 		<Unit filename="plain.c">
 			<Option compilerVar="CC" />
 		</Unit>

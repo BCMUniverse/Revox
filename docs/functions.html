@@ -11,7 +11,6 @@
 			<li>CreateTag: Cria os elementos</li>
 			<li>SubString: copia substrings de uma string</li>
 			<li>SubString2: copia substring e remove-as de uma string</li>
-			<li>InitHTMLText: Analisa o Documento ou arquivo recebido e converte o conteúdo HTML</li>
 		</ul>
 		<h2>http.h</h2>
 		<ul>
@@ -20,7 +19,6 @@
 		</ul>
 		<h2>revox.h</h2>
 		<ul>
-			<li>InitGumbo: analisa documento html</li>
 			<li>InitText: inicia o analisador html e acessa endereço recebido</li>
 			<li>InitFileText: analisa um arquivo html</li>
 		</ul>
@@ -28,13 +26,16 @@
 		<ul>
 			<li>InitSocket: recebe sockets a partir de um endereço</li>
 		</ul>
+		<p><a href="html.html">html.h</a></p>
+		<p><a href="manifest.html">manifest.h</a></p>
+		<p><a href="plain.html">plain.h</a></p>
+		<p><a href="typeparser.html">typeparser.h</a></p>
 		<h1>Implementando as Funções</h1>
 		<h2>htmlText.h</h2>
 		<ul>
 			<li>CreateTag: char *CreateTag(char *inicio, char *tag, char *fim)</li>
 			<li>SubString: char *SubString(char *str, int inicio, int fim)</li>
 			<li>SubString2: char *SubString2(char *str, char *inicio, char *fim)</li>
-			<li>InitHTMLText: char *InitHTMLText(char *content)</li>
 		</ul>
 		<h2>http.h</h2>
 		<ul>
@@ -43,7 +44,6 @@
 		</ul>
 		<h2>revox.h</h2>
 		<ul>
-			<li>InitGumbo: void InitGumbo(char *host)</li>
 			<li>InitText: void InitText(char *host)</li>
 			<li>InitFileText: void InitFileText(char *path)</li>
 		</ul>
@@ -51,8 +51,5 @@
 		<ul>
 			<li>InitSocket: void InitSocket(char *hostname)</li>
 		</ul>
-		<p><a href="manifest.html">manifest.h</a></p>
-		<p><a href="plain.html">plain.h</a></p>
-		<p><a href="typeparser.html">typeparser.h</a></p>
 	</body>
 </html>
