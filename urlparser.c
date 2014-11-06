@@ -48,13 +48,13 @@ url UrlParser(char host[]){
         strcpy(aux, CreateTag(ports[i], bars[0], bars[1]));
         strcpy(aux2, strstr(host, aux));
         if(aux2==NULL){
-            strcpy(aux2, strstr(host, strupr(aux)));
+            strcpy(aux2, strstr(host, strupr(&aux)));
         }
         if(aux2==NULL){
             strcpy(aux, CreateTag(ports[i], bars[0], "\0"));
             strcpy(aux2, strstr(host, aux));
             if(aux2==NULL){
-                strcpy(aux2, strstr(host, strupr(aux)));
+                strcpy(aux2, strstr(host, strupr(&aux)));
             }
         }
         if(aux2!=NULL){

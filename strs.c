@@ -19,6 +19,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "strs.h"
 
 int SearchString(char content[], char subStr[]){
     char *aux = NULL, auxstr[strlen(subStr)];
@@ -91,4 +92,56 @@ char *copiaString(char content[], int *i, char fim1, char fim2){
     *i = k;
 
     return result;
+}
+
+pilha *alocaPilha(){
+    pilha *p = (pilha *)malloc(sizeof(pilha));
+
+    p->topo = NULL;
+
+    return p;
+}
+
+void insereElementoNaPilha(pilha *pilha, char c){
+    elemento *e = (elemento *)malloc(sizeof(elemento));
+
+    e->c = c;
+    e->prox = pilha->topo;
+    if(pilha->topo!=NULL){
+        pilha->topo->ant = e;
+    }
+    pilha->topo = e;
+}
+
+int pilhaVazia(pilha *pilha){
+    if(pilha->topo == -1){
+        return 1;
+    }
+    return 0;
+}
+
+void removeElementoDaPilha(pilha *pilha, elemento *e){
+    elemento *inCurso = pilha->topo;
+
+    if(pilhaVazia(pilha)){
+        fprintf(stderr, "Erro: Pilha Vazia!");
+        exit(1);
+    }
+    else{
+        while(inCurso->prox!=NULL){
+            if(e==inCurso){
+                pilha->topo = inCurso->prox;
+                inCurso->prox->ant = NULL;
+                break;
+            }
+            else{
+                inCurso = inCurso->prox;
+            }
+        }
+    }
+    free(inCurso);
+}
+
+void excluirPilha(pilha *pilha){
+    free(pilha);
 }

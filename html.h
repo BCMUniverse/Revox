@@ -15,23 +15,25 @@
 	BCM Revox Engine v0.2
 	BCM Revox Engine -> Ano: 2014|Tipo: WebEngine
 */
+#include "revox.h"
+
 #ifndef _HTML_H_
 #define _HTML_H_
 
-#pragma once
-
 typedef struct _listaHtml listaHtml;
 typedef struct _pilhaHtml pilhaHtml;
-
-#include "revox.h"
+typedef struct _elemntHtml elemntHtml;
+typedef struct _hash hashHtml;
+typedef struct _elemntFila elemntFila;
+typedef struct _fila filaHtml;
 
 extern char elemts[][16];
 
 typedef enum _Elemts{
-    DOCTYPE = 200,
+    DOCTYPE,
     COMMENTS,
     CDATA,
-    HTML = 0,
+    HTML,
     HEAD,
     BASE,
     LINK,
@@ -57,20 +59,26 @@ typedef enum _Elemts{
 struct _elemntHtml{
     char *id, *className, *attrs, *innerHtml;
     Elemts tagName;
-    int quantFilhos;
+    int quantFilhos, isClosed;
     struct _elemntHtml *ant, *prox;
 };
-
-typedef struct _elemntHtml elemntHtml;
 
 struct _listaHtml{
     elemntHtml *inicio, *fim;
     int tam;
 };
 
-struct _pilhaHtml{
-    Elemts tagName[BUFKB];
-    int filhos[BUFKB], topo;
+struct _hash{
+    listaHtml vet[100];
+};
+
+struct _elemntFila{
+    Elemts tagName;
+    struct _elemntFila *ant, *prox;
+};
+
+struct _fila{
+    elemntFila *inicio, *fim;
 };
 
 /**
@@ -80,51 +88,43 @@ struct _pilhaHtml{
 **/
 void alocaListaHtml(listaHtml *lista);
 
-/**
-*	Cria a pilha.
-*
-*	@return pilhaHtml* - retorna a pilha criada.
-**/
-pilhaHtml *criaPilhaHtml();
+hashHtml *alocaHash();
+
+filaHtml *alocaFila();
 
 /**
-*	Insere o elemento na pilha.
+*	Insere o elemento na fila.
 *
-*	@param pilha* pilhaHtml - pilha onde o elemento será inserido.
+*	@param * filaHtml - fila onde o elemento será inserido.
 *	@param tagName Elemts - elemento que será adicionado.
-*	@return int - retorna -1 se a pilha estiver cheia, senão retorna 0.
 **/
-int insereElementoNaPilhaHtml(pilhaHtml *pilha, Elemts tagName);
+void insereElementoNaFila(filaHtml *, Elemts tagName);
+
+int insereElementoNoHash(hashHtml *h, char id[], char className[], char attrs[], char innerHtml[], Elemts tagName, filaHtml *f);
 
 /**
-*	Insere os dados em um elemento e o insere na lista.
+*	Insere um elemento na lista.
 *
 *	@param lista* listaHtml - lista onde o elemento será inserido.
-*	@param id char[] - adiciona o atributo id do elemento.
-*	@param className char[] - adiciona o atributo class do elemento.
-*	@param attrs char[] - adiciona o todos os atributos específicos do elemento.
-*	@param innerHtml char[] - adiciona o conteúdo puro do elemento.
-*	@param tagName Elemts - identifica o elemento que será adicionado.
-*	@param pilha pilhaHtml* - pilha onde o elemento será adicionado.
+*	@param elemento* elemntHtml - adiciona o elemento.
 *	@return int - retorna -1 se houver um erro na função, senão retorna 0.
 **/
-int insereElementoNaListaHtml(listaHtml *lista, char id[], char className[], char attrs[], char innerHtml[], Elemts tagName, pilhaHtml *pilha);
+int insereElementoNaListaHtml(listaHtml *lista, elemntHtml* elemento);
 
 /**
-*	Verifica se a pilha está vazia.
+*	Verifica se a fila está vazia.
 *
-*	@param pilha pilhaHtml* - pilha a ser verificada.
-*	@return int - retorna 1 se a pilha estiver vazia, senão retorna 0.
+*	@param filaHtml* - fila a ser verificada.
+*	@return int - retorna 1 se a sila estiver vazia, senão retorna 0.
 **/
-int pilhaHtmlVazia(pilhaHtml *pilha);
+int filaVazia(filaHtml *f);
 
 /**
-*	Remove o elemento da pilha.
+*	Remove o elemento da fila.
 *
-*	@param pilha pilhaHtml* - pilha onde está o elemento a ser removido.
-*	@param lista listaHtml* - lista onde está o elemento a ser removido da pilha.
+*	@param filaHtml* - fila onde está o elemento a ser removido.
 **/
-void removeElementoDaPilhaHtml(pilhaHtml *pilha, listaHtml *lista);
+void removeElementoDaFila(filaHtml *);
 
 /**
 *	Remove o elemento da lista.
@@ -165,6 +165,6 @@ char *copiaTag(char content[], int *i);
 *	@param url char[] - endereço deste conteúdo.
 *	@return listaHtml* - retorna a lista criada.
 **/
-listaHtml *htmlParser(char content[], char url[]);
+hashHtml *htmlParser(char content[], char url[]);
 
 #endif // _HTML_H_

@@ -18,9 +18,23 @@
 #ifndef _STRS_H_
 #define _STRS_H_
 
+typedef struct _elemento{
+	char c;
+	struct _elemento *ant, *prox;
+}elemento;
+
+typedef struct _pilha{
+	elemento *topo;
+}pilha;
+
 int SearchString(char content[], char subStr[]);
 int streql(char *str1, char *str2);
 char *copiaLinha(char content[], int *i);
 char *copiaString(char content[], int *i, char fim1, char fim2);
+pilha *alocaPilha();
+void insereElementoNaPilha(pilha *pilha, char c);
+int pilhaVazia(pilha *pilha);
+void removeElementoDaPilha(pilha *pilha, elemento *e);
+void excluirPilha(pilha *pilha);
 
 #endif // _STRS_H_

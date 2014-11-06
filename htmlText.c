@@ -15,15 +15,9 @@
 	BCM Revox Engine v0.2
 	BCM Revox Engine -> Ano: 2014|Tipo: WebEngine
 */
-#include <omp.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <ctype.h>
-#include "bonus.h"
-#include "html.h"
-#include "htmlText.h"
-#include "typeparser.h"
 
 char *CreateTag(char *inicio, char *tag, char *fim){
     char *element = (char *)malloc(sizeof(char)*(strlen(inicio)+strlen(tag)+strlen(fim)));

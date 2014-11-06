@@ -15,14 +15,13 @@
 	BCM Revox Engine v0.2
 	BCM Revox Engine -> Ano: 2014|Tipo: WebEngine
 */
+#include "manifest.h"
+#include "html.h"
+
 #ifndef _TYPEPARSER_H_
 #define _TYPEPARSER_H_
 
-#pragma once
-
 #include <windef.h>
-#include "manifest.h"
-#include "html.h"
 
 typedef struct _Type{
     char *url, *content;
@@ -32,7 +31,7 @@ typedef struct _Type{
 typedef struct _typec{
     char *plain;
     status manifst;
-    struct _listaHtml *lista;
+    hashHtml *h;
 } typec;
 
 typedef enum _type{

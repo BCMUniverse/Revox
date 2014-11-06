@@ -59,7 +59,7 @@ type TypeBuster(char content[]){
 }
 
 typec InitTypeParser(Type tp1, int mode){
-    char *vtyp = NULL, path[2048] = {}, *content = NULL, szFilePathName[_MAX_PATH] = {""}, *aux = NULL;
+    char *vtyp = NULL, path[2048] = {}, *content = NULL, szFilePathName[MAX_PATH] = {""}, *aux = NULL;
     int i = 0, j = 0, k = 0;
     type typ1;
     typec result;
@@ -87,7 +87,7 @@ typec InitTypeParser(Type tp1, int mode){
     }
     switch(typ1){
     case THTML:
-        result.lista = htmlParser(tp1.content, tp1.url);
+        result.h = htmlParser(tp1.content, tp1.url);
         break;
     case MANIFEST:
         result.manifst = InitManifest(tp1.content, tp1.url);
@@ -105,7 +105,7 @@ typec InitTypeParser(Type tp1, int mode){
             ofn.lpstrFilter = szFilters;
             ofn.lpstrFile = szFilePathName;  // Isto manterá o nome do arquivo
             ofn.lpstrDefExt = _T("");
-            ofn.nMaxFile = _MAX_PATH;
+            ofn.nMaxFile = MAX_PATH;
             ofn.lpstrTitle = _T("Salvar Arquivo");
             ofn.Flags = OFN_OVERWRITEPROMPT;
             ofn.lpstrFileTitle = path2;

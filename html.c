@@ -30,88 +30,92 @@ void alocaListaHtml(listaHtml *lista){
     lista->tam = 0;
 }
 
-pilhaHtml *criaPilhaHtml(){
-    pilhaHtml *p = (pilhaHtml *)malloc(sizeof(pilhaHtml));
-    p->topo = -1;
-    memset(p->tagName, UNKNOWN, sizeof(p->tagName));
-    memset(p->filhos, 0, sizeof(p->filhos));
+hashHtml *alocaHash(){
+    hashHtml *h = (hashHtml *)malloc(sizeof(hashHtml));
 
-    return p;
+    for(int i=0; i<100; i++){
+        alocaListaHtml(&h->vet[i]);
+    }
+    return h;
 }
 
-int insereElementoNaPilhaHtml(pilhaHtml *pilha, Elemts tagName){
-    int i = 0;
+filaHtml *alocaFila(){
+    filaHtml *f = (filaHtml *)malloc(sizeof(filaHtml));
 
-    if(pilha->topo == (sizeof(pilha->filhos)-1)){
-        return -1;
+    f->inicio = NULL;
+    f->fim = NULL;
+
+    return f;
+}
+
+void insereElementoNaFila(filaHtml *fila, Elemts tagName){
+    elemntFila *e = (elemntFila *)malloc(sizeof(elemntFila));
+
+    e->tagName = tagName;
+    if(fila->inicio == NULL){
+        e->ant = fila->inicio;
+        e->prox = fila->fim;
+        fila->inicio = e;
     }
     else{
-        pilha->topo++;
-        pilha->tagName[pilha->topo] = tagName;
-        while(i<pilha->topo){
-            pilha->filhos[i++]++;
-        }
+        e->ant = fila->fim;
+        e->prox = NULL;
+        fila->fim->prox = e;
     }
-
-    return 0;
+    fila->fim = e;
 }
 
-int insereElementoNaListaHtml(listaHtml *lista, char id[], char className[], char attrs[], char innerHtml[], Elemts tagName, pilhaHtml *pilha){
-    elemntHtml *elemento;
+int insereElementoNoHash(hashHtml *h, char id[], char className[], char attrs[], char innerHtml[], Elemts tagName, filaHtml *f){
+    elemntHtml *e = (elemntHtml *)malloc(sizeof(elemntHtml));
 
-    if((elemento = (elemntHtml *)malloc(sizeof(elemntHtml)))==NULL){
-        return -1;
-    }
-    // Insere os dados no elemento
-    strcpy(elemento->attrs, attrs);
-    strcpy(elemento->className, className);
-    strcpy(elemento->id, id);
-    strcpy(elemento->innerHtml, innerHtml);
-    elemento->tagName = tagName;
+    strcpy(e->attrs, attrs);
+    strcpy(e->className, className);
+    strcpy(e->id, id);
+    strcpy(e->innerHtml, innerHtml);
+    e->tagName = tagName;
+    e->isClosed = 0;
+    insereElementoNaFila(f, tagName);
 
+    return insereElementoNaListaHtml(&h->vet[tagName], e);
+}
+
+int insereElementoNaListaHtml(listaHtml *lista, elemntHtml* elemento){
     if(lista->inicio==NULL){
         elemento->ant = lista->inicio;
         elemento->prox = lista->fim;
         lista->inicio = elemento;
-        lista->fim = elemento;
     }
     else{
         elemento->ant = lista->fim;
         elemento->prox = NULL;
         lista->fim->prox = elemento;
-        lista->fim = elemento;
     }
+    lista->fim = elemento;
     lista->tam++;
-
-    if(tagName!=DOCTYPE && tagName!=COMMENTS){
-        if(insereElementoNaPilhaHtml(pilha, tagName)==-1){
-            return -1;
-        }
-    }
 
     return 0;
 }
 
-int pilhaHtmlVazia(pilhaHtml *pilha){
-    if(pilha->topo == -1){
+int filaVazia(filaHtml *fila){
+    if(fila->inicio == NULL && fila->fim == NULL){
         return 1;
     }
     return 0;
 }
 
-void removeElementoDaPilhaHtml(pilhaHtml *pilha, listaHtml *lista){
-    elemntHtml *inCurso = lista->fim;
-    int i = 0;
-
-    if(pilhaHtmlVazia(pilha)){
-        fprintf(stderr, "Erro: Pilha Vazia!");
-        exit(1);
+void removeElementoDaFila(filaHtml *f){
+    if(!filaVazia(f)){
+        elemntFila *e = f->inicio;
+        f->inicio = f->inicio->prox;
+        if(f->inicio!=NULL){
+            f->inicio->prox->ant = NULL;
+        }
+        else{
+            f->fim = NULL;
+        }
+        e->tagName = UNKNOWN;
+        free(e);
     }
-    for(i = pilha->filhos[pilha->topo]; inCurso!=NULL || i!=0; i--){
-        inCurso = inCurso->ant;
-    }
-    inCurso->quantFilhos = pilha->filhos[pilha->topo];
-    pilha->topo--;
 }
 
 int removeElementoDaListaHtml(listaHtml *lista, int pos){
@@ -149,7 +153,6 @@ int removeElementoDaListaHtml(listaHtml *lista, int pos){
     free(elemento->className);
     free(elemento->id);
     free(elemento->innerHtml);
-    elemento->quantFilhos = 0;
     elemento->tagName = UNKNOWN;
     free(elemento);
     lista->tam--;
@@ -157,8 +160,8 @@ int removeElementoDaListaHtml(listaHtml *lista, int pos){
     return 0;
 }
 
-void excluirPilhaHtml(pilhaHtml *pilha){
-    free(pilha);
+void excluirFila(filaHtml *fila){
+    free(fila);
 }
 
 void excluirListaHtml(listaHtml *lista){
@@ -186,14 +189,13 @@ char *copiaTag(char content[], int *i){
     return result;
 }
 
-listaHtml *htmlParser(char content[], char url[]){
+hashHtml *htmlParser(char content[], char url[]){
     char *body = NULL, *aux = NULL, *aux2 = NULL, *id = NULL, *className = NULL, *attrs = NULL, *cont = NULL;
     Elemts tagName = UNKNOWN;
     int i = 0, j = 0, k = 0;
-    listaHtml lista;
-    pilhaHtml *p = criaPilhaHtml();
+    hashHtml *h = alocaHash();
+    filaHtml *f = alocaFila();
 
-    alocaListaHtml(&lista);
     body = TagBody(content);
     while(body[i]!='\0'){
         if(aux!=NULL){
@@ -221,7 +223,7 @@ listaHtml *htmlParser(char content[], char url[]){
             aux2 = copiaString(aux, &j, ' ', '>');
             for(k=0; k<3; k++){
                 if(strcmp(aux2, elemts[k])==0){
-                    tagName = (Elemts)(k+200);
+                    tagName = (Elemts)(k);
                     break;
                 }
             }
@@ -233,7 +235,7 @@ listaHtml *htmlParser(char content[], char url[]){
                 }
                 for(k=0; k<3; k++){
                     if(strcmp(aux2, elemts[k])==0){
-                        tagName = (Elemts)(k+200);
+                        tagName = (Elemts)(k);
                         break;
                     }
                 }
@@ -245,7 +247,7 @@ listaHtml *htmlParser(char content[], char url[]){
                     attrs = NULL;
                 }
                 attrs = copiaString(aux, &j, '>', '\0');
-                insereElementoNaListaHtml(&lista, "\0", "\0", attrs, "\0", tagName, p);
+                insereElementoNoHash(h, "\0", "\0", attrs, "\0", tagName, f);
                 break;
             case COMMENTS:
                 if(cont!=NULL){
@@ -253,11 +255,11 @@ listaHtml *htmlParser(char content[], char url[]){
                     cont = NULL;
                 }
                 cont = copiaString(aux, &j, '>', '\0');
-                insereElementoNaListaHtml(&lista, "\0", "\0", "\0", cont, tagName, p);
+                insereElementoNoHash(h, "\0", "\0", "\0", cont, tagName, f);
                 break;
             case CDATA:
                 //Mais em Breve!
-                insereElementoNaListaHtml(&lista, "\0", "\0", "\0", "\0", tagName, p);
+                insereElementoNoHash(h, "\0", "\0", "\0", "\0", tagName, f);
                 break;
             default:
                 fprintf(stderr, "Erro: Elemento Invalido!\r\n");
@@ -272,7 +274,7 @@ listaHtml *htmlParser(char content[], char url[]){
             aux2 = copiaString(aux, &j, ' ', '>');
             for(k=3; k<23; k++){
                 if(strcmp(aux2, elemts[k])==0){
-                    tagName = (Elemts)(k-3);
+                    tagName = (Elemts)(k);
                     break;
                 }
             }
@@ -284,17 +286,17 @@ listaHtml *htmlParser(char content[], char url[]){
                 }
                 for(k=3; k<23; k++){
                     if(strcmp(aux2, elemts[k])==0){
-                        tagName = (Elemts)(k-3);
+                        tagName = (Elemts)(k);
                         break;
                     }
                 }
             }
             switch(tagName){
             case HTML:
-                removeElementoDaPilhaHtml(p, &lista);
+                //Marcar isCLosed == 1
                 break;
             case HEAD:
-                removeElementoDaPilhaHtml(p, &lista);
+                //Marcar isCLosed == 1
                 break;
             default:
                 fprintf(stderr, "Erro: Elemento Invalido!\r\n");
@@ -309,7 +311,7 @@ listaHtml *htmlParser(char content[], char url[]){
             aux2 = copiaString(aux, &j, ' ', '>');
             for(k=3; k<23; k++){
                 if(strcmp(aux2, elemts[k])==0){
-                    tagName = (Elemts)(k-3);
+                    tagName = (Elemts)(k);
                     break;
                 }
             }
@@ -321,7 +323,7 @@ listaHtml *htmlParser(char content[], char url[]){
                 }
                 for(k=3; k<23; k++){
                     if(strcmp(aux2, elemts[k])==0){
-                        tagName = (Elemts)(k-3);
+                        tagName = (Elemts)(k);
                         break;
                     }
                 }
@@ -360,13 +362,10 @@ listaHtml *htmlParser(char content[], char url[]){
                 }
                 cont[k] = body[i++];
             }
-
-            //insere os elemento na lista e na pilha
-            insereElementoNaPilhaHtml(p, tagName);
-            insereElementoNaListaHtml(&lista, id, className, attrs, cont, tagName, p);
+            insereElementoNoHash(h, id, className, attrs, cont, tagName, f);
         }
         j = 0;
     }
 
-    return &lista;
+    return h;
 }
