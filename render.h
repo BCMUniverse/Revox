@@ -17,4 +17,6 @@
 */
 #ifndef _RENDER_H_
 
+void InitRender(typec *t, HWND hwnd);
+
 #endif // _RENDER_H_

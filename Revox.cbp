@@ -106,6 +106,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="prospero.h" />
+		<Unit filename="render.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="render.h" />
 		<Unit filename="resource.h" />
 		<Unit filename="revox.h" />
 		<Unit filename="revox.rc">

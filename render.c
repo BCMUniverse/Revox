@@ -15,3 +15,9 @@
 	BCM Revox Engine v0.2
 	BCM Revox Engine -> Ano: 2014|Tipo: WebEngine
 */
+#include <tchar.h>
+#include <windows.h>
+#include "html.h"
+#include "typeparser.h"
+
+void InitRender(typec *t, HWND hwnd){}
