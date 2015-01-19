@@ -50,8 +50,8 @@
 		</Compiler>
 		<Linker>
 			<Add option="-lmsvcrt" />
-			<Add library="C:\Program Files\CodeBlocks\MinGW\lib\gcc\mingw32\4.7.1\libgomp.dll.a" />
-			<Add library="C:\Program Files\CodeBlocks\MinGW\lib\librasapi32.a" />
+			<Add library="C:\Program Files (x86)\CodeBlocks\MinGW\lib\gcc\mingw32\4.8.1\libgomp.dll.a" />
+			<Add library="C:\Program Files (x86)\CodeBlocks\MinGW\lib\librasapi32.a" />
 		</Linker>
 		<Unit filename="bonus.c">
 			<Option compilerVar="CC" />

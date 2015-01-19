@@ -16,7 +16,10 @@
 	BCM Revox Engine -> Ano: 2014|Tipo: WebEngine
 */
 #ifndef _RENDER_H_
+#define _RENDER_H_
 
-void InitRender(typec *t, HWND hwnd);
+#define RENDERCLASS "RenderView32"
+
+BOOL InitRender();
 
 #endif // _RENDER_H_
