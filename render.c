@@ -19,35 +19,55 @@
 #include <windows.h>
 #include "html.h"
 #include "render.h"
+#include "renderInt.h"
 #include "typeparser.h"
 
-struct params{
-    typec *t;
-    int modo;
-    HWND hwnd, hwndRender;
-};
+LRESULT WINAPI Render::OnPaint(){
+	HDC			hdc;
+	PAINTSTRUCT ps;
+	RECT		rect;
+	char		*text = "Hello World!";
+
+	HANDLE		hOldFont;
+	HFONT		hFont;
+
+	hdc = BeginPaint(m_hWnd, &ps);
+
+	hFont = (HFONT)GetStockObject(ANSI_FIXED_FONT);
+	hOldFont = SelectObject(hdc, hFont);
+
+	GetClientRect(m_hWnd, &rect);
+
+	ExtTextOut(hdc, 10, 10, ETO_OPAQUE, &rect, text, lstrlen(text), 0);
+
+	SelectObject(hdc, hOldFont);
+
+	EndPaint(m_hWnd, &ps);
+
+	return 0;
+}
 
 LRESULT WINAPI RenderWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam){
-	TextView *ptv = (TextView *)GetWindowLong(hwnd, 0);
+	Render *ptv = (Render *)GetWindowLong(hwnd, 0);
 
 	switch(msg){
-	// First message received by any window - make a new TextView object
+	// First message received by any window - make a new Render object
 	// and store pointer to it in our extra-window-bytes
 	case WM_NCCREATE:
 
-		if((ptv = new TextView(hwnd)) == 0)
+		if((ptv = new Render(hwnd)) == 0)
 			return FALSE;
 
 		SetWindowLong(hwnd, 0, (LONG)ptv);
 		return TRUE;
 
-	// Last message received by any window - delete the TextView object
+	// Last message received by any window - delete the Render object
 	case WM_NCDESTROY:
 
 		delete ptv;
 		return 0;
 
-	// Draw contents of TextView whenever window needs updating
+	// Draw contents of Render whenever window needs updating
 	case WM_PAINT:
 		return ptv->OnPaint();
 
@@ -66,7 +86,7 @@ BOOL InitRender(){
 	wcx.style			= 0;
 	wcx.lpfnWndProc		= RenderWndProc;
 	wcx.cbClsExtra		= 0;
-	wcx.cbWndExtra		= sizeof(TextView *);
+	wcx.cbWndExtra		= sizeof(Render *);
 	wcx.hInstance		= GetModuleHandle(0);
 	wcx.hIcon			= 0;
 	wcx.hCursor			= LoadCursor (NULL, IDC_IBEAM);

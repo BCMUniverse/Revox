@@ -20,6 +20,12 @@
 
 #define RENDERCLASS "RenderView32"
 
+typedef struct _params{
+    typec *t;
+    int modo;
+    HWND hwnd, hwndRender;
+}params;
+
 BOOL InitRender();
 
 #endif // _RENDER_H_
