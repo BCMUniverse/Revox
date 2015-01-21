@@ -13,14 +13,17 @@
 	51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 
 	BCM Revox Engine v0.2
-	BCM Revox Engine -> Ano: 2014|Tipo: WebEngine
+	BCM Revox Engine -> Ano: 2015|Tipo: WebEngine
 */
 #include <tchar.h>
 #include <windows.h>
+#include "css.h"
 #include "html.h"
 #include "render.h"
 #include "renderInt.h"
 #include "typeparser.h"
+
+params par;
 
 LRESULT WINAPI Render::OnPaint(){
 	HDC			hdc;
@@ -98,12 +101,13 @@ BOOL InitRender(){
 	return RegisterClassEx(&wcx) ? TRUE : FALSE;
 }
 
-HWND CreateRender(HWND hwndParent){
+HWND CreateRender(HWND hwndParent, params pars){
+    par = pars;
 	return CreateWindowEx(WS_EX_CLIENTEDGE,
 		RENDERCLASS, "", WS_VSCROLL |WS_HSCROLL | WS_CHILD | WS_VISIBLE, 0, 0, 0, 0, hwndParent, 0, GetModuleHandle(0), 0);
 }
 
-DWORD WINAPI RenderThread(void* params){
+/*DWORD WINAPI RenderThread(void* params){
     struct params* param = (struct params*)params;
 
     param->hwndRender = CreateRender(param->hwnd);
@@ -112,4 +116,4 @@ DWORD WINAPI RenderThread(void* params){
     Sleep(1000);
 
     return 0;
-}
+}*/

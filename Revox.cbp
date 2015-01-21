@@ -57,6 +57,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="bonus.h" />
+		<Unit filename="css.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="css.h" />
 		<Unit filename="downloads.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -110,6 +114,7 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="render.h" />
+		<Unit filename="renderInt.h" />
 		<Unit filename="resource.h" />
 		<Unit filename="revox.h" />
 		<Unit filename="revox.rc">

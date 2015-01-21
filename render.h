@@ -13,7 +13,7 @@
 	51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
 
 	BCM Revox Engine v0.2
-	BCM Revox Engine -> Ano: 2014|Tipo: WebEngine
+	BCM Revox Engine -> Ano: 2015|Tipo: WebEngine
 */
 #ifndef _RENDER_H_
 #define _RENDER_H_
@@ -23,9 +23,9 @@
 typedef struct _params{
     typec *t;
     int modo;
-    HWND hwnd, hwndRender;
 }params;
 
 BOOL InitRender();
+HWND CreateRender(HWND hwndParent, params pars);
 
 #endif // _RENDER_H_
