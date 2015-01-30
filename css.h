@@ -18,6 +18,35 @@
 #ifndef _CSS_H_
 #define _CSS_H_
 
+typedef enum _seltp{
+    DEFAULT,
+    ACTIVE,
+    FOCUS,
+    HOVER,
+    VISITED
+}selTipo;
 
+typedef enum _modoCss{
+    DEFAULT,
+    EXTERNAL,
+    INTERNAL,
+    INLINE
+}modCSS;
+
+typedef struct _elemCss{
+    char *prop, *valor;
+    selTipo tipo;
+    modCSS modo;
+    struct _elemCss *ant, *prox;
+}elemCSS;
+
+typedef struct _listaCss{
+    elemCSS *inicio, *fim;
+}listaCSS;
+
+typedef struct _hashCss{
+    listaCSS *vet;
+    int tam;
+}hashCSS;
 
 #endif // _CSS_H_
