@@ -1,43 +1,45 @@
 #BCM Revox Engine
 ### #TheNextEngine -> #TheRevox
 
+[![Join the chat at https://gitter.im/BCMUniverse/Revox](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/BCMUniverse/Revox?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 BCM Revox Engine <http://revox.sf.net/>
 
-##O que é Revox?
+##O que ï¿½ Revox?
 
-Revox é um renderizador web, escrito do zero por Cleber Matheus, que ler arquivos HTML e converte-os em páginas web. O Revox foi criado para programas que utilizavam dados da internet ou para exibir páginas web e ler arquivos HTML.
+Revox ï¿½ um renderizador web, escrito do zero por Cleber Matheus, que ler arquivos HTML e converte-os em pï¿½ginas web. O Revox foi criado para programas que utilizavam dados da internet ou para exibir pï¿½ginas web e ler arquivos HTML.
 
-O Revox acessa os arquivos HTML no disco local ou através do protocolo HTTP e outros protocolos da internet, lê os arquivos recebidos e interpreta-os segundo o padrão definido pela Engine(nas próximas versões irá interpretar conforme os padrões do HTML5.1).
+O Revox acessa os arquivos HTML no disco local ou atravï¿½s do protocolo HTTP e outros protocolos da internet, lï¿½ os arquivos recebidos e interpreta-os segundo o padrï¿½o definido pela Engine(nas prï¿½ximas versï¿½es irï¿½ interpretar conforme os padrï¿½es do HTML5.1).
 
-O BCM Revox Engine é distribuido pelo GNU General Public License - veja o arquivo LICENSE, acompanhamento para mais detalhes.
+O BCM Revox Engine ï¿½ distribuido pelo GNU General Public License - veja o arquivo LICENSE, acompanhamento para mais detalhes.
 
-##Requisitos Mínimos
+##Requisitos Mï¿½nimos
 
-O Revox está sendo desenvolvido somente no Windows 7, porém pode funcionar em outras versões do Windows, em versões futuras, terá suporte a Linux, Mac OS X entre outros.
+O Revox estï¿½ sendo desenvolvido somente no Windows 7, porï¿½m pode funcionar em outras versï¿½es do Windows, em versï¿½es futuras, terï¿½ suporte a Linux, Mac OS X entre outros.
 
-##Documentação:
-Na pasta docs/ você poderá encontrar mais detalhadamente com utilizar cada função no seu código e como incorporar o Revox no seu projeto.
+##Documentaï¿½ï¿½o:
+Na pasta docs/ vocï¿½ poderï¿½ encontrar mais detalhadamente com utilizar cada funï¿½ï¿½o no seu cï¿½digo e como incorporar o Revox no seu projeto.
 
 ##Como construir o Revox
 
-Primeiro, clone o repositório do Revox:
+Primeiro, clone o repositï¿½rio do Revox:
 
 ```bash
 git clone https://github.com/BCMUniverse/Revox.git
 ```
-Se não tiver o Codeblocks 12.11 instalado, faça o download e baixe-o no link abaixo:
+Se nï¿½o tiver o Codeblocks 12.11 instalado, faï¿½a o download e baixe-o no link abaixo:
 
 ```bash
 http://sourceforge.net/projects/codeblocks/files/Binaries/12.11/Windows/codeblocks-12.11mingw-setup.exe
 ```
 
 Abra o arquivo Revox.cbp no codeblocks e clique em Build ou compilar.
-Pronto. A Biblioteca estará na pasta bin/Release ou bin/Dbg, compilada junto com a biblioteca estática.
+Pronto. A Biblioteca estarï¿½ na pasta bin/Release ou bin/Dbg, compilada junto com a biblioteca estï¿½tica.
 
 ##Instalando e Utilizando o Revox
 
 - Para instalar o Revox no projeto, deve-se copiar o arquivo dll para a pasta de arquivos compilados do projeto ou a pasta bin do Revox na pasta bin do seu projeto.
-- Para utilizar o Revox no seu projeto deve seguir os passos que estão na pasta docs.
+- Para utilizar o Revox no seu projeto deve seguir os passos que estï¿½o na pasta docs.
 
 ##Copyright
 
