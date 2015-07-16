@@ -50,6 +50,7 @@
 		</Compiler>
 		<Linker>
 			<Add option="-lmsvcrt" />
+			<Add option="-lgdi32" />
 			<Add library="C:\Program Files (x86)\CodeBlocks\MinGW\lib\gcc\mingw32\4.8.1\libgomp.dll.a" />
 			<Add library="C:\Program Files (x86)\CodeBlocks\MinGW\lib\librasapi32.a" />
 		</Linker>
@@ -93,7 +94,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="mail.h" />
-		<Unit filename="main.cpp" />
+		<Unit filename="main.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="manifest.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -110,9 +113,7 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="prospero.h" />
-		<Unit filename="render.c">
-			<Option compilerVar="CC" />
-		</Unit>
+		<Unit filename="render.cpp" />
 		<Unit filename="render.h" />
 		<Unit filename="renderInt.h" />
 		<Unit filename="resource.h" />

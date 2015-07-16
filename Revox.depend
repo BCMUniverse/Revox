@@ -1,20 +1,20 @@
 # depslib dependency file v1.0
-1406330124 source:e:\bcmuniverse\revox\v1.x\bonus.c
+1406326524 source:e:\bcmuniverse\revox\v1.x\bonus.c
 	<ctype.h>
 	<stdio.h>
 	<stdint.h>
 	<winsock2.h>
 
-1404589984 source:e:\bcmuniverse\revox\v1.x\downloads.c
+1404586384 source:e:\bcmuniverse\revox\v1.x\downloads.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	"bonus.h"
 
-1406329398 e:\bcmuniverse\revox\v1.x\bonus.h
+1406325798 e:\bcmuniverse\revox\v1.x\bonus.h
 	<stdio.h>
 
-1399145229 source:e:\bcmuniverse\revox\v1.x\ftp.c
+1399141629 source:e:\bcmuniverse\revox\v1.x\ftp.c
 	<omp.h>
 	<conio.h>
 	<stdio.h>
@@ -23,20 +23,20 @@
 	<winsock2.h>
 	"ftp.h"
 
-1394313105 e:\bcmuniverse\revox\v1.x\ftp.h
+1394309505 e:\bcmuniverse\revox\v1.x\ftp.h
 
-1391390365 source:e:\bcmuniverse\revox\v1.x\guicon.c
+1391386765 source:e:\bcmuniverse\revox\v1.x\guicon.c
 	<windows.h>
 	<stdio.h>
 	<fcntl.h>
 	<io.h>
 
-1404527446 source:e:\bcmuniverse\revox\v1.x\hex.c
+1404523846 source:e:\bcmuniverse\revox\v1.x\hex.c
 	<stdio.h>
 	<string.h>
 	"bonus.h"
 
-1415311422 source:e:\bcmuniverse\revox\v1.x\html.c
+1415307822 source:e:\bcmuniverse\revox\v1.x\html.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -44,10 +44,10 @@
 	"strs.h"
 	"typeparser.h"
 
-1415278161 e:\bcmuniverse\revox\v1.x\html.h
+1415274561 e:\bcmuniverse\revox\v1.x\html.h
 	"revox.h"
 
-1406667120 e:\bcmuniverse\revox\v1.x\revox.h
+1406663520 e:\bcmuniverse\revox\v1.x\revox.h
 	<windows.h>
 	"bonus.h"
 	"http.h"
@@ -55,31 +55,31 @@
 	"typeparser.h"
 	"urlparser.h"
 
-1406227835 e:\bcmuniverse\revox\v1.x\http.h
+1406224235 e:\bcmuniverse\revox\v1.x\http.h
 	<winsock2.h>
 	"bonus.h"
 
-1383435675 e:\bcmuniverse\revox\v1.x\socket.h
+1383432075 e:\bcmuniverse\revox\v1.x\socket.h
 
-1415278161 e:\bcmuniverse\revox\v1.x\typeparser.h
+1415274561 e:\bcmuniverse\revox\v1.x\typeparser.h
 	"manifest.h"
 	"html.h"
 	<windef.h>
 
-1404678452 e:\bcmuniverse\revox\v1.x\manifest.h
+1404674852 e:\bcmuniverse\revox\v1.x\manifest.h
 
-1399142594 e:\bcmuniverse\revox\v1.x\urlparser.h
+1399138994 e:\bcmuniverse\revox\v1.x\urlparser.h
 	<windows.h>
 	"typeparser.h"
 
-1415275785 e:\bcmuniverse\revox\v1.x\strs.h
+1415272185 e:\bcmuniverse\revox\v1.x\strs.h
 
-1415227173 source:e:\bcmuniverse\revox\v1.x\htmltext.c
+1415223573 source:e:\bcmuniverse\revox\v1.x\htmltext.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 
-1406227812 source:e:\bcmuniverse\revox\v1.x\http.c
+1406224212 source:e:\bcmuniverse\revox\v1.x\http.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -94,9 +94,9 @@
 	"strs.h"
 	"revox.h"
 
-1388518500 e:\bcmuniverse\revox\v1.x\socks.h
+1388514900 e:\bcmuniverse\revox\v1.x\socks.h
 
-1406330051 source:e:\bcmuniverse\revox\v1.x\mail.c
+1406326451 source:e:\bcmuniverse\revox\v1.x\mail.c
 	<omp.h>
 	<ctype.h>
 	<conio.h>
@@ -110,17 +110,17 @@
 	"htmlText.h"
 	"resource.h"
 
-1406667079 e:\bcmuniverse\revox\v1.x\htmltext.h
+1406663479 e:\bcmuniverse\revox\v1.x\htmltext.h
 
-1395861231 e:\bcmuniverse\revox\v1.x\resource.h
+1395857631 e:\bcmuniverse\revox\v1.x\resource.h
 
-1406667112 source:e:\bcmuniverse\revox\v1.x\main.cpp
+1406663512 source:e:\bcmuniverse\revox\v1.x\main.cpp
 	<stdio.h>
 	<windef.h>
 	"bonus.h"
 	"revox.h"
 
-1405380067 source:e:\bcmuniverse\revox\v1.x\manifest.c
+1405376467 source:e:\bcmuniverse\revox\v1.x\manifest.c
 	<io.h>
 	<stdio.h>
 	<time.h>
@@ -132,13 +132,13 @@
 	"strs.h"
 	"urlparser.h"
 
-1404589346 e:\bcmuniverse\revox\v1.x\downloads.h
+1404585746 e:\bcmuniverse\revox\v1.x\downloads.h
 
-1394159506 e:\bcmuniverse\revox\v1.x\hex.h
+1394155906 e:\bcmuniverse\revox\v1.x\hex.h
 
-1404617482 e:\bcmuniverse\revox\v1.x\strptime.h
+1404613882 e:\bcmuniverse\revox\v1.x\strptime.h
 
-1399145466 source:e:\bcmuniverse\revox\v1.x\nntp.c
+1399141866 source:e:\bcmuniverse\revox\v1.x\nntp.c
 	<omp.h>
 	<stdio.h>
 	<stdlib.h>
@@ -149,9 +149,9 @@
 	"guicon.h"
 	"resource.h"
 
-1391359840 e:\bcmuniverse\revox\v1.x\guicon.h
+1391356240 e:\bcmuniverse\revox\v1.x\guicon.h
 
-1415311537 source:e:\bcmuniverse\revox\v1.x\plain.c
+1415307937 source:e:\bcmuniverse\revox\v1.x\plain.c
 	<stdlib.h>
 	<string.h>
 	"bonus.h"
@@ -160,7 +160,7 @@
 	"strs.h"
 	"typeparser.h"
 
-1405380944 source:e:\bcmuniverse\revox\v1.x\prospero.c
+1405377344 source:e:\bcmuniverse\revox\v1.x\prospero.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -168,11 +168,11 @@
 	"bonus.h"
 	"socks.h"
 
-1395861231 source:e:\bcmuniverse\revox\v1.x\revox.rc
+1395857631 source:e:\bcmuniverse\revox\v1.x\revox.rc
 	"resource.h"
 	<windows.h>
 
-1395861505 source:e:\bcmuniverse\revox\v1.x\socket.c
+1395857905 source:e:\bcmuniverse\revox\v1.x\socket.c
 	<stdio.h>
 	<sys/types.h>
 	<winsock.h>
@@ -181,33 +181,33 @@
 	<unistd.h>
 	"bonus.h"
 
-1404529203 source:e:\bcmuniverse\revox\v1.x\socks.c
+1404525603 source:e:\bcmuniverse\revox\v1.x\socks.c
 	<ctype.h>
 	<stdio.h>
 	<winsock2.h>
 	"bonus.h"
 
-1404617503 source:e:\bcmuniverse\revox\v1.x\strptime.c
+1404613903 source:e:\bcmuniverse\revox\v1.x\strptime.c
 	<ctype.h>
 	<string.h>
 	<time.h>
 	<conio.h>
 
-1415312011 source:e:\bcmuniverse\revox\v1.x\strs.c
+1415308411 source:e:\bcmuniverse\revox\v1.x\strs.c
 	<ctype.h>
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	"strs.h"
 
-1399147899 source:e:\bcmuniverse\revox\v1.x\telnet.c
+1399144299 source:e:\bcmuniverse\revox\v1.x\telnet.c
 	<omp.h>
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	<winsock2.h>
 
-1415278181 source:e:\bcmuniverse\revox\v1.x\typeparser.c
+1415274581 source:e:\bcmuniverse\revox\v1.x\typeparser.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -223,10 +223,10 @@
 	"typeparser.h"
 	"urlparser.h"
 
-1405637566 e:\bcmuniverse\revox\v1.x\plain.h
+1405633966 e:\bcmuniverse\revox\v1.x\plain.h
 	"typeparser.h"
 
-1415226728 source:e:\bcmuniverse\revox\v1.x\urlparser.c
+1415223128 source:e:\bcmuniverse\revox\v1.x\urlparser.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -245,18 +245,18 @@
 	"usenet.h"
 	"wais.h"
 
-1391393308 e:\bcmuniverse\revox\v1.x\mail.h
+1391389708 e:\bcmuniverse\revox\v1.x\mail.h
 	<windows.h>
 
-1391360595 e:\bcmuniverse\revox\v1.x\nntp.h
+1391356995 e:\bcmuniverse\revox\v1.x\nntp.h
 
-1391367356 e:\bcmuniverse\revox\v1.x\prospero.h
+1391363756 e:\bcmuniverse\revox\v1.x\prospero.h
 
-1388443585 e:\bcmuniverse\revox\v1.x\usenet.h
+1388439985 e:\bcmuniverse\revox\v1.x\usenet.h
 
-1391376437 e:\bcmuniverse\revox\v1.x\wais.h
+1391372837 e:\bcmuniverse\revox\v1.x\wais.h
 
-1399145615 source:e:\bcmuniverse\revox\v1.x\usenet.c
+1399142015 source:e:\bcmuniverse\revox\v1.x\usenet.c
 	<omp.h>
 	<stdio.h>
 	<stdlib.h>
@@ -265,7 +265,7 @@
 	"bonus.h"
 	"socks.h"
 
-1399145710 source:e:\bcmuniverse\revox\v1.x\wais.c
+1399142110 source:e:\bcmuniverse\revox\v1.x\wais.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -278,4 +278,31 @@
 	<windows.h>
 	"html.h"
 	"typeparser.h"
+
+1422405060 source:e:\bcmuniverse\revox\v1.x\css.c
+	<stdio.h>
+	"typeparser.h"
+
+1437070519 source:e:\bcmuniverse\revox\v1.x\render.cpp
+	<windows.h>
+	<tchar.h>
+	<string.h>
+	"css.h"
+	"html.h"
+	"render.h"
+	"renderInt.h"
+	"typeparser.h"
+
+1437067379 e:\bcmuniverse\revox\v1.x\css.h
+	"html.h"
+
+1437070615 e:\bcmuniverse\revox\v1.x\render.h
+
+1437069430 e:\bcmuniverse\revox\v1.x\renderint.h
+
+1437069989 source:e:\bcmuniverse\revox\v1.x\main.c
+	<stdio.h>
+	<windef.h>
+	"bonus.h"
+	"revox.h"
 

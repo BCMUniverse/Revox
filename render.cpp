@@ -15,8 +15,9 @@
 	BCM Revox Engine v0.2
 	BCM Revox Engine -> Ano: 2015|Tipo: WebEngine
 */
-#include <tchar.h>
 #include <windows.h>
+#include <tchar.h>
+#include <string.h>
 #include "css.h"
 #include "html.h"
 #include "render.h"
@@ -29,7 +30,9 @@ LRESULT WINAPI Render::OnPaint(){
 	HDC			hdc;
 	PAINTSTRUCT ps;
 	RECT		rect;
-	char		*text = "Hello World!";
+	char		*text = NULL;
+
+	strcpy(text, "Hello World!");
 
 	HANDLE		hOldFont;
 	HFONT		hFont;

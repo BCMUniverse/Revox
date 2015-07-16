@@ -15,9 +15,13 @@
 	BCM Revox Engine v0.2
 	BCM Revox Engine -> Ano: 2014|Tipo: WebEngine
 */
+
 #ifndef _RENDERINT_H_
 #define _RENDERINT_H_
 
+#ifdef __cplusplus
+extern "C"{
+#endif
 class Render{
     public:
 
@@ -27,5 +31,9 @@ class Render{
 
 	LRESULT WINAPI OnPaint();
 };
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // _RENDERINT_H_

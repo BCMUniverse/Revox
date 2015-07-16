@@ -18,7 +18,9 @@
 #ifndef _RENDER_H_
 #define _RENDER_H_
 
-#define RENDERCLASS "RenderView32"
+#ifdef __cplusplus
+extern "C"{
+#endif
 
 typedef struct _params{
     typec *t;
@@ -27,5 +29,11 @@ typedef struct _params{
 
 BOOL InitRender();
 HWND CreateRender(HWND hwndParent, params pars);
+
+#define RENDERCLASS "RenderView32"
+
+#ifdef __cplusplus
+}
+#endif // __cplusplus
 
 #endif // _RENDER_H_

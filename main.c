@@ -48,7 +48,7 @@ void InitFileText(char *path){
     fclose(input);
 }
 
-extern "C" BOOL APIENTRY DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved){
+BOOL APIENTRY DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved){
     switch (fdwReason){
         case DLL_PROCESS_ATTACH:
             // attach to process

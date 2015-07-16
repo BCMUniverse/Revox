@@ -15,6 +15,9 @@
 	BCM Revox Engine v0.2
 	BCM Revox Engine -> Ano: 2015|Tipo: WebEngine
 */
+
+#include "html.h"
+
 #ifndef _CSS_H_
 #define _CSS_H_
 
@@ -27,7 +30,7 @@ typedef enum _seltp{
 }selTipo;
 
 typedef enum _modoCss{
-    DEFAULT,
+    DEFAULT_MODE,
     EXTERNAL,
     INTERNAL,
     INLINE
@@ -41,6 +44,8 @@ typedef struct _elemCss{
 }elemCSS;
 
 typedef struct _listaCss{
+    char *id, *classe;
+    Elemts tag;
     elemCSS *inicio, *fim;
 }listaCSS;
 
