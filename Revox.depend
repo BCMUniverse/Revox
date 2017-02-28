@@ -44,7 +44,7 @@
 	"strs.h"
 	"typeparser.h"
 
-1415274561 e:\bcmuniverse\revox\v1.x\html.h
+1488222528 e:\bcmuniverse\revox\v1.x\html.h
 	"revox.h"
 
 1406663520 e:\bcmuniverse\revox\v1.x\revox.h
@@ -305,4 +305,26 @@
 	<windef.h>
 	"bonus.h"
 	"revox.h"
+
+1488239589 source:e:\bcmuniverse\revox\v1.x\html\domtokenlist.c
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+	<string.h>
+	"domTokenList.h"
+	"../utils/filaStrs.h"
+
+1488238261 e:\bcmuniverse\revox\v1.x\html\domtokenlist.h
+	<stdbool.h>
+	"../utils/filaStrs.h"
+
+1488247105 source:e:\bcmuniverse\revox\v1.x\utils\filastrs.c
+	<stdio.h>
+	<stdbool.h>
+	<stdlib.h>
+	<string.h>
+	"filaStrs.h"
+
+1488239080 e:\bcmuniverse\revox\v1.x\utils\filastrs.h
+	<stdbool.h>
 

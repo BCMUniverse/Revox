@@ -51,8 +51,8 @@
 		<Linker>
 			<Add option="-lmsvcrt" />
 			<Add option="-lgdi32" />
-			<Add library="C:\Program Files (x86)\CodeBlocks\MinGW\lib\gcc\mingw32\4.8.1\libgomp.dll.a" />
-			<Add library="C:\Program Files (x86)\CodeBlocks\MinGW\lib\librasapi32.a" />
+			<Add library="C:/Program Files (x86)/CodeBlocks/MinGW/lib/gcc/mingw32/4.8.1/libgomp.dll.a" />
+			<Add library="C:/Program Files (x86)/CodeBlocks/MinGW/lib/librasapi32.a" />
 		</Linker>
 		<Unit filename="bonus.c">
 			<Option compilerVar="CC" />
@@ -86,6 +86,11 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="htmlText.h" />
+		<Unit filename="html/domTokenList.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="html/domTokenList.h" />
+		<Unit filename="html/node.h" />
 		<Unit filename="http.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -153,6 +158,11 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="usenet.h" />
+		<Unit filename="utils/filaStrs.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="utils/filaStrs.h" />
+		<Unit filename="utils/utils.h" />
 		<Unit filename="wais.c">
 			<Option compilerVar="CC" />
 		</Unit>
